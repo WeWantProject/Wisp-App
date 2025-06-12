@@ -29,6 +29,34 @@ jobs:
         
       - name: Run tests
         run: flutter test
+        
+      - name: Discord notification - Success
+        if: success()
+        uses: sarisia/actions-status-discord@v1
+        with:
+          webhook: ${{ secrets.DISCORD_WEBHOOK }}
+          title: "✅ CI 검사 성공"
+          description: |
+            저장소: ${{ github.repository }}
+            브랜치: ${{ github.ref_name }}
+            커밋: ${{ github.event.after }}
+            실행자: ${{ github.actor }}
+          color: 0x43B581
+      
+      - name: Discord notification - Failure
+        if: failure()
+        uses: sarisia/actions-status-discord@v1
+        with:
+          webhook: ${{ secrets.DISCORD_WEBHOOK }}
+          title: "❌ CI 검사 실패"
+          description: |
+            저장소: ${{ github.repository }}
+            브랜치: ${{ github.ref_name }}
+            커밋: ${{ github.event.after }}
+            실행자: ${{ github.actor }}
+            
+            GitHub Actions 로그를 확인해주세요.
+          color: 0xF04747
 
   build_android:
     name: Build Android APK
@@ -54,6 +82,19 @@ jobs:
         with:
           name: release-apk
           path: build/app/outputs/flutter-apk/app-release.apk
+          
+      - name: Discord notification - Android Build Success
+        if: success()
+        uses: sarisia/actions-status-discord@v1
+        with:
+          webhook: ${{ secrets.DISCORD_WEBHOOK }}
+          title: "📱 Android 빌드 성공"
+          description: |
+            저장소: ${{ github.repository }}
+            브랜치: ${{ github.ref_name }}
+            
+            APK가 성공적으로 빌드되었습니다.
+          color: 0x43B581
 
   build_ios:
     name: Build iOS IPA
@@ -79,4 +120,17 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: ios-build
-          path: build/ios/iphoneos 
+          path: build/ios/iphoneos
+          
+      - name: Discord notification - iOS Build Success
+        if: success()
+        uses: sarisia/actions-status-discord@v1
+        with:
+          webhook: ${{ secrets.DISCORD_WEBHOOK }}
+          title: "🍎 iOS 빌드 성공"
+          description: |
+            저장소: ${{ github.repository }}
+            브랜치: ${{ github.ref_name }}
+            
+            iOS 앱이 성공적으로 빌드되었습니다.
+          color: 0x43B581 

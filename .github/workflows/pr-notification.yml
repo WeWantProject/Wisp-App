@@ -1,0 +1,50 @@
+name: PR Notification
+
+on:
+  pull_request:
+    types: [opened, reopened, closed, synchronize, ready_for_review]
+
+jobs:
+  notify_discord:
+    name: Notify Discord
+    runs-on: ubuntu-latest
+    steps:
+      - name: PR Opened/Reopened/Updated Notification
+        if: github.event.action == 'opened' || github.event.action == 'reopened' || github.event.action == 'synchronize'
+        uses: sarisia/actions-status-discord@v1
+        with:
+          webhook: ${{ secrets.DISCORD_WEBHOOK }}
+          title: "🔄 새로운 PR이 생성/업데이트 되었습니다"
+          description: |
+            PR: [#${{ github.event.pull_request.number }} ${{ github.event.pull_request.title }}](${{ github.event.pull_request.html_url }})
+            작성자: ${{ github.event.pull_request.user.login }}
+            브랜치: ${{ github.event.pull_request.head.ref }} → ${{ github.event.pull_request.base.ref }}
+            
+            ${{ github.event.pull_request.body }}
+          color: 0x5865F2
+          
+      - name: PR Merged Notification
+        if: github.event.action == 'closed' && github.event.pull_request.merged == true
+        uses: sarisia/actions-status-discord@v1
+        with:
+          webhook: ${{ secrets.DISCORD_WEBHOOK }}
+          title: "✅ PR이 병합되었습니다"
+          description: |
+            PR: [#${{ github.event.pull_request.number }} ${{ github.event.pull_request.title }}](${{ github.event.pull_request.html_url }})
+            작성자: ${{ github.event.pull_request.user.login }}
+            병합자: ${{ github.actor }}
+            브랜치: ${{ github.event.pull_request.head.ref }} → ${{ github.event.pull_request.base.ref }}
+          color: 0x43B581
+          
+      - name: PR Closed Notification
+        if: github.event.action == 'closed' && github.event.pull_request.merged == false
+        uses: sarisia/actions-status-discord@v1
+        with:
+          webhook: ${{ secrets.DISCORD_WEBHOOK }}
+          title: "❌ PR이 닫혔습니다 (병합되지 않음)"
+          description: |
+            PR: [#${{ github.event.pull_request.number }} ${{ github.event.pull_request.title }}](${{ github.event.pull_request.html_url }})
+            작성자: ${{ github.event.pull_request.user.login }}
+            닫은 사람: ${{ github.actor }}
+            브랜치: ${{ github.event.pull_request.head.ref }} → ${{ github.event.pull_request.base.ref }}
+          color: 0xF04747 
