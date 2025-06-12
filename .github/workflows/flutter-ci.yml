@@ -7,6 +7,31 @@ on:
     branches: [ main, develop ]
 
 jobs:
+  code_rabbit:
+    name: Code Rabbit Review
+    runs-on: ubuntu-latest
+    # PR에만 코드 래빗 실행
+    if: github.event_name == 'pull_request'
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      
+      - name: Code Rabbit Review
+        uses: coderabbitai/ai-pr-reviewer@latest
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        with:
+          debug: false
+          review_simple_changes: true
+          review_comment_lgtm: false
+          openai_light_model: gpt-4-turbo
+          openai_heavy_model: gpt-4-turbo
+
   flutter_test_and_build:
     name: Test, Analyze, and Build
     runs-on: ubuntu-latest
