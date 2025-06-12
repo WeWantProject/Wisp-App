@@ -50,7 +50,34 @@ jobs:
         run: |
           if [ -n "${{ secrets.DISCORD_WEBHOOK }}" ]; then
             curl -H "Content-Type: application/json" -X POST -d '{
-              "content": "**${{ job.status == 'success' && '✅ CI/CD 성공' || '❌ CI/CD 실패' }}**\n**저장소:** ${{ github.repository }}\n**브랜치:** ${{ github.ref_name }}\n**실행자:** ${{ github.actor }}\n\n${{ job.status == 'success' && '모든 작업이 성공적으로 완료되었습니다.' || 'GitHub Actions 로그를 확인해주세요.' }}"
+              "embeds": [
+                {
+                  "title": "${{ job.status == 'success' && '✅ CI/CD 파이프라인 성공' || '❌ CI/CD 파이프라인 실패' }}",
+                  "description": "${{ job.status == 'success' && '모든 작업이 성공적으로 완료되었습니다! 🎉' || 'GitHub Actions 로그를 확인해주세요. 🔍' }}",
+                  "color": ${{ job.status == 'success' && '5763719' || '15548997' }},
+                  "fields": [
+                    {
+                      "name": "📦 저장소",
+                      "value": "[${{ github.repository }}](${{ github.server_url }}/${{ github.repository }})",
+                      "inline": true
+                    },
+                    {
+                      "name": "🌿 브랜치",
+                      "value": "`${{ github.ref_name }}`",
+                      "inline": true
+                    },
+                    {
+                      "name": "👤 실행자",
+                      "value": "[${{ github.actor }}](${{ github.server_url }}/${{ github.actor }})",
+                      "inline": true
+                    }
+                  ],
+                  "footer": {
+                    "text": "Flutter CI/CD 알림"
+                  },
+                  "timestamp": "$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+                }
+              ]
             }' ${{ secrets.DISCORD_WEBHOOK }}
           else
             echo "::warning::Discord webhook URL is not set. Skipping notification."
