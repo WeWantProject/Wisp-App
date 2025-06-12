@@ -9,9 +9,10 @@ Flutter 기반 프로젝트입니다.
 ### 워크플로우
 
 - **Flutter CI (`flutter-ci.yml`)**: 코드 테스트, 분석 및 빌드 자동화
-- **Flutter CD (`flutter-cd.yml`)**: 태그 푸시 시 자동 배포 (Firebase, TestFlight)
+- **Flutter CD (`flutter-cd.yml`)**: 태그 푸시 시 자동 배포
 - **버전 관리 (`version-bump.yml`)**: 앱 버전 자동 관리
-- **코드 품질 (`code-quality.yml`)**: 정적 분석 및 테스트 커버리지 측정
+- **코드 품질 (`code-quality.yml`)**: 정적 분석 및 테스트
+- **PR 알림 (`pr-notification.yml`)**: PR 상태 변경 시 알림
 
 ### 사용 방법
 
@@ -21,17 +22,13 @@ GitHub Actions 탭에서 `Version Bump` 워크플로우를 수동으로 실행�
 
 #### 배포
 1. 버전 업데이트 후 생성된 태그(v*)가 푸시되면 `Flutter CD` 워크플로우가 자동으로 실행됩니다.
-2. 배포 워크플로우는 APK 및 App Bundle을 빌드하고 설정된 배포 채널(Firebase, TestFlight 등)에 업로드합니다.
+2. 배포 워크플로우는 APK 및 App Bundle을 빌드하고 GitHub Releases에 업로드합니다.
 
 #### 필요한 비밀값 설정
 다음 비밀값들을 GitHub 저장소 Settings > Secrets and variables > Actions에 추가해야 합니다:
 
 - `GH_PAT`: GitHub Personal Access Token (버전 업데이트 푸시용)
-- `FIREBASE_APP_ID`: Firebase 앱 ID
-- `FIREBASE_TOKEN`: Firebase CLI 토큰
-- `FASTLANE_USER`: Apple ID
-- `FASTLANE_PASSWORD`: Apple ID 비밀번호
-- `MATCH_PASSWORD`: Fastlane Match 암호화 비밀번호
+- `DISCORD_WEBHOOK`: 디스코드 알림을 위한 웹훅 URL
 
 ## 설정 방법
 
@@ -48,3 +45,14 @@ flutter pub get
 ```bash
 flutter run
 ```
+
+## 디스코드 알림 설정
+
+디스코드 알림을 설정하려면:
+
+1. 디스코드 서버에서 '서버 설정' > '연동' > '웹훅' 메뉴로 이동
+2. '새 웹훅' 버튼 클릭
+3. 웹훅 이름과 아이콘 설정
+4. 생성된 웹훅 URL 복사
+5. GitHub 저장소의 Settings > Secrets and variables > Actions에서 'New repository secret' 클릭
+6. 이름: `DISCORD_WEBHOOK`, 값: 복사한 웹훅 URL 입력

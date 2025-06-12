@@ -109,12 +109,21 @@ jobs:
           channel: 'stable'
           cache: true
       
+      # Ruby 설정 및 xcodeproj 설치
+      - name: Setup Ruby and required gems
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.2'
+          bundler-cache: true
+      
+      - name: Install required gems
+        run: gem install xcodeproj
+      
       - name: Install dependencies
         run: flutter pub get
         
       - name: Build iOS
-        run: |
-          flutter build ios --release --no-codesign
+        run: flutter build ios --release --no-codesign
           
       - name: Upload iOS build
         uses: actions/upload-artifact@v3

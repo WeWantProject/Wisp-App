@@ -31,6 +31,32 @@ jobs:
       
       - name: Check for outdated dependencies
         run: flutter pub outdated
+      
+      - name: Discord notification - Quality Check Success
+        if: success()
+        uses: sarisia/actions-status-discord@v1
+        with:
+          webhook: ${{ secrets.DISCORD_WEBHOOK }}
+          title: "✅ 코드 품질 검사 성공"
+          description: |
+            저장소: ${{ github.repository }}
+            브랜치: ${{ github.ref_name }}
+            
+            코드 품질 검사가 성공적으로 완료되었습니다.
+          color: 0x43B581
+      
+      - name: Discord notification - Quality Check Failure
+        if: failure()
+        uses: sarisia/actions-status-discord@v1
+        with:
+          webhook: ${{ secrets.DISCORD_WEBHOOK }}
+          title: "❌ 코드 품질 검사 실패"
+          description: |
+            저장소: ${{ github.repository }}
+            브랜치: ${{ github.ref_name }}
+            
+            코드 품질 검사에 실패했습니다. 자세한 내용은 GitHub Actions 로그를 확인하세요.
+          color: 0xF04747
   
   test_coverage:
     name: Test Coverage
@@ -44,15 +70,33 @@ jobs:
           cache: true
       
       - name: Install dependencies
-        run: |
-          flutter pub get
-          flutter pub global activate coverage
+        run: flutter pub get
       
-      - name: Run tests with coverage
-        run: flutter test --coverage
+      - name: Run tests
+        run: flutter test
       
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v3
+      - name: Discord notification - Test Success
+        if: success()
+        uses: sarisia/actions-status-discord@v1
         with:
-          file: coverage/lcov.info
-          fail_ci_if_error: false 
+          webhook: ${{ secrets.DISCORD_WEBHOOK }}
+          title: "✅ 테스트 성공"
+          description: |
+            저장소: ${{ github.repository }}
+            브랜치: ${{ github.ref_name }}
+            
+            모든 테스트가 성공적으로 통과했습니다.
+          color: 0x43B581
+      
+      - name: Discord notification - Test Failure
+        if: failure()
+        uses: sarisia/actions-status-discord@v1
+        with:
+          webhook: ${{ secrets.DISCORD_WEBHOOK }}
+          title: "❌ 테스트 실패"
+          description: |
+            저장소: ${{ github.repository }}
+            브랜치: ${{ github.ref_name }}
+            
+            테스트에 실패했습니다. 자세한 내용은 GitHub Actions 로그를 확인하세요.
+          color: 0xF04747 
