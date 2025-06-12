@@ -2,7 +2,7 @@ name: Flutter CI/CD
 
 on:
   push:
-    branches: [ main, develop ]
+    branches: [ main ]
   pull_request:
     branches: [ main, develop ]
 
@@ -10,6 +10,8 @@ jobs:
   flutter_test_and_build:
     name: Test, Analyze, and Build
     runs-on: ubuntu-latest
+    # PR이 없는 일반 푸시의 경우 특정 커밋 메시지에만 CI 실행
+    if: github.event_name == 'pull_request' || contains(github.event.head_commit.message, '[CI]')
     steps:
       - uses: actions/checkout@v3
       - uses: subosito/flutter-action@v2
@@ -49,16 +51,26 @@ jobs:
         if: always()
         run: |
           if [ -n "${{ secrets.DISCORD_WEBHOOK }}" ]; then
+            # 서버 URL 변수 설정
+            SERVER_URL="${{ github.server_url }}"
+            
+            # 이벤트 타입에 따른 추가 정보
+            if [ "${{ github.event_name }}" == "pull_request" ]; then
+              EVENT_INFO="PR #${{ github.event.number }}: [${{ github.event.pull_request.title }}](${{ github.event.pull_request.html_url }})"
+            else
+              EVENT_INFO="커밋: [${{ github.event.head_commit.message }}]($SERVER_URL/${{ github.repository }}/commit/${{ github.sha }})"
+            fi
+            
             curl -H "Content-Type: application/json" -X POST -d '{
               "embeds": [
                 {
                   "title": "${{ job.status == 'success' && '✅ CI/CD 파이프라인 성공' || '❌ CI/CD 파이프라인 실패' }}",
-                  "description": "${{ job.status == 'success' && '모든 작업이 성공적으로 완료되었습니다! 🎉' || 'GitHub Actions 로그를 확인해주세요. 🔍' }}",
+                  "description": "'"$EVENT_INFO"'\n\n${{ job.status == 'success' && '모든 작업이 성공적으로 완료되었습니다! 🎉' || 'GitHub Actions 로그를 확인해주세요. 🔍' }}",
                   "color": ${{ job.status == 'success' && '5763719' || '15548997' }},
                   "fields": [
                     {
                       "name": "📦 저장소",
-                      "value": "[${{ github.repository }}](${{ github.server_url }}/${{ github.repository }})",
+                      "value": "[${{ github.repository }}]($SERVER_URL/${{ github.repository }})",
                       "inline": true
                     },
                     {
@@ -68,14 +80,14 @@ jobs:
                     },
                     {
                       "name": "👤 실행자",
-                      "value": "[${{ github.actor }}](${{ github.server_url }}/${{ github.actor }})",
+                      "value": "[${{ github.actor }}]($SERVER_URL/${{ github.actor }})",
                       "inline": true
                     }
                   ],
                   "footer": {
                     "text": "Flutter CI/CD 알림"
                   },
-                  "timestamp": "$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+                  "timestamp": "'"$(date -u +%Y-%m-%dT%H:%M:%SZ)"'"
                 }
               ]
             }' ${{ secrets.DISCORD_WEBHOOK }}
