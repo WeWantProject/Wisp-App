@@ -1,18 +1,11 @@
 ---
 name: "\U0001F4DD TODO"
-about: Suggest an idea for this project
+about: "--- name: \"Todo\" about: \"해야할 것이 있나요??\U0001F914\" title: \"[TODO] \" labels:
+  할일 assignees: \"\" ---"
 title: ''
 labels: ''
 assignees: aiden30015
 
----
-
----
-name: "Todo"
-about: "해야할 것이 있나요??🤔"
-title: "[TODO] "
-labels: 할일
-assignees: ""
 ---
 
 ## Describe
