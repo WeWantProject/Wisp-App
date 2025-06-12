@@ -47,15 +47,11 @@ jobs:
       # 디스코드 알림 (하나로 통합)
       - name: Discord notification
         if: always()
-        uses: Ilshidur/action-discord@master
-        env:
-          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
-        with:
-          args: |
-            **${{ job.status == 'success' && '✅ CI/CD 성공' || '❌ CI/CD 실패' }}**
-            **저장소:** ${{ github.repository }}
-            **브랜치:** ${{ github.ref_name }}
-            **커밋:** ${{ github.event.after }}
-            **실행자:** ${{ github.actor }}
-            
-            ${{ job.status == 'success' && '모든 작업이 성공적으로 완료되었습니다.' || 'GitHub Actions 로그를 확인해주세요.' }} 
+        run: |
+          if [ -n "${{ secrets.DISCORD_WEBHOOK }}" ]; then
+            curl -H "Content-Type: application/json" -X POST -d '{
+              "content": "**${{ job.status == 'success' && '✅ CI/CD 성공' || '❌ CI/CD 실패' }}**\n**저장소:** ${{ github.repository }}\n**브랜치:** ${{ github.ref_name }}\n**실행자:** ${{ github.actor }}\n\n${{ job.status == 'success' && '모든 작업이 성공적으로 완료되었습니다.' || 'GitHub Actions 로그를 확인해주세요.' }}"
+            }' ${{ secrets.DISCORD_WEBHOOK }}
+          else
+            echo "::warning::Discord webhook URL is not set. Skipping notification."
+          fi 
