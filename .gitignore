@@ -43,3 +43,22 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# 민감한 정보가 포함된 파일들
+**/google-services.json
+**/GoogleService-Info.plist
+**/key.properties
+**/*.jks
+**/*.p8
+**/*.p12
+**/play-store-credentials.json
+**/firebase-service-account.json
+**/fastlane/report.xml
+**/fastlane/.env.*
+**/ios/Runner/GoogleService-Info.plist
+
+# iOS/XCode related
+**/ios/Runner/GoogleService-Info.plist
+
+# Web related
+**/ios/Runner/GoogleService-Info.plist

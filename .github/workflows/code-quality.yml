@@ -1,0 +1,58 @@
+name: Code Quality
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+  schedule:
+    - cron: '0 0 * * 0'  # 매주 일요일 자정에 실행
+
+jobs:
+  static_analysis:
+    name: Static Analysis
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.19.3'
+          channel: 'stable'
+          cache: true
+      
+      - name: Install dependencies
+        run: flutter pub get
+      
+      - name: Verify formatting
+        run: dart format --output=none --set-exit-if-changed .
+      
+      - name: Analyze project source
+        run: flutter analyze
+      
+      - name: Check for outdated dependencies
+        run: flutter pub outdated
+  
+  test_coverage:
+    name: Test Coverage
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.19.3'
+          channel: 'stable'
+          cache: true
+      
+      - name: Install dependencies
+        run: |
+          flutter pub get
+          flutter pub global activate coverage
+      
+      - name: Run tests with coverage
+        run: flutter test --coverage
+      
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          file: coverage/lcov.info
+          fail_ci_if_error: false 

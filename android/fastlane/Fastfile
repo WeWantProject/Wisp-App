@@ -1,0 +1,44 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+default_platform(:android)
+
+platform :android do
+  desc "Submit a new Beta Build to Firebase App Distribution"
+  lane :deploy_to_firebase do
+    # Firebase App Distribution에 배포
+    # 실제 사용 시 Firebase 프로젝트 설정 필요
+    firebase_app_distribution(
+      app: ENV["FIREBASE_APP_ID"],
+      firebase_cli_token: ENV["FIREBASE_TOKEN"],
+      release_notes: "Flutter 앱 테스트 배포",
+      groups: "testers"
+    )
+  end
+
+  desc "Deploy a new version to the Google Play"
+  lane :deploy_to_play_store do
+    # Google Play 스토어에 배포
+    # 실제 사용 시 Google Play 계정 설정 필요
+    upload_to_play_store(
+      track: 'internal',
+      aab: '../build/app/outputs/bundle/release/app-release.aab',
+      skip_upload_metadata: true,
+      skip_upload_images: true,
+      skip_upload_screenshots: true,
+      release_status: 'draft'
+    )
+  end
+end 
