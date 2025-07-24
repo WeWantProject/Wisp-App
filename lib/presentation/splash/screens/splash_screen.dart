@@ -5,9 +5,10 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:wisp/core/config/constans/base_scoffold.dart';
-import 'package:wisp/core/config/constans/colors.dart';
 
 class SplashScreen extends HookWidget {
+  const SplashScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
 
@@ -34,8 +35,9 @@ class SplashScreen extends HookWidget {
 
     useEffect(() {
       Timer(const Duration(seconds: 5), () {
-      context.pushReplacement('/login');
+      context.pushReplacement('/auth');
       });
+      return null;
     }, []);
 
     return BaseScoffold(
@@ -73,7 +75,7 @@ class SplashScreen extends HookWidget {
                     return Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 4.0),
                     child: AnimatedSlide(
-                      offset: isSeleted ? Offset(0, -0.5) : Offset.zero,
+                      offset: isSeleted ? const Offset(0, -0.5) : Offset.zero,
                       duration: const Duration(milliseconds: 300),
                       curve: Curves.easeInOut,
                       child: CircleAvatar(
