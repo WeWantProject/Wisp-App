@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:wisp/core/config/constans/base_scoffold.dart';
 import 'package:wisp/core/config/constans/colors.dart';
 
 class SplashScreen extends HookWidget {
@@ -37,22 +38,8 @@ class SplashScreen extends HookWidget {
       });
     }, []);
 
-    return Scaffold(
-      body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              WispColors.nightBlack,
-              WispColors.deepBlue1,
-              WispColors.deepBlue2,
-              WispColors.deepBlue3,
-              WispColors.deepPurple,
-            ],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ),
-        ),
-        child: Center(
+    return BaseScoffold(
+      child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -112,7 +99,6 @@ class SplashScreen extends HookWidget {
             ],
           ),
         ),
-      ),
     );
   }
 }
