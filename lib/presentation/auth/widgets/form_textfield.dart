@@ -8,14 +8,19 @@ class FormTextfield extends HookWidget {
   final TextEditingController controller;
   final IconData leadingIcon;
   final bool isPassword;
+  final FocusNode focusNode;
+  final TextInputType keyboardType;
 
-  const FormTextfield({
+  const FormTextfield(
+    {
     super.key,
     required this.hintText,
     required this.labelText,
     required this.controller,
     required this.leadingIcon,
     this.isPassword = false,
+    this.keyboardType = TextInputType.text,
+    required this.focusNode,
   });
 
   @override
@@ -40,6 +45,8 @@ class FormTextfield extends HookWidget {
         TextField(
           onChanged: (value) => controller.text = value,
           obscureText: obscureText.value,
+          focusNode: focusNode,
+          keyboardType: keyboardType,
           controller: controller,
           decoration: InputDecoration(
             border: OutlineInputBorder(
