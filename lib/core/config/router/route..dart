@@ -1,12 +1,12 @@
-import 'package:go_router/go_router.dart';
 import 'package:injectable/injectable.dart';
 import 'package:wisp/main.dart';
-import 'package:wisp/presentation/login/screens/login_screen.dart';
+import 'package:wisp/presentation/auth/screens/auth_screen.dart';
 import 'package:wisp/presentation/splash/screens/splash_screen.dart';
+import 'package:go_router/go_router.dart';
 
 class RouterPaths {
   static const String splash = '/splash';
-  static const String login = '/login';
+  static const String auth = '/auth';
   static const String main = '/';
 }
 
@@ -16,11 +16,11 @@ class AppRouter {
     routes: [
       GoRoute(
         path: RouterPaths.splash,
-        builder: (context, state) => SplashScreen(),
+        builder: (context, state) => const SplashScreen(),
       ),
       GoRoute(
-        path: RouterPaths.login,
-        builder: (context, state) => const LoginScreen(),
+        path: RouterPaths.auth,
+        builder: (context, state) => const AuthScreen(),
       ),
       GoRoute(
         path: RouterPaths.main,
