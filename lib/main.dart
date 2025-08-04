@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:wisp/core/config/constans/theme.dart';
 import 'package:wisp/core/config/di/injection.dart';
 import 'package:wisp/core/config/router/route..dart';
@@ -18,18 +17,14 @@ class Wisp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ScreenUtilInit(
-      builder: (context, child) {
-        return MaterialApp.router(
+    return MaterialApp.router(
           routerDelegate: AppRouter.router.routerDelegate,
           routeInformationParser: AppRouter.router.routeInformationParser,
           routeInformationProvider: AppRouter.router.routeInformationProvider,
           debugShowCheckedModeBanner: false,
           theme: wispTheme,
         );
-      },
-    );
-  }
+      }
 }
 
 class Main extends StatefulWidget {
