@@ -1,8 +1,8 @@
+import 'package:go_router/go_router.dart';
 import 'package:injectable/injectable.dart';
 import 'package:wisp/main.dart';
 import 'package:wisp/presentation/auth/screens/auth_screen.dart';
 import 'package:wisp/presentation/splash/screens/splash_screen.dart';
-import 'package:go_router/go_router.dart';
 
 class RouterPaths {
   static const String splash = '/splash';
