@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:wisp/core/config/constans/theme.dart';
+import 'package:wisp/core/config/constants/theme.dart';
 
 class BaseScaffold extends StatelessWidget {
   final Widget child;

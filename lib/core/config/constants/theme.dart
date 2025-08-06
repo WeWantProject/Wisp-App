@@ -1,7 +1,7 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
-import 'package:wisp/core/config/constans/colors.dart';
+import 'package:wisp/core/config/constants/colors.dart';
 
 ThemeData wispTheme = ThemeData(
   useMaterial3: true,
