@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import 'package:wisp/core/config/constans/colors.dart';
 
@@ -37,16 +39,26 @@ class GradientTheme extends ThemeExtension<GradientTheme> {
   @override
   GradientTheme lerp(ThemeExtension<GradientTheme>? other, double t) {
     if (other is! GradientTheme) return this;
+
+    final thisColors = backgroundGradient.colors;  
+    final otherColors = other.backgroundGradient.colors;  
+    final minLength = math.min(
+      backgroundGradient.colors.length,
+      other.backgroundGradient.colors.length,
+    );
+
     return GradientTheme(
       backgroundGradient: LinearGradient(
         colors: List.generate(
-          backgroundGradient.colors.length,
+          minLength,
           (index) => Color.lerp(
-            backgroundGradient.colors[index],
-            other.backgroundGradient.colors[index],
+            thisColors[index],
+            otherColors[index],
             t,
           )!,
         ),
+        begin: Alignment.lerp(backgroundGradient.begin as Alignment?, other.backgroundGradient.begin as Alignment?, t) ?? Alignment.topLeft,  
+        end: Alignment.lerp(backgroundGradient.end as Alignment?, other.backgroundGradient.end as Alignment?, t) ?? Alignment.bottomRight,  
       ),
     );
   }
