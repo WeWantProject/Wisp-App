@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:wisp/core/config/constans/base_scoffold.dart';
+import 'package:wisp/core/config/constans/base_scaffold.dart';
 import 'package:wisp/core/config/constans/colors.dart';
 import 'package:wisp/presentation/auth/controller/auth_controller.dart';
 import 'package:wisp/presentation/auth/login/controller/login_controller.dart';
@@ -23,7 +23,7 @@ class AuthScreen extends HookConsumerWidget {
     final phoneNumberFocusNode = useFocusNode();
     final passwordFocusNode = useFocusNode();
 
-    return BaseScoffold(
+    return BaseScaffold(
       child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

@@ -1,10 +1,9 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:wisp/core/config/constans/base_scoffold.dart';
+import 'package:wisp/core/config/constans/base_scaffold.dart';
 
 class SplashScreen extends HookWidget {
   const SplashScreen({super.key});
@@ -40,7 +39,7 @@ class SplashScreen extends HookWidget {
       return null;
     }, []);
 
-    return BaseScoffold(
+    return BaseScaffold(
       child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
