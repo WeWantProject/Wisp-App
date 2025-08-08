@@ -8,18 +8,20 @@ on:
 
 jobs:
   flutter_test_and_build:
-    name: Test, Analyze, and Build
     runs-on: ubuntu-latest
     if: github.event_name == 'pull_request' || contains(github.event.head_commit.message, '[CI]')
     steps:
       - uses: actions/checkout@v3
 
-      # ✅ Flutter 수동 설치 (Flutter 3.22.1 with Dart 3.6.0)
-      - name: Install Flutter (3.22.1)
-        run: |
-          git clone https://github.com/flutter/flutter.git --depth 1 -b 3.22.1
-          echo "$GITHUB_WORKSPACE/flutter/bin" >> $GITHUB_PATH
-          flutter --version
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.22.3'   # 최신 안정 버전 추천
+          channel: 'stable'
+          cache: true
+
+      - name: Check Flutter and Dart version
+        run: flutter --version
 
       - name: Install dependencies
         run: flutter pub get
@@ -87,4 +89,4 @@ jobs:
             }' ${{ secrets.DISCORD_WEBHOOK }}
           else
             echo "::warning::Discord webhook URL is not set. Skipping notification."
-          fi 
+          fi
