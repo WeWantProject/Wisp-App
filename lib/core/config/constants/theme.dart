@@ -57,8 +57,8 @@ class GradientTheme extends ThemeExtension<GradientTheme> {
             t,
           )!,
         ),
-        begin: Alignment.lerp(backgroundGradient.begin as Alignment?, other.backgroundGradient.begin as Alignment?, t) ?? Alignment.topLeft,  
-        end: Alignment.lerp(backgroundGradient.end as Alignment?, other.backgroundGradient.end as Alignment?, t) ?? Alignment.bottomRight,  
+          begin: AlignmentGeometry.lerp(backgroundGradient.begin, other.backgroundGradient.begin, t) ?? Alignment.topLeft,  
+          end: AlignmentGeometry.lerp(backgroundGradient.end, other.backgroundGradient.end, t) ?? Alignment.bottomRight, 
       ),
     );
   }
