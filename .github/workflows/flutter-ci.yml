@@ -19,7 +19,9 @@ jobs:
           flutter-version: '3.22.0'
           channel: 'stable'
           cache: true
-      
+            
+      - name: Check Flutter and Dart version
+        run: flutter --version
       # 기본 설정 및 테스트
       - name: Install dependencies
         run: flutter pub get
@@ -31,9 +33,6 @@ jobs:
       - name: Run tests
         run: flutter test
         continue-on-error: true
-      
-      - name: Check Flutter and Dart version
-        run: flutter --version
       
       # Android 빌드 (main 브랜치에 푸시된 경우만)
       - name: Build Android APK
