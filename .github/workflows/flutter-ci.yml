@@ -8,36 +8,37 @@ on:
 
 jobs:
   flutter_test_and_build:
-    name: Test, Analyze, and Build
     runs-on: ubuntu-latest
-    # PR이 없는 일반 푸시의 경우 특정 커밋 메시지에만 CI 실행
     if: github.event_name == 'pull_request' || contains(github.event.head_commit.message, '[CI]')
     steps:
       - uses: actions/checkout@v3
-      - uses: subosito/flutter-action@v2
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.22.0'
+          flutter-version: '3.29.0' 
           channel: 'stable'
           cache: true
-      
-      # 기본 설정 및 테스트
+
+      - name: Check Flutter and Dart version
+        run: flutter --version
+
       - name: Install dependencies
         run: flutter pub get
-        
+
       - name: Analyze project source
         run: flutter analyze --no-fatal-infos
         continue-on-error: true
-        
+
       - name: Run tests
         run: flutter test
         continue-on-error: true
-      
-      # Android 빌드 (main 브랜치에 푸시된 경우만)
+
       - name: Build Android APK
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: flutter build apk --release
         continue-on-error: true
-        
+
       - name: Upload APK
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         uses: actions/upload-artifact@v4
@@ -45,22 +46,17 @@ jobs:
           name: release-apk
           path: build/app/outputs/flutter-apk/app-release.apk
           if-no-files-found: warn
-      
-      # 디스코드 알림 (하나로 통합)
+
       - name: Discord notification
         if: always()
         run: |
           if [ -n "${{ secrets.DISCORD_WEBHOOK }}" ]; then
-            # 서버 URL 변수 설정
             SERVER_URL="${{ github.server_url }}"
-            
-            # 이벤트 타입에 따른 추가 정보
             if [ "${{ github.event_name }}" == "pull_request" ]; then
               EVENT_INFO="PR #${{ github.event.number }}: [${{ github.event.pull_request.title }}](${{ github.event.pull_request.html_url }})"
             else
               EVENT_INFO="커밋: [${{ github.event.head_commit.message }}]($SERVER_URL/${{ github.repository }}/commit/${{ github.sha }})"
             fi
-            
             curl -H "Content-Type: application/json" -X POST -d '{
               "embeds": [
                 {
@@ -93,4 +89,4 @@ jobs:
             }' ${{ secrets.DISCORD_WEBHOOK }}
           else
             echo "::warning::Discord webhook URL is not set. Skipping notification."
-          fi 
+          fi
