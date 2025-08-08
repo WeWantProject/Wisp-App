@@ -31,7 +31,7 @@ class AuthScreen extends HookConsumerWidget {
             const LogoSection(),
             const SizedBox(height: 30),
             ToggleAuthButton(
-              isSelected: authState.isLogin,
+              isSelected: authState.isLoginMode,
               onPressed: authNotifier.toggleAuthMode,
             ),
             const SizedBox(height: 20),
@@ -49,19 +49,19 @@ class AuthScreen extends HookConsumerWidget {
                   ),
                 );
               },
-              child: authState.isLogin[0]
+              child: authState.isLoginMode[0]
                   ? LoginForm(
                       phoneNumberFocusNode: phoneNumberFocusNode,
                       passwordFocusNode: passwordFocusNode,
-                      phoneController: notifier.phoneCoontroller,
+                      phoneController: notifier.phoneController,
                       passwordController: notifier.passwordController, 
                       onLogin: () {
-                        if (notifier.isValidPhoneNumber(notifier.phoneCoontroller.text) &&
+                        if (notifier.isValidPhoneNumber(notifier.phoneController.text) &&
                             notifier.isValidPassword(notifier.passwordController.text)) {
                         } else {
-                          if(notifier.phoneCoontroller.text.isEmpty) {
+                          if(notifier.phoneController.text.isEmpty) {
                             phoneNumberFocusNode.requestFocus();
-                          } else if (!notifier.isValidPhoneNumber(notifier.phoneCoontroller.text)) {
+                          } else if (!notifier.isValidPhoneNumber(notifier.phoneController.text)) {
                             phoneNumberFocusNode.requestFocus();
                           } else if (notifier.passwordController.text.isEmpty) {
                             passwordFocusNode.requestFocus();
