@@ -10,9 +10,9 @@ class AuthController extends StateNotifier<AuthState> {
 
   void toggleAuthMode(int index) {
     if (index == 1) {  
-    state = state.copyWith(isLogin: [false, true]);  
+    state = state.copyWith(isLoginMode: [false, true]);  
   } else {  
-    state = state.copyWith(isLogin: [true, false]);  
+    state = state.copyWith(isLoginMode: [true, false]);  
   }  
   }
 }

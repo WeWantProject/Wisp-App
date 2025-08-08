@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:wisp/core/config/constans/colors.dart';
+import 'package:wisp/core/config/constants/colors.dart';
 
 class FormTextfield extends HookWidget {
   final String hintText;

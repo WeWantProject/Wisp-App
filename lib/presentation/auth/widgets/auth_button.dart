@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:wisp/core/config/constans/colors.dart';
+import 'package:wisp/core/config/constants/colors.dart';
 
 class AuthButton extends StatelessWidget {
   final VoidCallback onPressed;
