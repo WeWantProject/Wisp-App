@@ -10,7 +10,7 @@ final loginControllerProvider = StateNotifierProvider<LoginController, LoginStat
 class LoginController extends StateNotifier<LoginState> {
   LoginController() : super(const LoginState());
 
-  final phoneCoontroller = TextEditingController();
+  final phoneController = TextEditingController();
   final passwordController = TextEditingController();
 
   void toggleLogin() {
