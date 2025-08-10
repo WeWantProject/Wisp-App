@@ -4,8 +4,9 @@ import 'package:wisp/core/config/constants/theme.dart';
 class BaseScaffold extends StatelessWidget {
   final Widget child;
   final AppBar? appBar;
+  final BottomNavigationBar? bottomNavigationBar;
 
-  const BaseScaffold({super.key, required this.child, this.appBar});
+  const BaseScaffold({super.key, required this.child, this.appBar, this.bottomNavigationBar});
 
   @override
   Widget build(BuildContext context) {
@@ -20,6 +21,7 @@ class BaseScaffold extends StatelessWidget {
         ),
         child: child,
       ),
+      bottomNavigationBar: bottomNavigationBar,
     );
   }
 }
