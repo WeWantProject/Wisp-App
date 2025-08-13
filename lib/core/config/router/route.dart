@@ -13,18 +13,20 @@ class AppRouter {
     routes: [
       GoRoute(
         path: '/splash',
+        name: 'splash',
         builder: (context, state) => const SplashScreen(),
       ),
       GoRoute(
         path: '/auth',
+        name: 'auth',
         builder: (context, state) => const AuthScreen(),
       ),
       ShellRoute(
         builder: (context, state, child) {
           PreferredSizeWidget? appBar;
-          if (state.uri.path == '/chat') {
+          if (state.name == '/chat') {
             appBar = const ChatListAppbar();
-          } else if (state.uri.path == '/profile') {
+          } else if (state.name == '/profile') {
             // 프로필 화면 앱바
           }
 
@@ -36,10 +38,12 @@ class AppRouter {
         routes: [
           GoRoute(
             path: '/chat',
+            name: 'chat',
             builder: (context, state) => const ChatListScreen(),
           ),
           GoRoute(
             path: '/profile',
+            name: 'profile',
             builder: (context, state) => const ProfileScreen(),
           ),
         ],
