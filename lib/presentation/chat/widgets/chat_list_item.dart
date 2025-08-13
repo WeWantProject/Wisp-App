@@ -69,9 +69,7 @@ class ChatListItem extends StatelessWidget {
                 Row(
                   children: [
                     Text(
-                      '${lastMessageTime.hour >= 12 ? '오후' : '오전'} ' +
-                          '${(lastMessageTime.hour % 12 == 0) ? 12 : (lastMessageTime.hour % 12)}:' +
-                          '${lastMessageTime.minute.toString().padLeft(2, '0')}',
+                      '${lastMessageTime.hour >= 12 ? '오후' : '오전'} ${(lastMessageTime.hour % 12 == 0) ? 12 : (lastMessageTime.hour % 12)}:${lastMessageTime.minute.toString().padLeft(2, '0')}',
                       style: const TextStyle(
                         fontSize: 12,
                         color: WispColors.lightSkyBlue,
