@@ -25,7 +25,7 @@ class ChatListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        context.go( '/chat/$chatId',);
+        context.go( '/chat/$chatId',); // api 연결시 바꿀 예정
       },
       child: Container(
         padding: const EdgeInsets.all(8),

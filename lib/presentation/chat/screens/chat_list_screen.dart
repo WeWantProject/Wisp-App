@@ -49,6 +49,6 @@ class ChatListScreen extends StatelessWidget {
               unreadMessageCount: 3,
             );
           },
-        ));
+        )); // api 연결시 바꿀 예정
   }
 }
