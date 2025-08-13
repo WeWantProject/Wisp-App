@@ -1,7 +1,9 @@
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:wisp/core/config/widgets/bottom_navigation.dart';
 import 'package:wisp/presentation/auth/screens/auth_screen.dart';
 import 'package:wisp/presentation/chat/screens/chat_list_screen.dart';
+import 'package:wisp/presentation/chat/widgets/chat_list_appbar.dart';
 import 'package:wisp/presentation/profile/screens/profile_screen.dart';
 import 'package:wisp/presentation/splash/screens/splash_screen.dart';
 
@@ -19,7 +21,17 @@ class AppRouter {
       ),
       ShellRoute(
         builder: (context, state, child) {
-          return BottomNavigation(child: child);
+          PreferredSizeWidget? appBar;
+          if (state.uri.toString() == '/chat') {
+            appBar = const ChatListAppbar();
+          } else if (state.uri.toString() == '/profile') {
+            // 프로필 화면 앱바
+          }
+
+          return BottomNavigation(
+            appBar: appBar,
+            child: child,
+          );
         },
         routes: [
           GoRoute(

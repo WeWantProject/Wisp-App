@@ -36,24 +36,21 @@ class ChatListScreen extends StatelessWidget {
       '새로운 음악 추천해 주세요.'
     ];
 
-    return BaseScaffold(
-      appBar: const ChatListAppbar(),
-      child: Center(
-          child: ListView.builder(
-            shrinkWrap: true,
-            itemCount: 10,
-            itemBuilder: (context, index) {
-              return ChatListItem(
-                chatName: chatList[index],
-                lastMessage: lastMessageList[index],
-                isOnline: true,
-                lastMessageTime: DateTime.now(),
-                avatarUrl: '',
-                chatId: '', 
-                unreadMessageCount: 3,
-              );
-            },
-          )),
-    );
+    return Center(
+        child: ListView.builder(
+          shrinkWrap: true,
+          itemCount: 10,
+          itemBuilder: (context, index) {
+            return ChatListItem(
+              chatName: chatList[index],
+              lastMessage: lastMessageList[index],
+              isOnline: true,
+              lastMessageTime: DateTime.now(),
+              avatarUrl: '',
+              chatId: '', 
+              unreadMessageCount: 3,
+            );
+          },
+        ));
   }
 }

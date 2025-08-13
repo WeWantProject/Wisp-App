@@ -5,8 +5,13 @@ import 'package:wisp/core/config/constants/colors.dart';
 
 class BottomNavigation extends StatefulWidget {
   final Widget child;
+  final PreferredSizeWidget? appBar;
 
-  const BottomNavigation({super.key, required this.child});
+  const BottomNavigation({
+    super.key,
+    required this.child,
+    this.appBar,
+  });
 
   @override
   State<BottomNavigation> createState() => _BottomNavigationState();
@@ -16,13 +21,14 @@ class _BottomNavigationState extends State<BottomNavigation> {
   int _currentIndex = 0;
 
   final _tabs = [
-    'chat',
-    'profile',
+    '/chat',
+    '/profile',
   ];
 
   @override
   Widget build(BuildContext context) {
     return BaseScaffold(
+      appBar: widget.appBar,
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: WispColors.deepBlue3,
         currentIndex: _currentIndex,
