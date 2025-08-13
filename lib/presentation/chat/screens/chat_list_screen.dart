@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:wisp/core/config/constants/base_scaffold.dart';
-import 'package:wisp/presentation/chat/widgets/chat_list_appbar.dart';
 import 'package:wisp/presentation/chat/widgets/chat_list_item.dart';
 
 class ChatListScreen extends StatelessWidget {
