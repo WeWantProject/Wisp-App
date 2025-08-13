@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:wisp/core/config/constants/base_scaffold.dart';
 import 'package:wisp/core/config/constants/colors.dart';
@@ -56,19 +57,7 @@ class AuthScreen extends HookConsumerWidget {
                       phoneController: notifier.phoneController,
                       passwordController: notifier.passwordController, 
                       onLogin: () {
-                        if (notifier.isValidPhoneNumber(notifier.phoneController.text) &&
-                            notifier.isValidPassword(notifier.passwordController.text)) {
-                        } else {
-                          if(notifier.phoneController.text.isEmpty) {
-                            phoneNumberFocusNode.requestFocus();
-                          } else if (!notifier.isValidPhoneNumber(notifier.phoneController.text)) {
-                            phoneNumberFocusNode.requestFocus();
-                          } else if (notifier.passwordController.text.isEmpty) {
-                            passwordFocusNode.requestFocus();
-                          } else if (!notifier.isValidPassword(notifier.passwordController.text)) {
-                            passwordFocusNode.requestFocus();
-                          }
-                        }
+                        context.go('/chat');
                       },
                     )
                   : SignupForm(
