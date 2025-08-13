@@ -25,7 +25,9 @@ class ChatListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        context.go( '/chat/$chatId',); // api 연결시 바꿀 예정
+        context.go(
+          '/chat/$chatId',
+        ); // api 연결시 바꿀 예정
       },
       child: Container(
         padding: const EdgeInsets.all(8),
@@ -67,7 +69,9 @@ class ChatListItem extends StatelessWidget {
                 Row(
                   children: [
                     Text(
-                      '${lastMessageTime.hour > 12 ? '오후' : '오전'} ${lastMessageTime.hour}:${lastMessageTime.minute.toString().padLeft(2, '0')}',
+                      '${lastMessageTime.hour >= 12 ? '오후' : '오전'} ' +
+                          '${(lastMessageTime.hour % 12 == 0) ? 12 : (lastMessageTime.hour % 12)}:' +
+                          '${lastMessageTime.minute.toString().padLeft(2, '0')}',
                       style: const TextStyle(
                         fontSize: 12,
                         color: WispColors.lightSkyBlue,
@@ -89,12 +93,12 @@ class ChatListItem extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 5),
-                if(isOnline)
+                if (isOnline)
                   const Icon(
                     Icons.circle,
                     color: Colors.green,
                     size: 8,
-                )
+                  )
               ],
             ),
           ],
