@@ -22,9 +22,9 @@ class AppRouter {
       ShellRoute(
         builder: (context, state, child) {
           PreferredSizeWidget? appBar;
-          if (state.uri.toString() == '/chat') {
+          if (state.uri.path == '/chat') {
             appBar = const ChatListAppbar();
-          } else if (state.uri.toString() == '/profile') {
+          } else if (state.uri.path == '/profile') {
             // 프로필 화면 앱바
           }
 
