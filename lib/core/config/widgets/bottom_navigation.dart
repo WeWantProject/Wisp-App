@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:wisp/core/config/constants/base_scaffold.dart';
 import 'package:wisp/core/config/constants/colors.dart';
-import 'package:wisp/core/config/constants/theme.dart';
 
 class BottomNavigation extends StatefulWidget {
   final Widget child;
@@ -21,17 +20,14 @@ class _BottomNavigationState extends State<BottomNavigation> {
     'profile',
   ];
 
-  final backgroundColor =
-      wispTheme.extension<GradientTheme>()?.backgroundGradient.colors.first;
-
   @override
   Widget build(BuildContext context) {
     return BaseScaffold(
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: backgroundColor,
+        backgroundColor: WispColors.deepBlue3,
         currentIndex: _currentIndex,
         selectedItemColor: Colors.white,
-        unselectedItemColor: WispColors.deepBlue3,
+        unselectedItemColor: WispColors.grey,
         onTap: (index) {
           setState(() {
             _currentIndex = index;
