@@ -57,7 +57,7 @@ class AuthScreen extends HookConsumerWidget {
                       phoneController: notifier.phoneController,
                       passwordController: notifier.passwordController, 
                       onLogin: () {
-                        context.go('/chat');
+                        context.go('/main');
                       },
                     )
                   : SignupForm(
