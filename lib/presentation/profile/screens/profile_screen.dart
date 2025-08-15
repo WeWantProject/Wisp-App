@@ -14,18 +14,17 @@ class ProfileScreen extends StatelessWidget {
     return SafeArea(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-        child: Center(
-          child: Column(
-            children: [
-              ProfileTop(userName: userName, statusMessage: statusMessage),
-              const SizedBox(height: 20),
-              const Expanded(
-                child: SingleChildScrollView(
-                  child: ProfileBottom(),
-                ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch, 
+          children: [
+            ProfileTop(userName: userName, statusMessage: statusMessage),
+            const SizedBox(height: 20),
+            const Expanded(
+              child: SingleChildScrollView(
+                child: ProfileBottom(),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
