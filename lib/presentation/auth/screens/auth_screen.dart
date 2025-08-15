@@ -6,9 +6,9 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:wisp/core/config/constants/base_scaffold.dart';
 import 'package:wisp/core/config/constants/colors.dart';
 import 'package:wisp/presentation/auth/controller/auth_controller.dart';
-import 'package:wisp/presentation/auth/login/controller/login_controller.dart';
-import 'package:wisp/presentation/auth/login/widgets/login_form.dart';
-import 'package:wisp/presentation/auth/signup/widgets/signup_form.dart';
+import 'package:wisp/presentation/auth/controller/login_controller.dart';
+import 'package:wisp/presentation/auth/widgets/login_form.dart';
+import 'package:wisp/presentation/auth/widgets/signup_form.dart';
 
 class AuthScreen extends HookConsumerWidget {
   const AuthScreen({super.key});

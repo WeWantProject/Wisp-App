@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:wisp/presentation/auth/login/state/login_state.dart';
+import 'package:wisp/presentation/auth/state/login_state.dart';
 
 final loginControllerProvider = StateNotifierProvider<LoginController, LoginState>(
   (ref) => LoginController(),
