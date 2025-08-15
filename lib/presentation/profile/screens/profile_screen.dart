@@ -107,10 +107,10 @@ class ProfileBottom extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
+    return Column(
       spacing: 16,
       children: [
-        ProfileItem(
+        const ProfileItem(
           color: Colors.blue,
           title: '계정 설정',
           icon: Icon(
@@ -119,24 +119,53 @@ class ProfileBottom extends StatelessWidget {
           ),
           description: '개인정보 및 보안 설정',
         ),
-        ProfileItem(
+        const ProfileItem(
           color: Colors.amber,
           title: '알림 설정',
           icon: Icon(Icons.notifications, color: Colors.amber),
           description: '알림 및 소리 설정',
         ),
-        ProfileItem(
+        const ProfileItem(
           color: Colors.red,
           title: '친구 초대',
           icon: Icon(Icons.share, color: Colors.red),
           description: 'Wisp을 친구들에게 추천하세요',
         ),
-        ProfileItem(
+        const ProfileItem(
           color: Colors.purple,
           title: '테마 설정',
           icon: Icon(Icons.palette, color: Colors.purple),
           description: '다크/라이트 모드 및 색상',
         ),
+        TextButton(
+          style: TextButton.styleFrom(
+            padding: const EdgeInsets.all(16),
+            backgroundColor: Colors.red.withOpacity(0.1),
+            foregroundColor: Colors.red.shade400,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+              side: BorderSide(
+                color: Colors.red.withOpacity(0.2),
+              ),
+            ),
+          ),
+          onPressed: () {},
+          child: const Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                Icons.logout, 
+                color: Colors.red,
+                size: 20,
+              ),
+              SizedBox(width: 8),
+              Text(
+                ' 로그아웃',
+                style: TextStyle(color: Colors.red, fontSize: 16),
+              )
+            ],
+          ),
+        )
       ],
     );
   }
