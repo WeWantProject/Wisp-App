@@ -27,9 +27,11 @@ class ProfileItem extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
-                color: color[200],
-                borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: color, width: 1.0),
+                color: color.withOpacity(0.1), // bg-red-500/10
+                border: Border.all(
+                  color: color.withOpacity(0.2), // border-red-400/20
+                ),
+                borderRadius: BorderRadius.circular(12), // rounded-xl
               ),
               child: icon,
             ),
