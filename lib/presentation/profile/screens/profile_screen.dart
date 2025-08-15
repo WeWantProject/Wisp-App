@@ -19,7 +19,11 @@ class ProfileScreen extends StatelessWidget {
             children: [
               ProfileTop(userName: userName, statusMessage: statusMessage),
               const SizedBox(height: 20),
-              const SingleChildScrollView(child: ProfileBottom())
+              const Expanded(
+                child: SingleChildScrollView(
+                  child: ProfileBottom(),
+                ),
+              ),
             ],
           ),
         ),
@@ -154,7 +158,7 @@ class ProfileBottom extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(
-                Icons.logout, 
+                Icons.logout,
                 color: Colors.red,
                 size: 20,
               ),
