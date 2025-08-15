@@ -82,30 +82,6 @@ class ProfileTop extends StatelessWidget {
   }
 }
 
-class ProfileTopButton extends StatelessWidget {
-  final Icon icon;
-  final String title;
-
-  const ProfileTopButton({super.key, required this.icon, required this.title});
-
-  @override
-  Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: () {},
-      child: Column(
-        children: [
-          icon,
-          const SizedBox(height: 8),
-          Text(
-            title,
-            style: const TextStyle(color: Colors.white, fontSize: 14),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
 class ProfileBottom extends StatelessWidget {
   const ProfileBottom({super.key});
 
