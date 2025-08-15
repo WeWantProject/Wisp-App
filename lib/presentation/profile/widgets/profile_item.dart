@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class ProfileItem extends StatelessWidget {
   final String title;
@@ -16,22 +17,31 @@ class ProfileItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      onTap: () {
+        context.pushNamed(title);
+      },
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        padding: const EdgeInsets.symmetric(
+          horizontal: 16,
+          vertical: 12,
+        ),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          border: Border.all(color: Colors.blueGrey[700]!, width: 1.0),
+          border: Border.all(
+            color: Colors.blueGrey[700]!,
+            width: 1.0,
+          ),
         ),
         child: Row(
           children: [
             Container(
               padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
-                color: color.withOpacity(0.1), // bg-red-500/10
+                color: color.withOpacity(0.1),
                 border: Border.all(
-                  color: color.withOpacity(0.2), // border-red-400/20
+                  color: color.withOpacity(0.2),
                 ),
-                borderRadius: BorderRadius.circular(12), // rounded-xl
+                borderRadius: BorderRadius.circular(12),
               ),
               child: icon,
             ),
@@ -42,21 +52,25 @@ class ProfileItem extends StatelessWidget {
                 Text(
                   title,
                   style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white),
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
                 ),
                 const SizedBox(height: 4),
                 Text(
                   description,
-                  style: const TextStyle(fontSize: 14, color: Colors.grey),
+                  style: const TextStyle(
+                    fontSize: 14,
+                    color: Colors.grey,
+                  ),
                 ),
               ],
             ),
             const Spacer(),
             const Icon(
-              color: Colors.white,
               Icons.arrow_forward_ios,
+              color: Colors.white,
             ),
           ],
         ),
