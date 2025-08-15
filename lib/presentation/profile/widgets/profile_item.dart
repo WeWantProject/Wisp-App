@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 
-
 class ProfileItem extends StatelessWidget {
   final String title;
   final String description;
   final Widget icon;
-  
+  final MaterialColor color;
 
   const ProfileItem(
       {super.key,
       required this.title,
       required this.icon,
-      required this.description});
+      required this.description,
+      required this.color});
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,15 @@ class ProfileItem extends StatelessWidget {
         ),
         child: Row(
           children: [
-            icon,
+            Container(
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: color[200],
+                borderRadius: BorderRadius.circular(8),
+                border: Border.all(color: color, width: 1.0),
+              ),
+              child: icon,
+            ),
             const SizedBox(width: 16),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -32,20 +40,21 @@ class ProfileItem extends StatelessWidget {
                 Text(
                   title,
                   style: const TextStyle(
-                    fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white),
                 ),
                 const SizedBox(height: 4),
                 Text(
                   description,
-                  style: const TextStyle(
-                    fontSize: 14, color: Colors.grey),
-                ), 
+                  style: const TextStyle(fontSize: 14, color: Colors.grey),
+                ),
               ],
             ),
             const Spacer(),
             const Icon(
-                color: Colors.white,
-                Icons.arrow_forward_ios,
+              color: Colors.white,
+              Icons.arrow_forward_ios,
             ),
           ],
         ),
