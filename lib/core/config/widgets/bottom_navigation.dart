@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:wisp/core/config/constants/base_scaffold.dart';
 import 'package:wisp/core/config/constants/colors.dart';
 import 'package:wisp/presentation/chat/screens/chat_list_screen.dart';
-import 'package:wisp/presentation/chat/widgets/chat_list_appbar.dart';
 import 'package:wisp/presentation/profile/screens/profile_screen.dart';
 import 'package:wisp/presentation/profile/widgets/profile_appbar.dart';
 
