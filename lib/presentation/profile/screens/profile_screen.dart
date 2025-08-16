@@ -66,9 +66,9 @@ class ProfileTop extends StatelessWidget {
             // 프로필 편집 구현 예정
           },
           style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all(WispColors.deepBlue1),
-            side: MaterialStateProperty.all(
-              BorderSide(color: Colors.white, width: 1),
+            backgroundColor: WidgetStateProperty.all(WispColors.deepBlue1),
+            side: WidgetStateProperty.all(
+              const BorderSide(color: Colors.white, width: 1),
             ),
           ),
           child: const Text(
