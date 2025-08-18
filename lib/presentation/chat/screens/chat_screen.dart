@@ -66,6 +66,7 @@ class _ChatMessageList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
+      reverse: true,
       padding: const EdgeInsets.all(16),
       itemBuilder: (context, index) {
         return ChatItem(
