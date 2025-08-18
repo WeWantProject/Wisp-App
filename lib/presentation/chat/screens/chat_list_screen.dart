@@ -35,6 +35,7 @@ class ChatListScreen extends StatelessWidget {
 
     return Center(
         child: ListView.builder(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
       shrinkWrap: true,
       itemCount: 10,
       itemBuilder: (context, index) {
