@@ -316,7 +316,7 @@ class _MessageFooter extends StatelessWidget {
         if (isMe && isRead) ...[
           const SizedBox(width: 5),
           const Icon(
-            Icons.check,
+            Icons.done_all,
             size: 16,
             color: Colors.greenAccent,
           ),
