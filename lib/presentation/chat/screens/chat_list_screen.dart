@@ -7,8 +7,6 @@ class ChatListScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-
     List<String> chatList = [
       '황지훈',
       '김민수',
@@ -37,20 +35,31 @@ class ChatListScreen extends StatelessWidget {
 
     return Center(
         child: ListView.builder(
-          shrinkWrap: true,
-          itemCount: 10,
-          itemBuilder: (context, index) {
-            return ChatListItem(
-              chatName: chatList[index],
-              lastMessage: lastMessageList[index],
-              isOnline: true,
-              lastMessageTime: DateTime.now(),
-              avatarUrl: '',
-              chatId: '', 
-              unreadMessageCount: 3,
+      shrinkWrap: true,
+      itemCount: 10,
+      itemBuilder: (context, index) {
+        return GestureDetector(
+          onTap: () {
+            context.push(
+              '/chat/$index',
+              extra: {
+                'userName': chatList[index],
+                'isOnline': true,
+              },
             );
           },
-        )); // api 연결시 바꿀 예정
+          child: ChatListItem(
+            chatName: chatList[index],
+            lastMessage: lastMessageList[index],
+            isOnline: true,
+            lastMessageTime: DateTime.now(),
+            avatarUrl: '',
+            chatId: '',
+            unreadMessageCount: 3,
+          ),
+        );
+      },
+    )); // api 연결시 바꿀 예정
   }
 }
 
@@ -124,84 +133,77 @@ class ChatListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        context.go(
-          '/chat/$chatId',
-        ); // api 연결시 바꿀 예정
-      },
-      child: Container(
-        padding: const EdgeInsets.all(8),
-        child: Row(
-          children: [
-            const CircleAvatar(
-              radius: 30,
-              child: Icon(
-                Icons.person,
-                size: 40,
-                color: Colors.white,
-              ), // 임시용
-            ),
-            const SizedBox(width: 10),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    chatName,
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
-                  ),
-                  const SizedBox(height: 5),
-                  Text(
-                    lastMessage,
-                    style: const TextStyle(
-                        fontSize: 14, color: WispColors.lightSkyBlue),
-                  ),
-                ],
-              ),
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
+    return Container(
+      padding: const EdgeInsets.all(8),
+      child: Row(
+        children: [
+          const CircleAvatar(
+            radius: 30,
+            child: Icon(
+              Icons.person,
+              size: 40,
+              color: Colors.white,
+            ), // 임시용
+          ),
+          const SizedBox(width: 10),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  children: [
-                    Text(
-                      '${lastMessageTime.hour >= 12 ? '오후' : '오전'} ${(lastMessageTime.hour % 12 == 0) ? 12 : (lastMessageTime.hour % 12)}:${lastMessageTime.minute.toString().padLeft(2, '0')}',
-                      style: const TextStyle(
-                        fontSize: 12,
-                        color: WispColors.lightSkyBlue,
-                      ),
-                    ),
-                    const SizedBox(width: 5),
-                    if (unreadMessageCount > 0)
-                      CircleAvatar(
-                        radius: 10,
-                        backgroundColor: Colors.blue,
-                        child: Text(
-                          unreadMessageCount.toString(),
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 12,
-                          ),
-                        ),
-                      ),
-                  ],
+                Text(
+                  chatName,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
                 ),
                 const SizedBox(height: 5),
-                if (isOnline)
-                  const Icon(
-                    Icons.circle,
-                    color: Colors.green,
-                    size: 8,
-                  )
+                Text(
+                  lastMessage,
+                  style: const TextStyle(
+                      fontSize: 14, color: WispColors.lightSkyBlue),
+                ),
               ],
             ),
-          ],
-        ),
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Row(
+                children: [
+                  Text(
+                    '${lastMessageTime.hour >= 12 ? '오후' : '오전'} ${(lastMessageTime.hour % 12 == 0) ? 12 : (lastMessageTime.hour % 12)}:${lastMessageTime.minute.toString().padLeft(2, '0')}',
+                    style: const TextStyle(
+                      fontSize: 12,
+                      color: WispColors.lightSkyBlue,
+                    ),
+                  ),
+                  const SizedBox(width: 5),
+                  if (unreadMessageCount > 0)
+                    CircleAvatar(
+                      radius: 10,
+                      backgroundColor: Colors.blue,
+                      child: Text(
+                        unreadMessageCount.toString(),
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 12,
+                        ),
+                      ),
+                    ),
+                ],
+              ),
+              const SizedBox(height: 5),
+              if (isOnline)
+                const Icon(
+                  Icons.circle,
+                  color: Colors.green,
+                  size: 8,
+                )
+            ],
+          ),
+        ],
       ),
     );
   }
