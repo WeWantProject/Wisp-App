@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:wisp/core/config/constants/base_scaffold.dart';
 import 'package:wisp/core/config/constants/colors.dart';
 
@@ -16,7 +17,6 @@ class ChatScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     final List<String> messages = [
       '안녕하세요!',
       '오늘 날씨 어때요?',
@@ -77,6 +77,15 @@ class ChatAppbar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       backgroundColor: WispColors.deepBlue1,
       actions: [
+        IconButton(
+          onPressed: () {
+            context.pop();
+          },
+          icon: const Icon(
+            Icons.arrow_back,
+            color: Colors.white,
+          ),
+        ),
         Row(
           children: [
             const CircleAvatar(
@@ -145,23 +154,20 @@ class ChatItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     final screenWidth = MediaQuery.of(context).size.width;
 
     return Align(
       alignment: isMe ? Alignment.centerRight : Alignment.centerLeft,
       child: Container(
-          constraints: BoxConstraints(
-            maxWidth: screenWidth * 0.5,
-            minWidth: 0
-          ),
+          constraints: BoxConstraints(maxWidth: screenWidth * 0.5, minWidth: 0),
           padding: const EdgeInsets.all(10),
           decoration: BoxDecoration(
-            gradient: isMe ? const LinearGradient(
+            gradient: isMe
+                ? const LinearGradient(
                     colors: [Color(0xFF3D7BF6), Color(0xFF8C52FF)],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight)
-                  : null,
+                : null,
             borderRadius: BorderRadius.circular(16),
             border: isMe
                 ? null
