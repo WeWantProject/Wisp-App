@@ -45,18 +45,23 @@ class ChatScreen extends StatelessWidget {
         userName: userName,
         isOnline: isOnline,
       ),
-      child: Center(
-        child: ListView.separated(
-          itemBuilder: (context, index) {
-            return ChatItem(
-              message: messages[index],
-              isRead: index % 2 == 0,
-              isMe: index % 2 == 0,
-            );
-          },
-          separatorBuilder: (context, index) => const SizedBox(height: 10),
-          itemCount: messages.length,
-        ),
+      child: Column(
+        children: [
+          Expanded(
+            child: ListView.separated(
+              itemBuilder: (context, index) {
+                return ChatItem(
+                  message: messages[index],
+                  isRead: index % 2 == 0,
+                  isMe: index % 2 == 0,
+                );
+              },
+              separatorBuilder: (context, index) => const SizedBox(height: 10),
+              itemCount: messages.length,
+            ),
+          ),
+          const ChatTextField(),
+        ],
       ),
     );
   }
@@ -159,7 +164,9 @@ class ChatItem extends StatelessWidget {
     return Align(
       alignment: isMe ? Alignment.centerRight : Alignment.centerLeft,
       child: Container(
-          constraints: BoxConstraints(maxWidth: screenWidth * 0.5, minWidth: 0),
+          constraints: BoxConstraints(
+            maxWidth: screenWidth * 0.5,
+          ),
           padding: const EdgeInsets.all(10),
           decoration: BoxDecoration(
             gradient: isMe
@@ -208,6 +215,82 @@ class ChatItem extends StatelessWidget {
               ],
             ),
           )),
+    );
+  }
+}
+
+class ChatTextField extends StatelessWidget {
+  const ChatTextField({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(10),
+      decoration: const BoxDecoration(
+        border: Border(
+          top: BorderSide(color: WispColors.grey, width: 0.5),
+        ),
+        color: null,
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        spacing: 5,
+        children: [
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(
+              Icons.emoji_emotions_outlined,
+              color: WispColors.lightSkyBlue,
+            ),
+          ),
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(
+              Icons.attach_file,
+              color: WispColors.lightSkyBlue,
+            ),
+          ),
+          Expanded(
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.grey.withOpacity(0.2),
+                border: Border.all(color: WispColors.grey, width: 0.5),
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: const TextField(
+                minLines: 1,
+                maxLines: 10,
+                decoration: InputDecoration(
+                  hintText: '메시지를 입력하세요',
+                  border: InputBorder.none,
+                  contentPadding: EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 10,
+                  ),
+                  hintStyle: TextStyle(
+                    color: WispColors.lightSkyBlue,
+                  ),
+                ),
+              ),
+            ),
+          ),
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(
+              Icons.bolt_outlined,
+              color: Colors.yellow,
+            ),
+          ),
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(
+              Icons.send,
+              color: WispColors.lightSkyBlue,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
