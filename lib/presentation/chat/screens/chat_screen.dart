@@ -48,21 +48,34 @@ class ChatScreen extends StatelessWidget {
       child: Column(
         children: [
           Expanded(
-            child: ListView.separated(
-              itemBuilder: (context, index) {
-                return ChatItem(
-                  message: messages[index],
-                  isRead: index % 2 == 0,
-                  isMe: index % 2 == 0,
-                );
-              },
-              separatorBuilder: (context, index) => const SizedBox(height: 10),
-              itemCount: messages.length,
-            ),
+            child: _ChatMessageList(messages: messages),
           ),
           const ChatTextField(),
         ],
       ),
+    );
+  }
+}
+
+// 메시지 리스트를 별도 위젯으로 분리
+class _ChatMessageList extends StatelessWidget {
+  final List<String> messages;
+
+  const _ChatMessageList({required this.messages});
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.separated(
+      padding: const EdgeInsets.all(16),
+      itemBuilder: (context, index) {
+        return ChatItem(
+          message: messages[index],
+          isRead: index % 2 == 0,
+          isMe: index % 2 == 0,
+        );
+      },
+      separatorBuilder: (context, index) => const SizedBox(height: 12),
+      itemCount: messages.length,
     );
   }
 }
@@ -81,68 +94,134 @@ class ChatAppbar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       backgroundColor: WispColors.deepBlue1,
-      actions: [
-        IconButton(
-          onPressed: () {
-            context.pop();
-          },
-          icon: const Icon(
-            Icons.arrow_back,
-            color: Colors.white,
-          ),
-        ),
-        Row(
-          children: [
-            const CircleAvatar(
-              radius: 20,
-              backgroundColor: Colors.white,
-            ), // api 연결시 받아올 에정
-            const SizedBox(width: 10),
-            Column(
-              children: [
-                Text(
-                  userName,
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
-                ),
-                const SizedBox(height: 5),
-                isOnline
-                    ? const Row(
-                        children: [
-                          Icon(
-                            Icons.circle,
-                            color: Colors.green,
-                            size: 12,
-                          ),
-                          SizedBox(width: 5),
-                          Text(
-                            '온라인',
-                            style: TextStyle(
-                              fontSize: 12,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ],
-                      )
-                    : const SizedBox.shrink(),
-              ],
+      automaticallyImplyLeading: false,
+      title: Row(
+        children: [
+          _BackButton(),
+          const SizedBox(width: 8),
+          const _UserAvatar(),
+          const SizedBox(width: 12),
+          Expanded(
+            child: _UserInfo(
+              userName: userName,
+              isOnline: isOnline,
             ),
-          ],
-        ),
-        const Spacer(),
-        IconButton(
-          onPressed: () {},
-          icon: const Icon(Icons.more_vert),
-        ),
-      ],
+          ),
+          _MoreButton(),
+        ],
+      ),
     );
   }
 
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+}
+
+// AppBar의 뒤로가기 버튼
+class _BackButton extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      onPressed: () => context.pop(),
+      icon: const Icon(
+        Icons.arrow_back,
+        color: Colors.white,
+      ),
+    );
+  }
+}
+
+// 사용자 아바타
+class _UserAvatar extends StatelessWidget {
+  const _UserAvatar();
+
+  @override
+  Widget build(BuildContext context) {
+    return const CircleAvatar(
+      radius: 20,
+      backgroundColor: Colors.white,
+      // api 연결시 받아올 예정
+      child: Icon(
+        Icons.person,
+        color: WispColors.deepBlue1,
+      ),
+    );
+  }
+}
+
+// 사용자 정보 (이름, 온라인 상태)
+class _UserInfo extends StatelessWidget {
+  final String userName;
+  final bool isOnline;
+
+  const _UserInfo({
+    required this.userName,
+    required this.isOnline,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          userName,
+          style: const TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
+        ),
+        if (isOnline) ...[
+          const SizedBox(height: 2),
+          const _OnlineStatus(),
+        ],
+      ],
+    );
+  }
+}
+
+// 온라인 상태 표시
+class _OnlineStatus extends StatelessWidget {
+  const _OnlineStatus();
+
+  @override
+  Widget build(BuildContext context) {
+    return const Row(
+      children: [
+        Icon(
+          Icons.circle,
+          color: Colors.green,
+          size: 12,
+        ),
+        SizedBox(width: 5),
+        Text(
+          '온라인',
+          style: TextStyle(
+            fontSize: 12,
+            color: Colors.white70,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+// AppBar의 더보기 버튼
+class _MoreButton extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      onPressed: () {
+        // TODO: 더보기 메뉴 구현
+      },
+      icon: const Icon(
+        Icons.more_vert,
+        color: Colors.white,
+      ),
+    );
+  }
 }
 
 class ChatItem extends StatelessWidget {
@@ -164,57 +243,85 @@ class ChatItem extends StatelessWidget {
     return Align(
       alignment: isMe ? Alignment.centerRight : Alignment.centerLeft,
       child: Container(
-          constraints: BoxConstraints(
-            maxWidth: screenWidth * 0.5,
-          ),
-          padding: const EdgeInsets.all(10),
-          decoration: BoxDecoration(
-            gradient: isMe
-                ? const LinearGradient(
-                    colors: [Color(0xFF3D7BF6), Color(0xFF8C52FF)],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight)
-                : null,
-            borderRadius: BorderRadius.circular(16),
-            border: isMe
-                ? null
-                : Border.all(
-                    color: Colors.white,
-                    width: 0.7,
-                  ),
-          ),
-          child: IntrinsicWidth(
-            child: Column(
-              crossAxisAlignment:
-                  isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
-              children: [
-                Text(
-                  message,
-                  style: const TextStyle(
-                      color: Colors.white, fontWeight: FontWeight.bold),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    const Text(
-                      '오후 12:30', // 시간은 API로부터 받아올 예정
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: Colors.white70,
-                      ),
-                    ),
-                    const SizedBox(width: 5),
-                    if (isMe && isRead)
-                      const Icon(
-                        Icons.check,
-                        size: 16,
-                        color: WispColors.deepBlue3,
-                      ),
-                  ],
-                )
-              ],
+        constraints: BoxConstraints(
+          maxWidth: screenWidth * 0.75,
+        ),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        decoration: _buildMessageDecoration(),
+        child: Column(
+          crossAxisAlignment: isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              message,
+              style: const TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.w500,
+              ),
             ),
-          )),
+            const SizedBox(height: 4),
+            _MessageFooter(
+              isMe: isMe,
+              isRead: isRead,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  BoxDecoration _buildMessageDecoration() {
+    return BoxDecoration(
+      gradient: isMe
+          ? const LinearGradient(
+              colors: [Color(0xFF3D7BF6), Color(0xFF8C52FF)],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            )
+          : null,
+      color: isMe ? null : WispColors.deepBlue1.withOpacity(0.1),
+      borderRadius: BorderRadius.circular(16),
+      border: isMe
+          ? null
+          : Border.all(
+              color: Colors.white24,
+              width: 0.7,
+            ),
+    );
+  }
+}
+
+// 메시지 하단 정보 (시간, 읽음 표시)
+class _MessageFooter extends StatelessWidget {
+  final bool isMe;
+  final bool isRead;
+
+  const _MessageFooter({
+    required this.isMe,
+    required this.isRead,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Text(
+          '오후 12:30', // 시간은 API로부터 받아올 예정
+          style: TextStyle(
+            fontSize: 12,
+            color: isMe ? Colors.white70 : Colors.white54,
+          ),
+        ),
+        if (isMe && isRead) ...[
+          const SizedBox(width: 5),
+          const Icon(
+            Icons.check,
+            size: 16,
+            color: Colors.greenAccent,
+          ),
+        ],
+      ],
     );
   }
 }
@@ -226,70 +333,112 @@ class ChatTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.all(10),
+      padding: const EdgeInsets.all(16),
       decoration: const BoxDecoration(
         border: Border(
           top: BorderSide(color: WispColors.grey, width: 0.5),
         ),
-        color: null,
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.end,
-        spacing: 5,
         children: [
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Icons.emoji_emotions_outlined,
-              color: WispColors.lightSkyBlue,
-            ),
+          _ActionButton(
+            icon: Icons.emoji_emotions_outlined,
+            onPressed: () {
+              // TODO: 이모지 피커 구현
+            },
           ),
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Icons.attach_file,
-              color: WispColors.lightSkyBlue,
-            ),
+          const SizedBox(width: 8),
+          _ActionButton(
+            icon: Icons.attach_file,
+            onPressed: () {
+              // TODO: 파일 첨부 구현
+            },
           ),
+          const SizedBox(width: 8),
           Expanded(
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.grey.withOpacity(0.2),
-                border: Border.all(color: WispColors.grey, width: 0.5),
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: const TextField(
-                minLines: 1,
-                maxLines: 10,
-                decoration: InputDecoration(
-                  hintText: '메시지를 입력하세요',
-                  border: InputBorder.none,
-                  contentPadding: EdgeInsets.symmetric(
-                    horizontal: 10,
-                    vertical: 10,
-                  ),
-                  hintStyle: TextStyle(
-                    color: WispColors.lightSkyBlue,
-                  ),
-                ),
-              ),
-            ),
+            child: _MessageInputField(),
           ),
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Icons.bolt_outlined,
-              color: Colors.yellow,
-            ),
+          const SizedBox(width: 8),
+          _ActionButton(
+            icon: Icons.bolt_outlined,
+            color: Colors.yellow,
+            onPressed: () {
+              // TODO: 특수 기능 구현
+            },
           ),
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Icons.send,
-              color: WispColors.lightSkyBlue,
-            ),
-          ),
+          const SizedBox(width: 8),
+          _SendButton(),
         ],
+      ),
+    );
+  }
+}
+
+// 액션 버튼 (이모지, 첨부파일, 특수기능)
+class _ActionButton extends StatelessWidget {
+  final IconData icon;
+  final VoidCallback onPressed;
+  final Color? color;
+
+  const _ActionButton({
+    required this.icon,
+    required this.onPressed,
+    this.color = WispColors.lightSkyBlue,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      onPressed: onPressed,
+      icon: Icon(
+        icon,
+        color: color,
+      ),
+    );
+  }
+}
+
+// 메시지 입력 필드
+class _MessageInputField extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.grey.withOpacity(0.2),
+        border: Border.all(color: WispColors.grey, width: 0.5),
+        borderRadius: BorderRadius.circular(24),
+      ),
+      child: const TextField(
+        minLines: 1,
+        maxLines: 5,
+        decoration: InputDecoration(
+          hintText: '메시지를 입력하세요',
+          border: InputBorder.none,
+          contentPadding: EdgeInsets.symmetric(
+            horizontal: 16,
+            vertical: 12,
+          ),
+          hintStyle: TextStyle(
+            color: WispColors.lightSkyBlue,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+// 전송 버튼
+class _SendButton extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      onPressed: () {
+        // TODO: 메시지 전송 구현
+      },
+      icon: const Icon(
+        Icons.send,
+        color: WispColors.lightSkyBlue,
       ),
     );
   }
