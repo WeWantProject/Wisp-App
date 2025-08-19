@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:wisp/core/config/constants/colors.dart';
 import 'package:wisp/presentation/profile/widgets/profile_item.dart';
 
@@ -15,7 +16,7 @@ class ProfileScreen extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch, 
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             ProfileTop(userName: userName, statusMessage: statusMessage),
             const SizedBox(height: 20),
@@ -101,19 +102,29 @@ class ProfileBottom extends StatelessWidget {
         const ProfileItem(
           color: Colors.amber,
           title: '알림 설정',
-          icon: Icon(Icons.notifications, color: Colors.amber),
+          icon: Icon(
+            Icons.notifications,
+            color: Colors.amber,
+          ),
           description: '알림 및 소리 설정',
         ),
-        const ProfileItem(
+        ProfileItem(
           color: Colors.red,
           title: '친구 초대',
-          icon: Icon(Icons.share, color: Colors.red),
+          icon: const Icon(
+            Icons.share,
+            color: Colors.red,
+          ),
+          onTap: () => context.pushNamed('addFriend'),
           description: 'Wisp을 친구들에게 추천하세요',
         ),
         const ProfileItem(
           color: Colors.purple,
           title: '테마 설정',
-          icon: Icon(Icons.palette, color: Colors.purple),
+          icon: Icon(
+            Icons.palette,
+            color: Colors.purple,
+          ),
           description: '다크/라이트 모드 및 색상',
         ),
         TextButton(
