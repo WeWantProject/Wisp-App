@@ -1,25 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
 class ProfileItem extends StatelessWidget {
   final String title;
   final String description;
   final Widget icon;
   final MaterialColor color;
+  final VoidCallback? onTap;
 
-  const ProfileItem(
-      {super.key,
-      required this.title,
-      required this.icon,
-      required this.description,
-      required this.color});
+  const ProfileItem({
+    super.key,
+    required this.title,
+    required this.icon,
+    required this.description,
+    required this.color,
+    this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        context.pushNamed(title);
-      },
+      onTap: onTap,
       child: Container(
         padding: const EdgeInsets.symmetric(
           horizontal: 16,
