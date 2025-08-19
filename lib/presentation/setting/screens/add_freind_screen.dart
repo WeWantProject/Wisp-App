@@ -20,6 +20,9 @@ class AddFreindScreen extends StatelessWidget {
           ),
           child: const Column(
             children: [
+              SizedBox(
+                height: 20,
+              ),
               _QrCodeAddFriend(),
             ],
           ),
@@ -41,13 +44,11 @@ class _QrCodeAddFriend extends StatelessWidget {
           const Text(
             'QR 코드로 초대',
             style: TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-            ),
+                fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),
           ),
           Container(
-              width: 100,
-              height: 100,
+              width: 200,
+              height: 200,
               color: Colors.white,
               child: const SizedBox.shrink()), // Qr 코드로 대체 예정
           const Text(
@@ -55,6 +56,7 @@ class _QrCodeAddFriend extends StatelessWidget {
             style: TextStyle(
               fontSize: 16,
               color: WispColors.lightSkyBlue,
+              fontWeight: FontWeight.w600,
             ),
           )
         ],
