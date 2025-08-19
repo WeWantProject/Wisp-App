@@ -37,7 +37,7 @@ class _QrCodeAddFriend extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       child: Column(
         spacing: 10,
         children: [
