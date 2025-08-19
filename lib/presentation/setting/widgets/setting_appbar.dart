@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-class SettingAppbar extends StatelessWidget {
+class SettingAppbar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
 
   const SettingAppbar({
@@ -20,8 +20,12 @@ class SettingAppbar extends StatelessWidget {
         title,
         style: const TextStyle(
           fontWeight: FontWeight.bold,
-          color: Colors.white
-        )),
-      );
+          color: Colors.white,
+        ),
+      ),
+    );
   }
+  
+  @override
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }
