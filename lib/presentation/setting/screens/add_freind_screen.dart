@@ -134,7 +134,7 @@ class _InviteLinkCard extends StatelessWidget {
                 ),
                 SizedBox(width: 16),
                 Text(
-                  '링크 복사',
+                  '링크 공유하기',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 16,
