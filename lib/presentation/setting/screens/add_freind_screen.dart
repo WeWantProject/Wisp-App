@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wisp/core/config/constants/base_scaffold.dart';
 import 'package:wisp/core/config/constants/colors.dart';
+import 'package:wisp/presentation/setting/widgets/invite_card.dart';
 import 'package:wisp/presentation/setting/widgets/setting_appbar.dart';
 
 class AddFreindScreen extends StatelessWidget {
@@ -30,6 +31,86 @@ class AddFreindScreen extends StatelessWidget {
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class _InviteLinkCard extends StatelessWidget {
+  const _InviteLinkCard();
+
+  @override
+  Widget build(BuildContext context) {
+    return InviteCard(
+      title: '초대 링크 공유',
+      child: Column(
+        children: [
+          Row(
+            children: [
+              const Text(
+                '내 초대 코드',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const Spacer(),
+              Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 8,
+                  vertical: 4,
+                ),
+                decoration: BoxDecoration(
+                  color: Colors.grey.withOpacity(0.2),
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                child: const Text(
+                  'WISP2024',
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: WispColors.lightSkyBlue,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              )
+            ],
+          ),
+          const SizedBox(height: 10),
+          Container(
+            width: double.infinity,
+            height: 50,
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  Colors.blue,
+                  WispColors.deepPurple,
+                ],
+              ),
+              borderRadius: BorderRadius.all(
+                Radius.circular(12),
+              ),
+            ),
+            child: const Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.share,
+                  color: Colors.white,
+                ),
+                SizedBox(width: 16),
+                Text(
+                  '링크 복사',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                )
+              ],
+            ),
+          )
+        ],
       ),
     );
   }
@@ -68,106 +149,13 @@ class _QrCodeAddFriend extends StatelessWidget {
   }
 }
 
-class _InviteLinkCard extends StatelessWidget {
-  const _InviteLinkCard();
+class _FriendCodeInput extends StatelessWidget {
+  const _FriendCodeInput();
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        spacing: 10,
-        children: [
-          const Text(
-            '초대 링크 공유',
-            style: TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-            ),
-          ),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-            decoration: BoxDecoration(
-              color: Colors.grey.withOpacity(0.2),
-              borderRadius: BorderRadius.circular(10),
-              border: Border.all(
-                color: WispColors.lightSkyBlue,
-                width: 0.3,
-              ),
-            ),
-            child: Column(
-              children: [
-                Row(
-                  children: [
-                    const Text(
-                      '내 초대 코드',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const Spacer(),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 8,
-                        vertical: 4,
-                      ),
-                      decoration: BoxDecoration(
-                        color: Colors.grey.withOpacity(0.2),
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      child: const Text(
-                        'WISP2024',
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: WispColors.lightSkyBlue,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-                const SizedBox(height: 10),
-                Container(
-                  width: double.infinity,
-                  height: 50,
-                  decoration: const BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [
-                        Colors.blue,
-                        WispColors.deepPurple,
-                      ],
-                    ),
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(12),
-                    ),
-                  ),
-                  child: const Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.share,
-                        color: Colors.white,
-                      ),
-                      SizedBox(width: 16),
-                      Text(
-                        '링크 복사',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      )
-                    ],
-                  ),
-                )
-              ],
-            ),
-          )
-        ],
-      ),
+    return Container(
+      child: Column(),
     );
   }
 }
