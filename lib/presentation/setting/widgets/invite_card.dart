@@ -12,6 +12,7 @@ class InviteCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         spacing: 20,
         children: [
           Text(
