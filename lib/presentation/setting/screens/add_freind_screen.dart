@@ -191,8 +191,7 @@ class _FriendCodeInput extends StatelessWidget {
                     ),
                     decoration: InputDecoration(
                       border: InputBorder.none,
-                      contentPadding:
-                          EdgeInsets.symmetric(horizontal: 12),
+                      contentPadding: EdgeInsets.symmetric(horizontal: 12),
                       hintText: '예: WISP2024',
                       hintStyle: TextStyle(
                         color: WispColors.lightSkyBlue,
@@ -247,6 +246,69 @@ class _FriendCodeInput extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
           ),
+        ],
+      ),
+    );
+  }
+}
+
+class _InvitationStatus extends StatelessWidget {
+  const _InvitationStatus({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return InviteCard(
+      title: '초대 현황',
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [],
+      ),
+    );
+  }
+}
+
+class InviteStatusItem extends StatelessWidget {
+  final String name;
+  final bool isAccepted;
+
+  const InviteStatusItem({
+    super.key,
+    required this.name,
+    required this.isAccepted,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Row(
+        children: [
+          Text(
+            name,
+            style: const TextStyle(
+              fontSize: 16,
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          const Spacer(),
+          isAccepted
+          ?
+          const Text(
+            '가입 완료',
+            style: TextStyle(
+              fontSize: 16,
+              color: Colors.green,
+              fontWeight: FontWeight.bold,
+            ),
+          ) :
+          const Text(
+            '초대중',
+            style: TextStyle(
+              fontSize: 16,
+              color: Colors.yellow,
+              fontWeight: FontWeight.bold,
+            ),
+          )
         ],
       ),
     );
