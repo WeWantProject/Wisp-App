@@ -29,6 +29,7 @@ class AddFreindScreen extends StatelessWidget {
               _QrCodeAddFriend(),
               _InviteLinkCard(),
               _FriendCodeInput(),
+              _InvitationStatus()
             ],
           ),
         ),
@@ -253,15 +254,50 @@ class _FriendCodeInput extends StatelessWidget {
 }
 
 class _InvitationStatus extends StatelessWidget {
-  const _InvitationStatus({super.key});
+  const _InvitationStatus();
 
   @override
   Widget build(BuildContext context) {
+    final Map<String, bool> invitedFriends = {
+      '친구 1': true,
+      '친구 2': false,
+      '친구 3': true,
+      '친구 4': false,
+      '친구 5': true,
+      '친구 6': false,
+    };
+
     return InviteCard(
       title: '초대 현황',
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
-        children: [],
+        children: [
+          Text(
+            '${invitedFriends.length}',
+            style: const TextStyle(
+              fontSize: 48,
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          const Text(
+            '명의 친구를 초대했습니다',
+            style: TextStyle(
+              fontSize: 16,
+              color: WispColors.lightSkyBlue,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          Column(
+            children: List.generate(
+              invitedFriends.length,
+              (index) => InviteStatusItem(
+                name: invitedFriends.keys.elementAt(index),
+                isAccepted: invitedFriends.values.elementAt(index),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -279,38 +315,36 @@ class InviteStatusItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Row(
-        children: [
-          Text(
-            name,
-            style: const TextStyle(
-              fontSize: 16,
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-            ),
+    return Row(
+      children: [
+        Text(
+          name,
+          style: const TextStyle(
+            fontSize: 16,
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
           ),
-          const Spacer(),
-          isAccepted
-          ?
-          const Text(
-            '가입 완료',
-            style: TextStyle(
-              fontSize: 16,
-              color: Colors.green,
-              fontWeight: FontWeight.bold,
-            ),
-          ) :
-          const Text(
-            '초대중',
-            style: TextStyle(
-              fontSize: 16,
-              color: Colors.yellow,
-              fontWeight: FontWeight.bold,
-            ),
-          )
-        ],
-      ),
+        ),
+        const Spacer(),
+        isAccepted
+        ?
+        const Text(
+          '가입 완료',
+          style: TextStyle(
+            fontSize: 16,
+            color: Colors.green,
+            fontWeight: FontWeight.bold,
+          ),
+        ) :
+        const Text(
+          '초대중',
+          style: TextStyle(
+            fontSize: 16,
+            color: Colors.yellow,
+            fontWeight: FontWeight.bold,
+          ),
+        )
+      ],
     );
   }
 }
