@@ -4,13 +4,13 @@ import 'package:wisp/presentation/auth/screens/auth_screen.dart';
 import 'package:wisp/presentation/chat/screens/chat_list_screen.dart';
 import 'package:wisp/presentation/chat/screens/chat_screen.dart';
 import 'package:wisp/presentation/setting/screens/add_freind_screen.dart';
+import 'package:wisp/presentation/setting/screens/setting_screen.dart';
 import 'package:wisp/presentation/splash/screens/splash_screen.dart';
 
 class AppRouter {
   static final GoRouter router = GoRouter(
     initialLocation: '/splash',
     routes: [
-
       /// Splash
       GoRoute(
         path: '/splash',
@@ -54,12 +54,18 @@ class AppRouter {
           );
         },
       ),
-
-      /// Add Friend (Profile → AddFriendScreen 바로 이동)
+      
       GoRoute(
-        path: '/add-friend',
-        name: 'addFriend',
-        builder: (context, state) => const AddFreindScreen(),
+        path: '/setting',
+        name: 'setting',
+        builder: (context, state) => const SettingScreen(),
+        routes: [
+          GoRoute(
+            path: 'add-friend',
+            name: 'addFriend',
+            builder: (context, state) => const AddFreindScreen(),
+          ),
+        ],
       ),
     ],
   );

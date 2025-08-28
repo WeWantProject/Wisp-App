@@ -90,13 +90,14 @@ class ProfileBottom extends StatelessWidget {
     return Column(
       spacing: 16,
       children: [
-        const ProfileItem(
+        ProfileItem(
           color: Colors.blue,
           title: '계정 설정',
-          icon: Icon(
+          icon: const Icon(
             Icons.settings,
             color: Colors.blue,
           ),
+          onTap: () => context.goNamed('setting'),
           description: '계정 설정',
         ),
         ProfileItem(
