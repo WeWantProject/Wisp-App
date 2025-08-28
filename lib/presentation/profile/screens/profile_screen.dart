@@ -97,7 +97,7 @@ class ProfileBottom extends StatelessWidget {
             Icons.settings,
             color: Colors.blue,
           ),
-          onTap: () => context.goNamed('setting'),
+          onTap: () => context.pushNamed('setting'),
           description: '계정 설정',
         ),
         ProfileItem(
