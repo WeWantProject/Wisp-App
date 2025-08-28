@@ -18,6 +18,7 @@ class SettingAppbar extends StatelessWidget implements PreferredSizeWidget {
         icon: const Icon(Icons.arrow_back_ios_new, color: Colors.white),
         onPressed: () => context.pop(),
       ),
+      centerTitle: false,
       title: Text(
         title,
         style: const TextStyle(
