@@ -97,16 +97,7 @@ class ProfileBottom extends StatelessWidget {
             Icons.settings,
             color: Colors.blue,
           ),
-          description: '개인정보 및 보안 설정',
-        ),
-        const ProfileItem(
-          color: Colors.amber,
-          title: '알림 설정',
-          icon: Icon(
-            Icons.notifications,
-            color: Colors.amber,
-          ),
-          description: '알림 및 소리 설정',
+          description: '계정 설정',
         ),
         ProfileItem(
           color: Colors.red,
@@ -117,15 +108,6 @@ class ProfileBottom extends StatelessWidget {
           ),
           onTap: () => context.pushNamed('addFriend'),
           description: 'Wisp을 친구들에게 추천하세요',
-        ),
-        const ProfileItem(
-          color: Colors.purple,
-          title: '테마 설정',
-          icon: Icon(
-            Icons.palette,
-            color: Colors.purple,
-          ),
-          description: '다크/라이트 모드 및 색상',
         ),
         TextButton(
           style: TextButton.styleFrom(
