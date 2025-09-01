@@ -25,7 +25,7 @@ class _SettingDropdownState extends State<SettingDropdown> {
         color: Colors.transparent,
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: Colors.grey.withOpacity(0.5),
+          color: Colors.grey.withValues(alpha: 0.5),
           width: 0.5,
         ), // 테두리
       ),

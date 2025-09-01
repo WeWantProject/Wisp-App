@@ -114,12 +114,12 @@ class ProfileBottom extends StatelessWidget {
         TextButton(
           style: TextButton.styleFrom(
             padding: const EdgeInsets.all(16),
-            backgroundColor: Colors.red.withOpacity(0.1),
+            backgroundColor: Colors.red.withValues(alpha: 0.1),
             foregroundColor: Colors.red.shade400,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12),
               side: BorderSide(
-                color: Colors.red.withOpacity(0.2),
+                color: Colors.red.withValues(alpha: 0.2),
               ),
             ),
           ),
@@ -132,7 +132,7 @@ class ProfileBottom extends StatelessWidget {
                 color: Colors.red,
                 size: 20,
               ),
-              const Gap(8),
+              Gap(8),
               Text(
                 ' 로그아웃',
                 style: TextStyle(color: Colors.red, fontSize: 16),
