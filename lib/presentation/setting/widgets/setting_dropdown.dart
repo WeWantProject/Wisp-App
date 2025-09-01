@@ -32,7 +32,9 @@ class _SettingDropdownState extends State<SettingDropdown> {
       child: DropdownButtonHideUnderline(
         child: DropdownButton<String>(
           isExpanded: true,
-          value: widget.selectedValue,
+          value: widget.options.contains(widget.selectedValue)
+              ? widget.selectedValue
+              : null,
           icon: const Icon(
             Icons.arrow_drop_down,
             color: Colors.white,
