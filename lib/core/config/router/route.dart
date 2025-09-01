@@ -3,7 +3,7 @@ import 'package:wisp/core/config/widgets/bottom_navigation.dart';
 import 'package:wisp/presentation/auth/screens/auth_screen.dart';
 import 'package:wisp/presentation/chat/screens/chat_list_screen.dart';
 import 'package:wisp/presentation/chat/screens/chat_screen.dart';
-import 'package:wisp/presentation/setting/screens/add_freind_screen.dart';
+import 'package:wisp/presentation/setting/screens/add_friend_screen.dart';
 import 'package:wisp/presentation/setting/screens/setting_screen.dart';
 import 'package:wisp/presentation/splash/screens/splash_screen.dart';
 
@@ -54,7 +54,7 @@ class AppRouter {
           );
         },
       ),
-      
+
       GoRoute(
         path: '/setting',
         name: 'setting',
@@ -63,7 +63,7 @@ class AppRouter {
           GoRoute(
             path: 'add-friend',
             name: 'addFriend',
-            builder: (context, state) => const AddFreindScreen(),
+            builder: (context, state) => const AddFriendScreen(),
           ),
         ],
       ),

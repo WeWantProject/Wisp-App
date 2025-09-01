@@ -5,8 +5,8 @@ import 'package:wisp/core/config/constants/colors.dart';
 import 'package:wisp/presentation/setting/widgets/invite_card.dart';
 import 'package:wisp/presentation/setting/widgets/setting_appbar.dart';
 
-class AddFreindScreen extends StatelessWidget {
-  const AddFreindScreen({super.key});
+class AddFriendScreen extends StatelessWidget {
+  const AddFriendScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
