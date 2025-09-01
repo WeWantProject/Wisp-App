@@ -209,10 +209,10 @@ class _FriendCodeInput extends StatelessWidget {
                 child: ElevatedButton(
                   onPressed: () {},
                   style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(
+                    backgroundColor: WidgetStateProperty.all(
                       Colors.green,
                     ),
-                    shape: MaterialStateProperty.all(
+                    shape: WidgetStateProperty.all(
                       RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
                       ),
@@ -327,23 +327,22 @@ class InviteStatusItem extends StatelessWidget {
         ),
         const Spacer(),
         isAccepted
-        ?
-        const Text(
-          '가입 완료',
-          style: TextStyle(
-            fontSize: 16,
-            color: Colors.green,
-            fontWeight: FontWeight.bold,
-          ),
-        ) :
-        const Text(
-          '초대중',
-          style: TextStyle(
-            fontSize: 16,
-            color: Colors.yellow,
-            fontWeight: FontWeight.bold,
-          ),
-        )
+            ? const Text(
+                '가입 완료',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.green,
+                  fontWeight: FontWeight.bold,
+                ),
+              )
+            : const Text(
+                '초대중',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.yellow,
+                  fontWeight: FontWeight.bold,
+                ),
+              )
       ],
     );
   }
