@@ -30,6 +30,7 @@ class _SettingScreenState extends State<SettingScreen> {
                 _BasicSettings(),
                 _InformationSettings(),
                 _LanguageSettings(),
+                _AccountSettings(),
               ],
             ),
           ),
@@ -40,7 +41,7 @@ class _SettingScreenState extends State<SettingScreen> {
 }
 
 class _BasicSettings extends StatefulWidget {
-  const _BasicSettings({super.key});
+  const _BasicSettings();
 
   @override
   State<_BasicSettings> createState() => __BasicSettingsState();
@@ -248,6 +249,31 @@ class __LanguageSettingsState extends State<_LanguageSettings> {
   }
 }
 
+class _AccountSettings extends StatelessWidget {
+  const _AccountSettings({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const _SettingTile(
+      title: "계정 관리",
+      icon: Icon(
+        Icons.lock_outline,
+        color: Colors.blue,
+      ),
+      children: [
+        _SettingItem(
+          icon: Icon(
+            Icons.language_outlined,
+            color: Colors.blue,
+          ),
+          title: "앱 언어",
+          content: "앱에서 사용할 언어를 선택하세요",
+        ),
+      ],
+    );
+  }
+}
+
 class _SettingTile extends StatelessWidget {
   final List<Widget> children;
   final String title;
@@ -296,7 +322,7 @@ class _SettingItem extends StatelessWidget {
     required this.icon,
     required this.title,
     required this.content,
-    required this.active,
+    this.active = const SizedBox.shrink(),
   });
 
   @override
