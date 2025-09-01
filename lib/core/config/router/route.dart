@@ -61,7 +61,7 @@ class AppRouter {
         builder: (context, state) => const SettingScreen(),
         routes: [
           GoRoute(
-            path: 'add-friend',
+            path: 'addFriend',
             name: 'addFriend',
             builder: (context, state) => const AddFriendScreen(),
           ),
