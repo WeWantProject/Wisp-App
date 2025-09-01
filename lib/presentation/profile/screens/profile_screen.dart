@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:wisp/core/config/constants/colors.dart';
 import 'package:wisp/presentation/profile/widgets/profile_item.dart';
@@ -19,7 +20,7 @@ class ProfileScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             ProfileTop(userName: userName, statusMessage: statusMessage),
-            const SizedBox(height: 20),
+            const Gap(20),
             const Expanded(
               child: SingleChildScrollView(
                 child: ProfileBottom(),
@@ -51,7 +52,7 @@ class ProfileTop extends StatelessWidget {
             color: Colors.white,
           ), // api를 통해 불러올 예정
         ),
-        const SizedBox(height: 20),
+        const Gap(20),
         Text(
           userName,
           style: const TextStyle(
@@ -61,7 +62,7 @@ class ProfileTop extends StatelessWidget {
           statusMessage,
           style: const TextStyle(fontSize: 16, color: Colors.grey),
         ),
-        const SizedBox(height: 20),
+        const Gap(20),
         ElevatedButton(
           onPressed: () {
             // 프로필 편집 구현 예정
@@ -131,7 +132,7 @@ class ProfileBottom extends StatelessWidget {
                 color: Colors.red,
                 size: 20,
               ),
-              SizedBox(width: 8),
+              const Gap(8),
               Text(
                 ' 로그아웃',
                 style: TextStyle(color: Colors.red, fontSize: 16),

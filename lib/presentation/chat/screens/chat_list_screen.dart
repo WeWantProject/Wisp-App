@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:wisp/core/config/constants/colors.dart';
 
@@ -146,7 +147,7 @@ class ChatListItem extends StatelessWidget {
               color: Colors.white,
             ), // 임시용
           ),
-          const SizedBox(width: 10),
+          const Gap(10),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -159,7 +160,7 @@ class ChatListItem extends StatelessWidget {
                     color: Colors.white,
                   ),
                 ),
-                const SizedBox(height: 5),
+                const Gap(5),
                 Text(
                   lastMessage,
                   style: const TextStyle(
@@ -180,7 +181,7 @@ class ChatListItem extends StatelessWidget {
                       color: WispColors.lightSkyBlue,
                     ),
                   ),
-                  const SizedBox(width: 5),
+                  const Gap(5),
                   if (unreadMessageCount > 0)
                     CircleAvatar(
                       radius: 10,
@@ -195,7 +196,7 @@ class ChatListItem extends StatelessWidget {
                     ),
                 ],
               ),
-              const SizedBox(height: 5),
+              const Gap(5),
               if (isOnline)
                 const Icon(
                   Icons.circle,

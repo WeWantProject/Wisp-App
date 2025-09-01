@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 
 class ProfileItem extends StatelessWidget {
   final String title;
@@ -45,7 +46,7 @@ class ProfileItem extends StatelessWidget {
               ),
               child: icon,
             ),
-            const SizedBox(width: 16),
+            const Gap(16),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -57,7 +58,7 @@ class ProfileItem extends StatelessWidget {
                     color: Colors.white,
                   ),
                 ),
-                const SizedBox(height: 4),
+                const Gap(4),
                 Text(
                   description,
                   style: const TextStyle(

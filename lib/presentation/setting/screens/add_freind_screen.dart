@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:wisp/core/config/constants/base_scaffold.dart';
 import 'package:wisp/core/config/constants/colors.dart';
 import 'package:wisp/presentation/setting/widgets/invite_card.dart';
@@ -23,9 +24,7 @@ class AddFreindScreen extends StatelessWidget {
           child: const Column(
             spacing: 20,
             children: [
-              SizedBox(
-                height: 20,
-              ),
+              Gap(20),
               _QrCodeAddFriend(),
               _InviteLinkCard(),
               _FriendCodeInput(),
@@ -111,7 +110,7 @@ class _InviteLinkCard extends StatelessWidget {
               )
             ],
           ),
-          const SizedBox(height: 10),
+          const Gap(10),
           Container(
             width: double.infinity,
             height: 50,
@@ -133,7 +132,7 @@ class _InviteLinkCard extends StatelessWidget {
                   Icons.share,
                   color: Colors.white,
                 ),
-                SizedBox(width: 16),
+                Gap(16),
                 Text(
                   '링크 공유하기',
                   style: TextStyle(
@@ -224,7 +223,7 @@ class _FriendCodeInput extends StatelessWidget {
                         Icons.person_add,
                         color: Colors.white,
                       ),
-                      SizedBox(width: 8),
+                      Gap(8),
                       Text(
                         '추가',
                         style: TextStyle(

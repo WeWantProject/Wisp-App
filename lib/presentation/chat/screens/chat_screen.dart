@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:wisp/core/config/constants/base_scaffold.dart';
 import 'package:wisp/core/config/constants/colors.dart';
@@ -99,9 +100,9 @@ class ChatAppbar extends StatelessWidget implements PreferredSizeWidget {
       title: Row(
         children: [
           _BackButton(),
-          const SizedBox(width: 8),
+          const Gap(8),
           const _UserAvatar(),
-          const SizedBox(width: 12),
+          const Gap(12),
           Expanded(
             child: _UserInfo(
               userName: userName,
@@ -250,7 +251,8 @@ class ChatItem extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         decoration: _buildMessageDecoration(),
         child: Column(
-          crossAxisAlignment: isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+          crossAxisAlignment:
+              isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
@@ -260,7 +262,7 @@ class ChatItem extends StatelessWidget {
                 fontWeight: FontWeight.w500,
               ),
             ),
-            const SizedBox(height: 4),
+            const Gap(4),
             _MessageFooter(
               isMe: isMe,
               isRead: isRead,
@@ -315,7 +317,7 @@ class _MessageFooter extends StatelessWidget {
           ),
         ),
         if (isMe && isRead) ...[
-          const SizedBox(width: 5),
+          const Gap(5),
           const Icon(
             Icons.done_all,
             size: 16,
@@ -349,18 +351,18 @@ class ChatTextField extends StatelessWidget {
               // TODO: 이모지 피커 구현
             },
           ),
-          const SizedBox(width: 8),
+          const Gap(8),
           _ActionButton(
             icon: Icons.attach_file,
             onPressed: () {
               // TODO: 파일 첨부 구현
             },
           ),
-          const SizedBox(width: 8),
+          const Gap(8),
           Expanded(
             child: _MessageInputField(),
           ),
-          const SizedBox(width: 8),
+          const Gap(8),
           _ActionButton(
             icon: Icons.bolt_outlined,
             color: Colors.yellow,
@@ -368,7 +370,7 @@ class ChatTextField extends StatelessWidget {
               // TODO: 특수 기능 구현
             },
           ),
-          const SizedBox(width: 8),
+          const Gap(8),
           _SendButton(),
         ],
       ),

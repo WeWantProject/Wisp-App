@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:gap/gap.dart';
 import 'package:wisp/presentation/auth/widgets/auth_button.dart';
 import 'package:wisp/presentation/auth/widgets/form_textfield.dart';
 
@@ -15,9 +16,8 @@ class LoginForm extends HookWidget {
       required this.passwordController,
       required this.onLogin,
       required this.phoneNumberFocusNode,
-      required this.passwordFocusNode,  
-      super.key
-    });
+      required this.passwordFocusNode,
+      super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +34,7 @@ class LoginForm extends HookWidget {
             focusNode: phoneNumberFocusNode,
             keyboardType: TextInputType.phone,
           ),
-          const SizedBox(height: 20),
+          const Gap(20),
           FormTextfield(
             hintText: '비밀번호를 입력하세요.',
             labelText: '비밀번호',
@@ -43,7 +43,7 @@ class LoginForm extends HookWidget {
             isPassword: true,
             focusNode: passwordFocusNode,
           ),
-          const SizedBox(height: 40),
+          const Gap(40),
           AuthButton(onPressed: onLogin, text: '로그인'),
         ],
       ),
