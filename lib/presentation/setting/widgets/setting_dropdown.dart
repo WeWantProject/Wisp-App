@@ -22,8 +22,8 @@ class _SettingDropdownState extends State<SettingDropdown> {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12),
       decoration: BoxDecoration(
-        color: Colors.blue[800], // 버튼 배경색
-        borderRadius: BorderRadius.circular(8), // 둥근 모서리
+        color: Colors.transparent,
+        borderRadius: BorderRadius.circular(12),
         border: Border.all(
           color: Colors.grey.withOpacity(0.5),
           width: 0.5,
@@ -32,9 +32,15 @@ class _SettingDropdownState extends State<SettingDropdown> {
       child: DropdownButtonHideUnderline(
         child: DropdownButton<String>(
             value: widget.selectedValue,
-            icon: Icon(Icons.arrow_drop_down, color: Colors.white),
-            dropdownColor: Colors.blue[800], // 드롭다운 색상
-            style: TextStyle(color: Colors.white, fontSize: 16),
+            icon: const Icon(
+              Icons.arrow_drop_down,
+              color: Colors.white,
+            ),
+            dropdownColor: Colors.transparent, // 드롭다운 색상
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 16,
+            ),
             items: widget.options.map((String value) {
               return DropdownMenuItem<String>(
                 value: value,
