@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:wisp/core/config/constants/colors.dart';
 
 class InviteCard extends StatelessWidget {
-
   final String title;
   final Widget child;
-  
-  const InviteCard({super.key, required this.title, required this.child,});
+
+  const InviteCard({
+    super.key,
+    required this.title,
+    required this.child,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -29,8 +32,8 @@ class InviteCard extends StatelessWidget {
               color: Colors.grey.withOpacity(0.2),
               borderRadius: BorderRadius.circular(10),
               border: Border.all(
-                color: WispColors.lightSkyBlue,
-                width: 0.3,
+                color: Colors.grey.withOpacity(0.5),
+                width: 0.5,
               ),
             ),
             child: child,
