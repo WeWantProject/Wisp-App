@@ -1,0 +1,44 @@
+import 'package:flutter/material.dart';
+
+class InviteCard extends StatelessWidget {
+  final String title;
+  final Widget child;
+
+  const InviteCard({
+    super.key,
+    required this.title,
+    required this.child,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        spacing: 20,
+        children: [
+          Text(
+            title,
+            style: const TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
+          ),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+            decoration: BoxDecoration(
+              color: Colors.grey.withValues(alpha: 0.2),
+              borderRadius: BorderRadius.circular(10),
+              border: Border.all(
+                color: Colors.grey.withValues(alpha: 0.5),
+                width: 0.5,
+              ),
+            ),
+            child: child,
+          ),
+        ],
+      ),
+    );
+  }
+}

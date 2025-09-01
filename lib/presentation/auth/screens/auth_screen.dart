@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
@@ -18,7 +19,6 @@ class AuthScreen extends HookConsumerWidget {
     final authNotifier = ref.watch(authControllerProvider.notifier);
     final authState = ref.watch(authControllerProvider);
 
-
     final notifier = ref.watch(loginControllerProvider.notifier);
 
     final phoneNumberFocusNode = useFocusNode();
@@ -30,12 +30,12 @@ class AuthScreen extends HookConsumerWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const LogoSection(),
-            const SizedBox(height: 30),
+            const Gap(30),
             ToggleAuthButton(
               isSelected: authState.isLoginMode,
               onPressed: authNotifier.toggleAuthMode,
             ),
-            const SizedBox(height: 20),
+            const Gap(20),
             AnimatedSwitcher(
               duration: const Duration(milliseconds: 300),
               switchInCurve: Curves.easeIn,
@@ -44,8 +44,8 @@ class AuthScreen extends HookConsumerWidget {
                 return FadeTransition(
                   opacity: animation,
                   child: ScaleTransition(
-                    scale: Tween<double>(begin: 0.95, end: 1.0)
-                        .animate(animation),
+                    scale:
+                        Tween<double>(begin: 0.95, end: 1.0).animate(animation),
                     child: child,
                   ),
                 );
@@ -55,23 +55,22 @@ class AuthScreen extends HookConsumerWidget {
                       phoneNumberFocusNode: phoneNumberFocusNode,
                       passwordFocusNode: passwordFocusNode,
                       phoneController: notifier.phoneController,
-                      passwordController: notifier.passwordController, 
+                      passwordController: notifier.passwordController,
                       onLogin: () {
                         context.go('/main');
                       },
                     )
                   : SignupForm(
-                    nameController: TextEditingController(), 
-                    phoneController: TextEditingController(), 
-                    confromPhoneController: TextEditingController(),
-                    passwordController: TextEditingController(),
-                    conformPasswordController: TextEditingController(),
-                    onSignup: () {  },
-                    phoneNumberFocusNode: FocusNode(),
-                    passwordFocusNode: FocusNode(),
-                    conformPasswordFocusNode: FocusNode(),
-                    nameFocusNode: FocusNode()
-                  ),
+                      nameController: TextEditingController(),
+                      phoneController: TextEditingController(),
+                      confromPhoneController: TextEditingController(),
+                      passwordController: TextEditingController(),
+                      conformPasswordController: TextEditingController(),
+                      onSignup: () {},
+                      phoneNumberFocusNode: FocusNode(),
+                      passwordFocusNode: FocusNode(),
+                      conformPasswordFocusNode: FocusNode(),
+                      nameFocusNode: FocusNode()),
             ),
           ],
         ),
@@ -92,7 +91,7 @@ class LogoSection extends StatelessWidget {
           width: 100,
           height: 100,
         ),
-        const SizedBox(height: 20),
+        const Gap(20),
         const Text(
           'Wisp',
           style: TextStyle(
@@ -101,7 +100,7 @@ class LogoSection extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
         ),
-        const SizedBox(height: 10),
+        const Gap(10),
         const Text(
           '가벼운 소통, 깊은 연결',
           style: TextStyle(

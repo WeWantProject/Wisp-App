@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:gap/gap.dart';
 import 'package:wisp/core/config/constants/colors.dart';
 
 class FormTextfield extends HookWidget {
@@ -11,8 +12,7 @@ class FormTextfield extends HookWidget {
   final FocusNode focusNode;
   final TextInputType keyboardType;
 
-  const FormTextfield(
-    {
+  const FormTextfield({
     super.key,
     required this.hintText,
     required this.labelText,
@@ -41,7 +41,7 @@ class FormTextfield extends HookWidget {
             fontSize: 16,
           ),
         ),
-        const SizedBox(height: 10),
+        const Gap(10),
         TextField(
           onChanged: (value) => controller.text = value,
           obscureText: obscureText.value,

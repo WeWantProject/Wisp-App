@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:wisp/presentation/auth/widgets/auth_button.dart';
 import 'package:wisp/presentation/auth/widgets/form_textfield.dart';
 
@@ -44,7 +45,7 @@ class SignupForm extends StatelessWidget {
             focusNode: nameFocusNode,
             keyboardType: TextInputType.phone,
           ),
-          const SizedBox(height: 20),
+          const Gap(20),
           FormTextfield(
             hintText: '010-1234-5678',
             labelText: '전화번호',
@@ -53,7 +54,7 @@ class SignupForm extends StatelessWidget {
             focusNode: phoneNumberFocusNode,
             keyboardType: TextInputType.phone,
           ),
-          const SizedBox(height: 20),
+          const Gap(20),
           FormTextfield(
             hintText: '비밀번호를 입력하세요.',
             labelText: '비밀번호',
@@ -62,7 +63,7 @@ class SignupForm extends StatelessWidget {
             isPassword: true,
             focusNode: passwordFocusNode,
           ),
-          const SizedBox(height: 20),
+          const Gap(20),
           FormTextfield(
             hintText: '비밀번호를 다시 입력하세요.',
             labelText: '비밀번호 확인',
@@ -71,7 +72,7 @@ class SignupForm extends StatelessWidget {
             isPassword: true,
             focusNode: conformPasswordFocusNode,
           ),
-          const SizedBox(height: 40),
+          const Gap(40),
           AuthButton(onPressed: onSignup, text: '회원가입'),
         ],
       ),

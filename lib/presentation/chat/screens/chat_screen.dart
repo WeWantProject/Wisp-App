@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:wisp/core/config/constants/base_scaffold.dart';
 import 'package:wisp/core/config/constants/colors.dart';
@@ -99,9 +100,9 @@ class ChatAppbar extends StatelessWidget implements PreferredSizeWidget {
       title: Row(
         children: [
           _BackButton(),
-          const SizedBox(width: 8),
+          const Gap(8),
           const _UserAvatar(),
-          const SizedBox(width: 12),
+          const Gap(12),
           Expanded(
             child: _UserInfo(
               userName: userName,
@@ -214,9 +215,7 @@ class _MoreButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton(
-      onPressed: () {
-        // TODO: 더보기 메뉴 구현
-      },
+      onPressed: () {},
       icon: const Icon(
         Icons.more_vert,
         color: Colors.white,
@@ -250,7 +249,8 @@ class ChatItem extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         decoration: _buildMessageDecoration(),
         child: Column(
-          crossAxisAlignment: isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+          crossAxisAlignment:
+              isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
@@ -260,7 +260,7 @@ class ChatItem extends StatelessWidget {
                 fontWeight: FontWeight.w500,
               ),
             ),
-            const SizedBox(height: 4),
+            const Gap(4),
             _MessageFooter(
               isMe: isMe,
               isRead: isRead,
@@ -280,7 +280,7 @@ class ChatItem extends StatelessWidget {
               end: Alignment.bottomRight,
             )
           : null,
-      color: isMe ? null : WispColors.deepBlue1.withOpacity(0.1),
+      color: isMe ? null : WispColors.deepBlue1.withValues(alpha: 0.1),
       borderRadius: BorderRadius.circular(16),
       border: isMe
           ? null
@@ -315,7 +315,7 @@ class _MessageFooter extends StatelessWidget {
           ),
         ),
         if (isMe && isRead) ...[
-          const SizedBox(width: 5),
+          const Gap(5),
           const Icon(
             Icons.done_all,
             size: 16,
@@ -345,30 +345,24 @@ class ChatTextField extends StatelessWidget {
         children: [
           _ActionButton(
             icon: Icons.emoji_emotions_outlined,
-            onPressed: () {
-              // TODO: 이모지 피커 구현
-            },
+            onPressed: () {},
           ),
-          const SizedBox(width: 8),
+          const Gap(8),
           _ActionButton(
             icon: Icons.attach_file,
-            onPressed: () {
-              // TODO: 파일 첨부 구현
-            },
+            onPressed: () {},
           ),
-          const SizedBox(width: 8),
+          const Gap(8),
           Expanded(
             child: _MessageInputField(),
           ),
-          const SizedBox(width: 8),
+          const Gap(8),
           _ActionButton(
             icon: Icons.bolt_outlined,
             color: Colors.yellow,
-            onPressed: () {
-              // TODO: 특수 기능 구현
-            },
+            onPressed: () {},
           ),
-          const SizedBox(width: 8),
+          const Gap(8),
           _SendButton(),
         ],
       ),
@@ -407,7 +401,7 @@ class _MessageInputField extends StatelessWidget {
     return SafeArea(
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.grey.withOpacity(0.2),
+          color: Colors.grey.withValues(alpha: 0.2),
           border: Border.all(color: WispColors.grey, width: 0.5),
           borderRadius: BorderRadius.circular(24),
         ),
@@ -436,9 +430,7 @@ class _SendButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton(
-      onPressed: () {
-        // TODO: 메시지 전송 구현
-      },
+      onPressed: () {},
       icon: const Icon(
         Icons.send,
         color: WispColors.lightSkyBlue,
