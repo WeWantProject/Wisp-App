@@ -182,11 +182,11 @@ class __InformationSettingsState extends State<_InformationSettings> {
         const Gap(16),
         _SettingItem(
           icon: const Icon(
-            Icons.chat_bubble_outline,
-            color: Colors.green,
+            Icons.shield_outlined,
+            color: Colors.purpleAccent,
           ),
-          title: "읽음 확인",
-          content: "메시지 읽음 표시",
+          title: "프로필 공개 범위",
+          content: "누가 내 프로필을 볼 수 있는지 설정",
           active: SettingDropdown(
             options: options,
             selectedValue: selectedValue,
@@ -283,7 +283,7 @@ class _SettingItem extends StatelessWidget {
               Text(
                 content,
                 style: const TextStyle(
-                  fontSize: 14,
+                  fontSize: 12,
                   color: WispColors.lightSkyBlue,
                 ),
               ),

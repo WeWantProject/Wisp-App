@@ -31,23 +31,24 @@ class _SettingDropdownState extends State<SettingDropdown> {
       ),
       child: DropdownButtonHideUnderline(
         child: DropdownButton<String>(
-            value: widget.selectedValue,
-            icon: const Icon(
-              Icons.arrow_drop_down,
-              color: Colors.white,
-            ),
-            dropdownColor: Colors.transparent, // 드롭다운 색상
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 16,
-            ),
-            items: widget.options.map((String value) {
-              return DropdownMenuItem<String>(
-                value: value,
-                child: Text(value),
-              );
-            }).toList(),
-            onChanged: widget.onChanged),
+          value: widget.selectedValue,
+          icon: const Icon(
+            Icons.arrow_drop_down,
+            color: Colors.white,
+          ),
+          dropdownColor: Colors.transparent, // 드롭다운 색상
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 14,
+          ),
+          items: widget.options.map((String value) {
+            return DropdownMenuItem<String>(
+              value: value,
+              child: Text(value),
+            );
+          }).toList(),
+          onChanged: widget.onChanged,
+        ),
       ),
     );
   }
