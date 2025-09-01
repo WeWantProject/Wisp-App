@@ -250,7 +250,7 @@ class __LanguageSettingsState extends State<_LanguageSettings> {
 }
 
 class _AccountSettings extends StatelessWidget {
-  const _AccountSettings({super.key});
+  const _AccountSettings();
 
   @override
   Widget build(BuildContext context) {
@@ -258,16 +258,34 @@ class _AccountSettings extends StatelessWidget {
       title: "계정 관리",
       icon: Icon(
         Icons.lock_outline,
-        color: Colors.blue,
+        color: Colors.orange,
       ),
       children: [
         _SettingItem(
           icon: Icon(
-            Icons.language_outlined,
+            Icons.lock_outline,
             color: Colors.blue,
           ),
-          title: "앱 언어",
-          content: "앱에서 사용할 언어를 선택하세요",
+          title: "비밀번호 변경",
+          content: "계정 보안을 위해 정기적으로 변경하세요",
+        ),
+        Gap(16),
+        _SettingItem(
+          icon: Icon(
+            Icons.shield_outlined,
+            color: Colors.green,
+          ),
+          title: "2단계 인증",
+          content: "SMS 또는 앱을 통한 추가 보안",
+        ),
+        Gap(16),
+        _SettingItem(
+          icon: Icon(
+            Icons.delete_outline,
+            color: Colors.red,
+          ),
+          title: "계정 삭제",
+          content: "모든 데이터가 영구적으로 삭제됩니다",
         ),
       ],
     );
