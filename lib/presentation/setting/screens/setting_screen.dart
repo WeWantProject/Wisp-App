@@ -22,12 +22,16 @@ class _SettingScreenState extends State<SettingScreen> {
       child: SafeArea(
         child: Padding(
           padding: EdgeInsetsGeometry.symmetric(vertical: 14, horizontal: 16),
-          child: Column(
-            spacing: 20,
-            children: [
-              _BasicSettings(),
-              _InformationSettings(),
-            ],
+          child: SingleChildScrollView(
+            physics: ClampingScrollPhysics(),
+            child: Column(
+              spacing: 20,
+              children: [
+                _BasicSettings(),
+                _InformationSettings(),
+                _LanguageSettings(),
+              ],
+            ),
           ),
         ),
       ),
@@ -119,7 +123,7 @@ class __BasicSettingsState extends State<_BasicSettings> {
 }
 
 class _InformationSettings extends StatefulWidget {
-  const _InformationSettings({super.key});
+  const _InformationSettings();
 
   @override
   State<_InformationSettings> createState() => __InformationSettingsState();
@@ -187,6 +191,48 @@ class __InformationSettingsState extends State<_InformationSettings> {
           ),
           title: "프로필 공개 범위",
           content: "누가 내 프로필을 볼 수 있는지 설정",
+          active: SettingDropdown(
+            options: options,
+            selectedValue: selectedValue,
+            onChanged: (String? newValue) {
+              setState(() {
+                selectedValue = newValue!;
+              });
+            },
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _LanguageSettings extends StatefulWidget {
+  const _LanguageSettings();
+
+  @override
+  State<_LanguageSettings> createState() => __LanguageSettingsState();
+}
+
+class __LanguageSettingsState extends State<_LanguageSettings> {
+  String selectedValue = '한국어';
+  final List<String> options = ['한국어', 'English', '日本語', '中国人'];
+
+  @override
+  Widget build(BuildContext context) {
+    return _SettingTile(
+      title: "언어",
+      icon: const Icon(
+        Icons.language_outlined,
+        color: Colors.blue,
+      ),
+      children: [
+        _SettingItem(
+          icon: const Icon(
+            Icons.language_outlined,
+            color: Colors.blue,
+          ),
+          title: "앱 언어",
+          content: "앱에서 사용할 언어를 선택하세요",
           active: SettingDropdown(
             options: options,
             selectedValue: selectedValue,
