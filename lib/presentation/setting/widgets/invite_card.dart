@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:wisp/core/config/constants/colors.dart';
 
 class InviteCard extends StatelessWidget {
   final String title;
