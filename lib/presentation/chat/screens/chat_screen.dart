@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:wisp/core/config/constants/base_scaffold.dart';
 import 'package:wisp/core/config/constants/colors.dart';
+import 'package:wisp/presentation/chat/controller/chat_controller.dart';
 
 class ChatScreen extends StatelessWidget {
   final String userName;
@@ -426,11 +428,15 @@ class _MessageInputField extends StatelessWidget {
 }
 
 // 전송 버튼
-class _SendButton extends StatelessWidget {
+class _SendButton extends ConsumerWidget {
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final chatController = ref.read(chatControllerProvider.notifier);
+
     return IconButton(
-      onPressed: () {},
+      onPressed: () {
+        chatController.sendMessage();
+      },
       icon: const Icon(
         Icons.send,
         color: WispColors.lightSkyBlue,
