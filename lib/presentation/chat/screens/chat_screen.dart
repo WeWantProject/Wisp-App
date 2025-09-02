@@ -347,22 +347,18 @@ class ChatTextField extends StatelessWidget {
             icon: Icons.emoji_emotions_outlined,
             onPressed: () {},
           ),
-          const Gap(8),
           _ActionButton(
             icon: Icons.attach_file,
             onPressed: () {},
           ),
-          const Gap(8),
           Expanded(
             child: _MessageInputField(),
           ),
-          const Gap(8),
           _ActionButton(
             icon: Icons.bolt_outlined,
             color: Colors.yellow,
             onPressed: () {},
           ),
-          const Gap(8),
           _SendButton(),
         ],
       ),
@@ -409,6 +405,7 @@ class _MessageInputField extends StatelessWidget {
           minLines: 1,
           maxLines: 5,
           decoration: InputDecoration(
+            hintMaxLines: 1,
             hintText: '메시지를 입력하세요',
             border: InputBorder.none,
             contentPadding: EdgeInsets.symmetric(
@@ -417,6 +414,7 @@ class _MessageInputField extends StatelessWidget {
             ),
             hintStyle: TextStyle(
               color: WispColors.lightSkyBlue,
+              fontSize: 14,
             ),
           ),
         ),
