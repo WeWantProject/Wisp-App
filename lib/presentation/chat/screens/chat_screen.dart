@@ -394,28 +394,26 @@ class _ActionButton extends StatelessWidget {
 class _MessageInputField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Container(
-        decoration: BoxDecoration(
-          color: Colors.grey.withValues(alpha: 0.2),
-          border: Border.all(color: WispColors.grey, width: 0.5),
-          borderRadius: BorderRadius.circular(24),
-        ),
-        child: const TextField(
-          minLines: 1,
-          maxLines: 5,
-          decoration: InputDecoration(
-            hintMaxLines: 1,
-            hintText: '메시지를 입력하세요',
-            border: InputBorder.none,
-            contentPadding: EdgeInsets.symmetric(
-              horizontal: 16,
-              vertical: 12,
-            ),
-            hintStyle: TextStyle(
-              color: WispColors.lightSkyBlue,
-              fontSize: 14,
-            ),
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.grey.withValues(alpha: 0.2),
+        border: Border.all(color: WispColors.grey, width: 0.5),
+        borderRadius: BorderRadius.circular(24),
+      ),
+      child: const TextField(
+        minLines: 1,
+        maxLines: 5,
+        decoration: InputDecoration(
+          hintMaxLines: 1,
+          hintText: '메시지를 입력하세요',
+          border: InputBorder.none,
+          contentPadding: EdgeInsets.symmetric(
+            horizontal: 16,
+            vertical: 12,
+          ),
+          hintStyle: TextStyle(
+            color: WispColors.lightSkyBlue,
+            fontSize: 14,
           ),
         ),
       ),
