@@ -327,6 +327,7 @@ class _MessageFooter extends StatelessWidget {
   }
 }
 
+// 채팅 입력 필드
 class ChatTextField extends StatelessWidget {
   const ChatTextField({super.key});
 
