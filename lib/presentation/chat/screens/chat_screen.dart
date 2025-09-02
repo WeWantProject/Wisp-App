@@ -404,6 +404,9 @@ class _MessageInputField extends StatelessWidget {
       child: const TextField(
         minLines: 1,
         maxLines: 5,
+        style: TextStyle(
+          color: Colors.white,
+        ),
         decoration: InputDecoration(
           hintMaxLines: 1,
           hintText: '메시지를 입력하세요',
