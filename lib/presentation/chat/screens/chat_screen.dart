@@ -394,22 +394,25 @@ class _ActionButton extends StatelessWidget {
 }
 
 // 메시지 입력 필드
-class _MessageInputField extends StatelessWidget {
+class _MessageInputField extends ConsumerWidget {
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final chatController = ref.read(chatControllerProvider.notifier);
+
     return Container(
       decoration: BoxDecoration(
         color: Colors.grey.withValues(alpha: 0.2),
         border: Border.all(color: WispColors.grey, width: 0.5),
         borderRadius: BorderRadius.circular(24),
       ),
-      child: const TextField(
+      child: TextField(
         minLines: 1,
         maxLines: 5,
-        style: TextStyle(
+        controller: chatController.messageController,
+        style: const TextStyle(
           color: Colors.white,
         ),
-        decoration: InputDecoration(
+        decoration: const InputDecoration(
           hintMaxLines: 1,
           hintText: '메시지를 입력하세요',
           border: InputBorder.none,
