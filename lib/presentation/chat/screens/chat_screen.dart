@@ -1,3 +1,4 @@
+import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
@@ -30,16 +31,6 @@ class ChatScreen extends StatelessWidget {
       '이번 주말에 시간 있어요?',
       '최근에 읽은 책 추천해 주세요.',
       '다음 달 여행 계획은 어떻게 되나요?',
-      '새로운 음악 추천해 주세요.',
-      '안녕하세요!',
-      '오늘 날씨 어때요?',
-      '주말에 뭐해요?',
-      '프로젝트 진행 상황은 어때요?',
-      '다음 주 회의 일정은 언제인가요?',
-      '새로운 영화 봤어요?',
-      '이번 주말에 시간 있어요?',
-      '최근에 읽은 책 추천해 주세요.',
-      '다음 달 여행 계획은 어떻게 되나요?',
       '새로운 음악 추천해 주세요.'
     ];
 
@@ -60,7 +51,6 @@ class ChatScreen extends StatelessWidget {
   }
 }
 
-// 메시지 리스트를 별도 위젯으로 분리
 class _ChatMessageList extends StatelessWidget {
   final List<String> messages;
 
@@ -69,7 +59,6 @@ class _ChatMessageList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
-      reverse: true,
       padding: const EdgeInsets.all(16),
       itemBuilder: (context, index) {
         return ChatItem(
@@ -121,7 +110,6 @@ class ChatAppbar extends StatelessWidget implements PreferredSizeWidget {
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }
 
-// AppBar의 뒤로가기 버튼
 class _BackButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -135,7 +123,6 @@ class _BackButton extends StatelessWidget {
   }
 }
 
-// 사용자 아바타
 class _UserAvatar extends StatelessWidget {
   const _UserAvatar();
 
@@ -144,7 +131,6 @@ class _UserAvatar extends StatelessWidget {
     return const CircleAvatar(
       radius: 20,
       backgroundColor: Colors.white,
-      // api 연결시 받아올 예정
       child: Icon(
         Icons.person,
         color: WispColors.deepBlue1,
@@ -153,7 +139,6 @@ class _UserAvatar extends StatelessWidget {
   }
 }
 
-// 사용자 정보 (이름, 온라인 상태)
 class _UserInfo extends StatelessWidget {
   final String userName;
   final bool isOnline;
@@ -186,7 +171,6 @@ class _UserInfo extends StatelessWidget {
   }
 }
 
-// 온라인 상태 표시
 class _OnlineStatus extends StatelessWidget {
   const _OnlineStatus();
 
@@ -212,7 +196,6 @@ class _OnlineStatus extends StatelessWidget {
   }
 }
 
-// AppBar의 더보기 버튼
 class _MoreButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -294,7 +277,6 @@ class ChatItem extends StatelessWidget {
   }
 }
 
-// 메시지 하단 정보 (시간, 읽음 표시)
 class _MessageFooter extends StatelessWidget {
   final bool isMe;
   final bool isRead;
@@ -310,7 +292,7 @@ class _MessageFooter extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         Text(
-          '오후 12:30', // 시간은 API로부터 받아올 예정
+          '오후 12:30',
           style: TextStyle(
             fontSize: 12,
             color: isMe ? Colors.white70 : Colors.white54,
@@ -330,46 +312,73 @@ class _MessageFooter extends StatelessWidget {
 }
 
 // 채팅 입력 필드
-class ChatTextField extends StatelessWidget {
+class ChatTextField extends ConsumerStatefulWidget {
   const ChatTextField({super.key});
 
   @override
+  ConsumerState<ChatTextField> createState() => _ChatTextFieldState();
+}
+
+class _ChatTextFieldState extends ConsumerState<ChatTextField> {
+  bool _emojiShowing = false;
+
+  @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(16),
-      decoration: const BoxDecoration(
-        border: Border(
-          top: BorderSide(color: WispColors.grey, width: 0.5),
+    final chatController = ref.watch(chatControllerProvider.notifier);
+
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Container(
+          width: double.infinity,
+          padding: const EdgeInsets.all(16),
+          decoration: const BoxDecoration(
+            border: Border(
+              top: BorderSide(color: WispColors.grey, width: 0.5),
+            ),
+          ),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              _ActionButton(
+                icon: Icons.emoji_emotions_outlined,
+                onPressed: () {
+                  setState(() {
+                    _emojiShowing = !_emojiShowing;
+                  });
+                },
+              ),
+              _ActionButton(
+                icon: Icons.attach_file,
+                onPressed: () {},
+              ),
+              Expanded(
+                child: _MessageInputField(
+                  messageController: chatController.messageController,
+                ),
+              ),
+              _ActionButton(
+                icon: Icons.bolt_outlined,
+                color: Colors.yellow,
+                onPressed: () {},
+              ),
+              _SendButton(),
+            ],
+          ),
         ),
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          _ActionButton(
-            icon: Icons.emoji_emotions_outlined,
-            onPressed: () {},
+        // EmojiPicker는 Row 밖으로 이동
+        if (_emojiShowing)
+          SizedBox(
+            height: 250,
+            child: EmojiPicker(
+              textEditingController: chatController.messageController,
+            ),
           ),
-          _ActionButton(
-            icon: Icons.attach_file,
-            onPressed: () {},
-          ),
-          Expanded(
-            child: _MessageInputField(),
-          ),
-          _ActionButton(
-            icon: Icons.bolt_outlined,
-            color: Colors.yellow,
-            onPressed: () {},
-          ),
-          _SendButton(),
-        ],
-      ),
+      ],
     );
   }
 }
 
-// 액션 버튼 (이모지, 첨부파일, 특수기능)
 class _ActionButton extends StatelessWidget {
   final IconData icon;
   final VoidCallback onPressed;
@@ -393,12 +402,15 @@ class _ActionButton extends StatelessWidget {
   }
 }
 
-// 메시지 입력 필드
-class _MessageInputField extends ConsumerWidget {
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final chatController = ref.read(chatControllerProvider.notifier);
+class _MessageInputField extends StatelessWidget {
+  final TextEditingController messageController;
 
+  const _MessageInputField({
+    required this.messageController,
+  });
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
         color: Colors.grey.withValues(alpha: 0.2),
@@ -408,7 +420,7 @@ class _MessageInputField extends ConsumerWidget {
       child: TextField(
         minLines: 1,
         maxLines: 5,
-        controller: chatController.messageController,
+        controller: messageController,
         style: const TextStyle(
           color: Colors.white,
         ),
@@ -430,11 +442,10 @@ class _MessageInputField extends ConsumerWidget {
   }
 }
 
-// 전송 버튼
 class _SendButton extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final chatController = ref.read(chatControllerProvider.notifier);
+    final chatController = ref.watch(chatControllerProvider.notifier);
 
     return IconButton(
       onPressed: () {
