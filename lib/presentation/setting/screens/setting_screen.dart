@@ -21,15 +21,17 @@ class _SettingScreenState extends State<SettingScreen> {
       ),
       child: SafeArea(
         child: Padding(
-          padding: EdgeInsetsGeometry.symmetric(vertical: 14, horizontal: 16),
+          padding: EdgeInsets.symmetric(vertical: 14, horizontal: 16),
           child: SingleChildScrollView(
             physics: ClampingScrollPhysics(),
             child: Column(
-              spacing: 20,
               children: [
                 _BasicSettings(),
+                Gap(20),
                 _InformationSettings(),
+                Gap(20),
                 _LanguageSettings(),
+                Gap(20),
                 _AccountSettings(),
               ],
             ),
@@ -307,6 +309,7 @@ class _SettingTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
@@ -356,31 +359,45 @@ class _SettingItem extends StatelessWidget {
         ),
       ),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           icon,
           const Gap(10),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                title,
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  title,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
                 ),
-              ),
-              Text(
-                content,
-                style: const TextStyle(
-                  fontSize: 12,
-                  color: WispColors.lightSkyBlue,
+                Text(
+                  content,
+                  style: const TextStyle(
+                    fontSize: 12,
+                    color: WispColors.lightSkyBlue,
+                  ),
+                  overflow: TextOverflow.ellipsis,
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-          const Spacer(),
-          active,
+          const Gap(10),
+          Flexible(
+            fit: FlexFit.loose,
+            child: Align(
+              alignment: Alignment.centerRight,
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 180),
+                child: active,
+              ),
+            ),
+          ),
         ],
       ),
     );
