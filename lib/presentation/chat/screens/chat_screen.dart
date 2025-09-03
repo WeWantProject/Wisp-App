@@ -54,7 +54,9 @@ class ChatScreen extends StatelessWidget {
 class _ChatMessageList extends StatelessWidget {
   final List<String> messages;
 
-  const _ChatMessageList({required this.messages});
+  const _ChatMessageList({
+    required this.messages,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -424,7 +426,9 @@ class _ChatTextFieldState extends ConsumerState<ChatTextField> {
               ),
               _ActionButton(
                 icon: Icons.attach_file,
-                onPressed: () {},
+                onPressed: () {
+                  // api 연동후 파일 첨부 기능 구현 예정
+                },
               ),
               Expanded(
                 child: _MessageInputField(
