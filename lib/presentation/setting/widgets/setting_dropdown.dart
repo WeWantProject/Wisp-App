@@ -31,7 +31,6 @@ class _SettingDropdownState extends State<SettingDropdown> {
       ),
       child: DropdownButtonHideUnderline(
         child: DropdownButton<String>(
-          isExpanded: true,
           value: widget.options.contains(widget.selectedValue)
               ? widget.selectedValue
               : null,
