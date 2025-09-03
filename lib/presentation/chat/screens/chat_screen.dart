@@ -321,6 +321,15 @@ class ChatTextField extends ConsumerStatefulWidget {
 
 class _ChatTextFieldState extends ConsumerState<ChatTextField> {
   bool _emojiShowing = false;
+  bool _isAi = false;
+
+  final List<String> aiSuggestions = [
+    '안녕하세요! 무엇을 도와드릴까요?',
+    '오늘 날씨가 정말 좋네요!',
+    '주말에 특별한 계획이 있으신가요?',
+    '프로젝트 진행 상황은 어떻게 되나요?',
+    '다음 주 회의 일정은 언제인가요?',
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -329,6 +338,71 @@ class _ChatTextFieldState extends ConsumerState<ChatTextField> {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
+        if (_isAi)
+          Container(
+              height: 200,
+              padding: const EdgeInsets.all(8),
+              width: double.infinity,
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    WispColors.deepBlue3,
+                    WispColors.deepPurple,
+                  ],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+                border: Border(
+                  top: BorderSide(color: WispColors.grey, width: 0.5),
+                  bottom: BorderSide(color: WispColors.grey, width: 0.5),
+                ),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    "\u{1F916} AI 추천 메시지",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: aiSuggestions.length,
+                      itemBuilder: (context, index) {
+                        return ListTile(
+                          dense: true,
+                          title: Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 12, vertical: 8),
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: WispColors.grey,
+                                width: 0.5,
+                              ),
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: Text(
+                              aiSuggestions[index],
+                              style: const TextStyle(
+                                color: Colors.white70,
+                                fontSize: 14,
+                              ),
+                            ),
+                          ),
+                          onTap: () {
+                            chatController.messageController.text =
+                                aiSuggestions[index];
+                          },
+                        );
+                      },
+                    ),
+                  ),
+                ],
+              )),
         Container(
           width: double.infinity,
           padding: const EdgeInsets.all(16),
@@ -360,13 +434,16 @@ class _ChatTextFieldState extends ConsumerState<ChatTextField> {
               _ActionButton(
                 icon: Icons.bolt_outlined,
                 color: Colors.yellow,
-                onPressed: () {},
+                onPressed: () {
+                  setState(() {
+                    _isAi = !_isAi;
+                  });
+                },
               ),
               _SendButton(),
             ],
           ),
         ),
-        // EmojiPicker는 Row 밖으로 이동
         if (_emojiShowing)
           SizedBox(
             height: 250,
