@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class ChatController extends StateNotifier<void> {
-  ChatController() : super(0);
+class ChatController extends StateNotifier<Null> {
+  ChatController() : super(null);
 
   final TextEditingController messageController = TextEditingController();
 
@@ -16,6 +16,6 @@ class ChatController extends StateNotifier<void> {
 }
 
 final chatControllerProvider =
-    StateNotifierProvider<ChatController, void>((ref) {
+    StateNotifierProvider.autoDispose<ChatController, Null>((ref) {
   return ChatController();
 });
