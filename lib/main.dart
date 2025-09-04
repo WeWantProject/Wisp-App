@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:wisp/core/config/configurations.dart';
 import 'package:wisp/core/config/constants/theme.dart';
-import 'package:wisp/core/config/di/injection.dart';
 import 'package:wisp/core/config/router/route.dart';
 
-Future<void> main () async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   configureDependencies();
   runApp(const ProviderScope(child: Wisp()));
