@@ -1,6 +1,6 @@
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
-import 'package:wisp/core/config/configurations.config.dart';
+import 'package:wisp/core/config/di/configurations.config.dart';
 
 final getIt = GetIt.instance;
 
