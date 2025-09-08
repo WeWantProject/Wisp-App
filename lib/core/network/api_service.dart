@@ -1,35 +1,22 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:wisp/core/network/auth_intercepter.dart';
+import 'package:wisp/domain/usecases/auth/refresh_token_usecase.dart';
 
 class ApiService {
-  final Dio _dio = Dio(
-    BaseOptions(
-      baseUrl: dotenv.env['BASE_URL'] ?? "",
-      connectTimeout: Duration(seconds: 5),
-      receiveTimeout: Duration(seconds: 5),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    ),
-  );
+  final Dio _dio = Dio(BaseOptions(
+    baseUrl: dotenv.env['BASE_URL'] ?? "",
+    headers: {"Content-Type": "application/json"},
+  ));
 
-  final storage = const FlutterSecureStorage();
+  final FlutterSecureStorage storage = const FlutterSecureStorage();
 
-  ApiService() {
-    _dio.interceptors.add(
-      InterceptorsWrapper(
-        onRequest: (options, handler) async {
-          String? token = await storage.read(key: "access_token");
-
-          if (token != null) {
-            options.headers["Authorization"] = "Bearer $token";
-          }
-
-          return handler.next(options);
-        },
-      ),
-    );
+  ApiService(RefreshTokenUsecase refreshTokenUseCase) {
+    _dio.interceptors.add(AuthInterceptor(
+      storage: storage,
+      refreshTokenUseCase: refreshTokenUseCase,
+    ));
   }
 
   Future<Response> get(String path) async => await _dio.get(path);
