@@ -1,13 +1,13 @@
-import 'package:wisp/domain/entities/auth/signup_entity.dart';
+import 'package:wisp/domain/entities/auth/signin_entity.dart';
 import 'package:wisp/domain/repositories/auth/auth_repository.dart';
 
-class AuthUsecase {
+class SignInUseCase {
   final AuthRepository authRepository;
 
-  AuthUsecase(this.authRepository);
+  SignInUseCase(this.authRepository);
 
-  Future<void> signUp(SignUpEntity signUpEntity) async {
-    return await authRepository.signUp(signUpEntity);
+  Future<void> call(SigInEntity signinEntity) async {
+    return await authRepository.signIn(signinEntity);
   }
 
   Future<void> sendSms(String phoneNumber) async {
