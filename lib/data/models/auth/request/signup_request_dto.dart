@@ -6,9 +6,11 @@ part 'signup_request_dto.g.dart';
 
 @freezed
 abstract class SignUpRequestDto with _$SignUpRequestDto {
-  const factory SignUpRequestDto({
+  factory SignUpRequestDto({
+    required String userName,
     required String phoneNumber,
     required String password,
+    required String displayName,
   }) = _SignUpRequestDto;
 
   factory SignUpRequestDto.fromJson(Map<String, dynamic> json) =>
