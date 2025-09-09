@@ -1,20 +1,14 @@
 import 'package:wisp/data/models/auth/request/signin_request_dto.dart';
 import 'package:wisp/domain/entities/auth/signin_entity.dart';
 
-extension SiginEntityMapper on SignInEntity {
-  SignInEntity toEntity() {
-    return SignInEntity(
-      phoneNumber: phoneNumber,
-      password: password,
-    );
-  }
-}
+class SigninRequestMapper {
+  static SignInEntity toEntity(SigninRequestDto dto) => SignInEntity(
+        phoneNumber: dto.phoneNumber,
+        password: dto.password,
+      );
 
-extension SignInDtoMapper on SigninRequestDto {
-  SigninRequestDto toDto() {
-    return SigninRequestDto(
-      phoneNumber: phoneNumber,
-      password: password,
-    );
-  }
+  static SigninRequestDto toDto(SignInEntity entity) => SigninRequestDto(
+        phoneNumber: entity.phoneNumber,
+        password: entity.password,
+      );
 }
