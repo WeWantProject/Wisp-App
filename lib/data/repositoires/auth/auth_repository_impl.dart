@@ -7,13 +7,13 @@ import 'package:wisp/domain/entities/auth/signup_entity.dart';
 import 'package:wisp/domain/entities/auth/token_entity.dart';
 import 'package:wisp/domain/repositories/auth/auth_repository.dart';
 
-class AuthRepositoryImpl extends AuthRepository {
+class AuthRepositoryImpl implements AuthRepository {
   final AuthRemoteDataSourceImpl remoteDataSource;
 
   AuthRepositoryImpl(this.remoteDataSource);
 
   @override
-  Future<void> ChangePassword(String phoneNumber, String newPassword) async {
+  Future<void> changePassword(String phoneNumber, String newPassword) async {
     await remoteDataSource.changePassword(phoneNumber, newPassword);
   }
 
