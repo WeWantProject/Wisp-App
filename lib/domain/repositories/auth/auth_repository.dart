@@ -7,7 +7,7 @@ abstract class AuthRepository {
 
   Future<void> sendSms(String phoneNumber);
 
-  Future<void> verifySms(String code);
+  Future<void> verifyPhone(String code);
 
   Future<void> ChangePassword(String phoneNumber, String newPassword);
 

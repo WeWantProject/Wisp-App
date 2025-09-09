@@ -15,6 +15,6 @@ class SignInUseCase {
   }
 
   Future<void> verifySms(String code) async {
-    return await authRepository.verifySms(code);
+    return await authRepository.verifyPhone(code);
   }
 }
