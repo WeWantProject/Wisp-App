@@ -9,7 +9,7 @@ abstract class AuthRepository {
 
   Future<void> verifySms(String code);
 
-  Future<void> ChangePassword(String newPassword);
+  Future<void> ChangePassword(String phoneNumber, String newPassword);
 
   Future<void> signIn(SigInEntity signinEntity);
 
