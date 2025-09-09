@@ -11,7 +11,7 @@ abstract class AuthRepository {
 
   Future<void> ChangePassword(String phoneNumber, String newPassword);
 
-  Future<void> signIn(SigInEntity signinEntity);
+  Future<void> signIn(SignInEntity signinEntity);
 
   Future<TokenEntity> refreshToken(String refreshToken);
 }

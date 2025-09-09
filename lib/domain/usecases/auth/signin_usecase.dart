@@ -6,7 +6,7 @@ class SignInUseCase {
 
   SignInUseCase(this.authRepository);
 
-  Future<void> call(SigInEntity signinEntity) async {
+  Future<void> call(SignInEntity signinEntity) async {
     return await authRepository.signIn(signinEntity);
   }
 
