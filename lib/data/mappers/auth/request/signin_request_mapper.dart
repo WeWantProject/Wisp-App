@@ -10,7 +10,7 @@ extension SiginEntityMapper on SignInEntity {
   }
 }
 
-extension SignInRequestMapper on SigninRequestDto {
+extension SignInDtoMapper on SigninRequestDto {
   SigninRequestDto toDto() {
     return SigninRequestDto(
       phoneNumber: phoneNumber,
