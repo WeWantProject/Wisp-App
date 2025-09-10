@@ -12,14 +12,20 @@ class ApiService {
 
   final FlutterSecureStorage storage = const FlutterSecureStorage();
 
-  ApiService(RefreshTokenUsecase refreshTokenUseCase) {
-    _dio.interceptors.add(AuthInterceptor(
-      storage: storage,
-      refreshTokenUseCase: refreshTokenUseCase,
-    ));
+  ApiService();
+
+  void attachAuthInterceptor(RefreshTokenUsecase refreshTokenUseCase) {
+    _dio.interceptors.add(
+      AuthInterceptor(
+        storage: storage,
+        refreshTokenUseCase: refreshTokenUseCase,
+      ),
+    );
   }
 
   Future<Response> get(String path) async => await _dio.get(path);
   Future<Response> post(String path, Map<String, dynamic> data) async =>
       await _dio.post(path, data: data);
+
+  Dio get client => _dio;
 }
