@@ -5,7 +5,7 @@ class ChangePasswordUsecase {
 
   ChangePasswordUsecase(this.authRepository);
 
-  Future<void> call(String phoneNumber, String newPassword) async {
+  Future<void> changePassword(String phoneNumber, String newPassword) async {
     return await authRepository.changePassword(phoneNumber, newPassword);
   }
 }

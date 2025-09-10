@@ -41,7 +41,7 @@ class LoginController extends StateNotifier<LoginState> {
         return false;
       }
 
-      await signInUseCase(SignInEntity(
+      await signInUseCase.signIn(SignInEntity(
         phoneNumber: phoneNumber,
         password: password,
       ));
