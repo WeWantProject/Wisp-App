@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:wisp/core/config/di/configurations.dart';
 import 'package:wisp/core/config/constants/theme.dart';
+import 'package:wisp/core/config/di/injection.dart';
 import 'package:wisp/core/config/router/route.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
