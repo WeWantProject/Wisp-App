@@ -25,59 +25,70 @@ class AuthScreen extends HookConsumerWidget {
     final passwordFocusNode = useFocusNode();
 
     return BaseScaffold(
-      child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const LogoSection(),
-            const Gap(30),
-            ToggleAuthButton(
-              isSelected: authState.isLoginMode,
-              onPressed: authNotifier.toggleAuthMode,
+      child: SafeArea(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+              minHeight: MediaQuery.of(context).size.height -
+                  MediaQuery.of(context).padding.top -
+                  MediaQuery.of(context).padding.bottom -
+                  40,
             ),
-            const Gap(20),
-            AnimatedSwitcher(
-              duration: const Duration(milliseconds: 300),
-              switchInCurve: Curves.easeIn,
-              switchOutCurve: Curves.easeOut,
-              transitionBuilder: (child, animation) {
-                return FadeTransition(
-                  opacity: animation,
-                  child: ScaleTransition(
-                    scale:
-                        Tween<double>(begin: 0.95, end: 1.0).animate(animation),
-                    child: child,
-                  ),
-                );
-              },
-              child: authState.isLoginMode[0]
-                  ? LoginForm(
-                      phoneNumberFocusNode: phoneNumberFocusNode,
-                      passwordFocusNode: passwordFocusNode,
-                      phoneController: notifier.phoneController,
-                      passwordController: notifier.passwordController,
-                      onLogin: () async {
-                        await notifier.login();
-                        if (ref.read(loginControllerProvider).isLogin) {
-                          if (context.mounted) {
-                            context.go('/home');
-                          }
-                        }
-                      },
-                    )
-                  : SignupForm(
-                      nameController: TextEditingController(),
-                      phoneController: TextEditingController(),
-                      confromPhoneController: TextEditingController(),
-                      passwordController: TextEditingController(),
-                      conformPasswordController: TextEditingController(),
-                      onSignup: () {},
-                      phoneNumberFocusNode: FocusNode(),
-                      passwordFocusNode: FocusNode(),
-                      conformPasswordFocusNode: FocusNode(),
-                      nameFocusNode: FocusNode()),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const LogoSection(),
+                const Gap(30),
+                ToggleAuthButton(
+                  isSelected: authState.isLoginMode,
+                  onPressed: authNotifier.toggleAuthMode,
+                ),
+                const Gap(20),
+                AnimatedSwitcher(
+                  duration: const Duration(milliseconds: 300),
+                  switchInCurve: Curves.easeIn,
+                  switchOutCurve: Curves.easeOut,
+                  transitionBuilder: (child, animation) {
+                    return FadeTransition(
+                      opacity: animation,
+                      child: ScaleTransition(
+                        scale: Tween<double>(begin: 0.95, end: 1.0)
+                            .animate(animation),
+                        child: child,
+                      ),
+                    );
+                  },
+                  child: authState.isLoginMode[0]
+                      ? LoginForm(
+                          phoneNumberFocusNode: phoneNumberFocusNode,
+                          passwordFocusNode: passwordFocusNode,
+                          phoneController: notifier.phoneController,
+                          passwordController: notifier.passwordController,
+                          onLogin: () async {
+                            await notifier.login();
+                            if (ref.read(loginControllerProvider).isLogin) {
+                              if (context.mounted) {
+                                context.go('/home');
+                              }
+                            }
+                          },
+                        )
+                      : SignupForm(
+                          nameController: TextEditingController(),
+                          phoneController: TextEditingController(),
+                          confromPhoneController: TextEditingController(),
+                          passwordController: TextEditingController(),
+                          conformPasswordController: TextEditingController(),
+                          onSignup: () {},
+                          phoneNumberFocusNode: FocusNode(),
+                          passwordFocusNode: FocusNode(),
+                          conformPasswordFocusNode: FocusNode(),
+                          nameFocusNode: FocusNode()),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );
