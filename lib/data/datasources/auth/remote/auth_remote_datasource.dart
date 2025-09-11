@@ -1,3 +1,4 @@
+import 'package:injectable/injectable.dart';
 import 'package:wisp/data/datasources/auth/remote/auth_api.dart';
 import 'package:wisp/data/models/auth/request/signin_request_dto.dart';
 import 'package:wisp/data/models/auth/request/signup_request_dto.dart';
@@ -12,6 +13,7 @@ abstract class AuthRemoteDataSource {
   Future<RefreshTokenResponseDto> refreshToken(String refreshToken);
 }
 
+@LazySingleton(as: AuthRemoteDataSource)
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   final AuthApi api;
 

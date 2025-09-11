@@ -1,3 +1,4 @@
+import 'package:injectable/injectable.dart';
 import 'package:wisp/data/datasources/auth/remote/auth_remote_datasource.dart';
 import 'package:wisp/data/mappers/auth/request/signin_request_mapper.dart';
 import 'package:wisp/data/mappers/auth/request/signup_request_mapper.dart';
@@ -7,6 +8,7 @@ import 'package:wisp/domain/entities/auth/signup_entity.dart';
 import 'package:wisp/domain/entities/auth/token_entity.dart';
 import 'package:wisp/domain/repositories/auth/auth_repository.dart';
 
+@LazySingleton(as: AuthRepository)
 class AuthRepositoryImpl implements AuthRepository {
   final AuthRemoteDataSourceImpl remoteDataSource;
 
