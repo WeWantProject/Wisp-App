@@ -37,7 +37,7 @@ class LoginController extends StateNotifier<LoginState> {
       if (!isValidPassword(password)) {
         state = state.copyWith(
           isLoading: false,
-          errorMessage: '비밀번호는 11자 이상이어야 합니다.',
+          errorMessage: '비밀번호는 8자 이상이어야 합니다.',
         );
         return false;
       }
@@ -66,7 +66,7 @@ class LoginController extends StateNotifier<LoginState> {
   }
 
   bool isValidPassword(String password) {
-    return password.length >= 11;
+    return password.length >= 8;
   }
 
   @override
