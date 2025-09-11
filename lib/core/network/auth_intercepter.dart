@@ -4,17 +4,24 @@ import 'package:wisp/domain/usecases/auth/refresh_token_usecase.dart';
 
 class AuthInterceptor extends Interceptor {
   final FlutterSecureStorage storage;
-  final RefreshTokenUsecase refreshTokenUseCase;
+  final RefreshTokenUseCase refreshTokenUseCase;
+  final Dio dio;
 
-  AuthInterceptor({required this.storage, required this.refreshTokenUseCase});
+  AuthInterceptor({
+    required this.storage,
+    required this.refreshTokenUseCase,
+    required this.dio,
+  });
 
   @override
   void onRequest(
       RequestOptions options, RequestInterceptorHandler handler) async {
-    String? token = await storage.read(key: "access_token");
-    if (token != null) {
-      options.headers["Authorization"] = "Bearer $token";
-    }
+    try {
+      final token = await storage.read(key: "access_token");
+      if (token != null) {
+        options.headers["Authorization"] = "Bearer $token";
+      }
+    } catch (_) {}
     handler.next(options);
   }
 
@@ -31,8 +38,8 @@ class AuthInterceptor extends Interceptor {
 
           final opts = err.requestOptions;
           opts.headers["Authorization"] = "Bearer ${newToken.accessToken}";
-          final cloneReq = await Dio().fetch(opts);
-          return handler.resolve(cloneReq);
+          final response = await dio.fetch(opts);
+          return handler.resolve(response);
         } catch (_) {
           return handler.next(err);
         }

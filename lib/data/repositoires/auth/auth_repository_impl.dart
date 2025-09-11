@@ -10,7 +10,7 @@ import 'package:wisp/domain/repositories/auth/auth_repository.dart';
 
 @LazySingleton(as: AuthRepository)
 class AuthRepositoryImpl implements AuthRepository {
-  final AuthRemoteDataSourceImpl remoteDataSource;
+  final AuthRemoteDataSource remoteDataSource;
 
   AuthRepositoryImpl(this.remoteDataSource);
 

@@ -56,8 +56,13 @@ class AuthScreen extends HookConsumerWidget {
                       passwordFocusNode: passwordFocusNode,
                       phoneController: notifier.phoneController,
                       passwordController: notifier.passwordController,
-                      onLogin: () {
-                        context.go('/main');
+                      onLogin: () async {
+                        await notifier.login();
+                        if (ref.read(loginControllerProvider).isLogin) {
+                          if (context.mounted) {
+                            context.go('/home');
+                          }
+                        }
                       },
                     )
                   : SignupForm(

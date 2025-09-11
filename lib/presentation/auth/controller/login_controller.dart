@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:wisp/core/config/di/auth_module.dart';
+import 'package:wisp/core/config/di/injection.dart';
 import 'package:wisp/domain/entities/auth/signin_entity.dart';
 import 'package:wisp/domain/usecases/auth/signin_usecase.dart';
 import 'package:wisp/presentation/auth/state/login_state.dart';
 
 final loginControllerProvider =
     StateNotifierProvider<LoginController, LoginState>((ref) {
-  return LoginController(getIt<SignInUseCase>());
+  final signInuseCase = getIt<SignInUseCase>();
+  return LoginController(signInuseCase);
 });
 
 class LoginController extends StateNotifier<LoginState> {
