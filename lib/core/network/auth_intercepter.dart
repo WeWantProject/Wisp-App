@@ -14,15 +14,15 @@ class AuthInterceptor extends Interceptor {
   });
 
   @override
-  void onRequest(
-      RequestOptions options, RequestInterceptorHandler handler) async {
-    try {
-      final token = await storage.read(key: "access_token");
+  void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
+    storage.read(key: "access_token").then((token) {
       if (token != null) {
         options.headers["Authorization"] = "Bearer $token";
       }
-    } catch (_) {}
-    handler.next(options);
+      handler.next(options);
+    }).catchError((_) {
+      handler.next(options);
+    });
   }
 
   @override
@@ -35,7 +35,6 @@ class AuthInterceptor extends Interceptor {
           await storage.write(key: "access_token", value: newToken.accessToken);
           await storage.write(
               key: "refresh_token", value: newToken.refreshToken);
-
           final opts = err.requestOptions;
           opts.headers["Authorization"] = "Bearer ${newToken.accessToken}";
           final response = await dio.fetch(opts);
