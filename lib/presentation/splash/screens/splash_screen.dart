@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:wisp/core/config/constants/base_scaffold.dart';
@@ -10,6 +11,7 @@ class SplashScreen extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    const _storage = FlutterSecureStorage();
 
     final dotIndex = useState(0);
 
@@ -33,73 +35,83 @@ class SplashScreen extends HookWidget {
     );
 
     useEffect(() {
-      Timer(const Duration(seconds: 5), () {
-      context.pushReplacement('/auth');
-      });
+      Future<void> checkToken() async {
+        await Future.delayed(const Duration(seconds: 5), () {});
+        final token = await _storage.read(key: 'accessToken');
+        if (token != null && token.isNotEmpty) {
+          context.go('/main');
+        } else {
+          context.go('/auth');
+        }
+      }
+
+      checkToken();
       return null;
     }, []);
 
     return BaseScaffold(
       child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              ScaleTransition(
-                scale: logoScale,
-                child: SvgPicture.asset(
-                  'assets/images/wisp_logo.svg'
-                ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            ScaleTransition(
+              scale: logoScale,
+              child: SvgPicture.asset('assets/images/wisp_logo.svg'),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            const Text(
+              'Wisp',
+              style: TextStyle(
+                color: Colors.white,
               ),
-              const SizedBox(height: 20,),
-              const Text(
-                'Wisp',
-                style: TextStyle(
-                  color: Colors.white,
-                ),
+            ),
+            const Text(
+              '가벼운 소통, 깊은 연결',
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
               ),
-              const Text(
-                '가벼운 소통, 깊은 연결',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(height: 30,),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: List.generate(
-                  3, (index) {
-                    final isSeleted = dotIndex.value == index;
-                    return Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                    child: AnimatedSlide(
-                      offset: isSeleted ? const Offset(0, -0.5) : Offset.zero,
-                      duration: const Duration(milliseconds: 300),
-                      curve: Curves.easeInOut,
-                      child: CircleAvatar(
-                        radius: 4,
-                        backgroundColor: isSeleted ? Colors.white : Colors.grey,
-                      ),
+            ),
+            const SizedBox(
+              height: 30,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: List.generate(3, (index) {
+                final isSeleted = dotIndex.value == index;
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                  child: AnimatedSlide(
+                    offset: isSeleted ? const Offset(0, -0.5) : Offset.zero,
+                    duration: const Duration(milliseconds: 300),
+                    curve: Curves.easeInOut,
+                    child: CircleAvatar(
+                      radius: 4,
+                      backgroundColor: isSeleted ? Colors.white : Colors.grey,
                     ),
-                  );
-                  }
+                  ),
+                );
+              }),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            FadeTransition(
+              opacity: textFadeIn,
+              child: const Text(
+                '앱을 준비하고 있습니다...',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w300,
                 ),
               ),
-              const SizedBox(height: 20,),
-              FadeTransition(
-                opacity: textFadeIn,
-                child: const Text(
-                  '앱을 준비하고 있습니다...',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w300,
-                  ),
-                ),
-              )
-            ],
-          ),
+            )
+          ],
         ),
+      ),
     );
   }
 }
