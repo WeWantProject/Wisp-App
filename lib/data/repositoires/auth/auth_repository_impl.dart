@@ -4,7 +4,6 @@ import 'package:wisp/data/mappers/auth/request/signin_request_mapper.dart';
 import 'package:wisp/data/mappers/auth/request/signup_request_mapper.dart';
 import 'package:wisp/data/mappers/auth/response/signin_response_mapper.dart';
 import 'package:wisp/data/mappers/auth/response/token_response_mapper.dart';
-import 'package:wisp/data/models/auth/response/signin_response_dto.dart';
 import 'package:wisp/domain/entities/auth/signin_entity.dart';
 import 'package:wisp/domain/entities/auth/signup_entity.dart';
 import 'package:wisp/domain/entities/auth/refresh_token_entity.dart';
