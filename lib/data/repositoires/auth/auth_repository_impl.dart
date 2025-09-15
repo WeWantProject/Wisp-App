@@ -5,7 +5,7 @@ import 'package:wisp/data/mappers/auth/request/signup_request_mapper.dart';
 import 'package:wisp/data/mappers/auth/response/token_response_mapper.dart';
 import 'package:wisp/domain/entities/auth/signin_entity.dart';
 import 'package:wisp/domain/entities/auth/signup_entity.dart';
-import 'package:wisp/domain/entities/auth/token_entity.dart';
+import 'package:wisp/domain/entities/auth/refresh_token_entity.dart';
 import 'package:wisp/domain/repositories/auth/auth_repository.dart';
 
 @LazySingleton(as: AuthRepository)
@@ -20,7 +20,7 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<TokenEntity> refreshToken(String refreshToken) async {
+  Future<RefreshToken> refreshToken(String refreshToken) async {
     final response = await remoteDataSource.refreshToken(refreshToken);
     return TokenResponseMapper.toEntity(response);
   }
@@ -34,6 +34,7 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<void> signIn(SignInEntity signinEntity) async {
     final dto = SigninRequestMapper.toDto(signinEntity);
     await remoteDataSource.signIn(dto);
+    print("호출됨");
   }
 
   @override
