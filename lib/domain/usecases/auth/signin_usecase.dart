@@ -1,5 +1,6 @@
 import 'package:injectable/injectable.dart';
 import 'package:wisp/domain/entities/auth/signin_entity.dart';
+import 'package:wisp/domain/entities/auth/token_entity.dart';
 import 'package:wisp/domain/repositories/auth/auth_repository.dart';
 
 @injectable
@@ -8,7 +9,7 @@ class SignInUseCase {
 
   SignInUseCase(this.authRepository);
 
-  Future<void> signIn(SignInEntity signinEntity) async {
+  Future<TokenEntity> signIn(SignInEntity signinEntity) async {
     return await authRepository.signIn(signinEntity);
   }
 

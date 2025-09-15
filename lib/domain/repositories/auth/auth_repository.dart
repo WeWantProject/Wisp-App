@@ -1,6 +1,7 @@
 import 'package:wisp/domain/entities/auth/signin_entity.dart';
 import 'package:wisp/domain/entities/auth/signup_entity.dart';
 import 'package:wisp/domain/entities/auth/refresh_token_entity.dart';
+import 'package:wisp/domain/entities/auth/token_entity.dart';
 
 abstract class AuthRepository {
   Future<void> signUp(SignUpEntity signUpEntity);
@@ -11,7 +12,7 @@ abstract class AuthRepository {
 
   Future<void> changePassword(String phoneNumber, String newPassword);
 
-  Future<void> signIn(SignInEntity signinEntity);
+  Future<TokenEntity> signIn(SignInEntity signinEntity);
 
   Future<RefreshToken> refreshToken(String refreshToken);
 }

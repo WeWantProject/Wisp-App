@@ -3,6 +3,7 @@ import 'package:retrofit/retrofit.dart';
 import 'package:wisp/data/models/auth/request/signin_request_dto.dart';
 import 'package:wisp/data/models/auth/request/signup_request_dto.dart';
 import 'package:wisp/data/models/auth/response/refresh_token_response_dto.dart';
+import 'package:wisp/data/models/auth/response/signin_response_dto.dart';
 
 part 'auth_api.g.dart';
 
@@ -26,7 +27,7 @@ abstract class AuthApi {
   );
 
   @POST('/auth/signin')
-  Future<void> signIn(
+  Future<SignInResponseDto> signIn(
     @Body() SigninRequestDto body,
   );
 

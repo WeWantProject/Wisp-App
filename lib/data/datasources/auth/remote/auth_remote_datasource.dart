@@ -3,12 +3,13 @@ import 'package:wisp/data/datasources/auth/remote/auth_api.dart';
 import 'package:wisp/data/models/auth/request/signin_request_dto.dart';
 import 'package:wisp/data/models/auth/request/signup_request_dto.dart';
 import 'package:wisp/data/models/auth/response/refresh_token_response_dto.dart';
+import 'package:wisp/data/models/auth/response/signin_response_dto.dart';
 
 abstract class AuthRemoteDataSource {
   Future<void> sendSms(String phoneNumber);
   Future<void> verifyPhone(String code);
   Future<void> signUp(SignUpRequestDto dto);
-  Future<void> signIn(SigninRequestDto dto);
+  Future<SignInResponseDto> signIn(SigninRequestDto dto);
   Future<void> changePassword(String phoneNumber, String newPassword);
   Future<RefreshTokenResponseDto> refreshToken(String refreshToken);
 }
@@ -33,7 +34,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   Future<void> signUp(SignUpRequestDto dto) => api.signUp(dto);
 
   @override
-  Future<void> signIn(SigninRequestDto dto) => api.signIn(dto);
+  Future<SignInResponseDto> signIn(SigninRequestDto dto) => api.signIn(dto);
 
   @override
   Future<void> changePassword(String phoneNumber, String newPassword) async {
