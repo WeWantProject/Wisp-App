@@ -13,28 +13,30 @@ class AuthInterceptor extends Interceptor {
     required this.dio,
   });
 
+  static const _accessTokenKey = 'access_token';
+  static const _refreshTokenKey = 'refresh_token';
+
   @override
-  void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
-    storage.read(key: "access_token").then((token) {
-      if (token != null) {
-        options.headers["Authorization"] = "Bearer $token";
-      }
-      handler.next(options);
-    }).catchError((_) {
-      handler.next(options);
-    });
+  void onRequest(
+      RequestOptions options, RequestInterceptorHandler handler) async {
+    final token = await storage.read(key: _accessTokenKey);
+    if (token != null) {
+      options.headers["Authorization"] = "Bearer $token";
+    }
+    handler.next(options);
   }
 
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) async {
     if (err.response?.statusCode == 401) {
-      final refreshToken = await storage.read(key: "refresh_token");
+      final refreshToken = await storage.read(key: _refreshTokenKey);
       if (refreshToken != null) {
         try {
           final newToken = await refreshTokenUseCase.refreshToken(refreshToken);
-          await storage.write(key: "access_token", value: newToken.accessToken);
           await storage.write(
-              key: "refresh_token", value: newToken.refreshToken);
+              key: _accessTokenKey, value: newToken.accessToken);
+          await storage.write(
+              key: _refreshTokenKey, value: newToken.refreshToken);
           final opts = err.requestOptions;
           opts.headers["Authorization"] = "Bearer ${newToken.accessToken}";
           final response = await dio.fetch(opts);

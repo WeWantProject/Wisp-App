@@ -1,30 +1,61 @@
 import 'package:dio/dio.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:wisp/core/network/auth_intercepter.dart';
-import 'package:wisp/domain/usecases/auth/refresh_token_usecase.dart';
 
 class ApiService {
   final Dio _dio;
-  final FlutterSecureStorage storage;
 
   ApiService({
     required Dio dio,
-    required this.storage,
-  }) : _dio = dio;
+  }) : _dio = dio {
+    _attachErrorLoggingInterceptor();
+  }
 
-  void attachAuthInterceptor(RefreshTokenUseCase refreshTokenUseCase) {
+  // ========= API 호출 =========
+  Future<Response> get(String path,
+      {Map<String, dynamic>? queryParameters}) async {
+    try {
+      final res = await _dio.get(path, queryParameters: queryParameters);
+      return res;
+    } on DioException catch (e) {
+      _printDioError(e);
+      rethrow; // 필요하면 상위에서 catch
+    } catch (e) {
+      print("❌ Unknown error: $e");
+      rethrow;
+    }
+  }
+
+  Future<Response> post(String path, Map<String, dynamic> data) async {
+    try {
+      final res = await _dio.post(path, data: data);
+      return res;
+    } on DioException catch (e) {
+      _printDioError(e);
+      rethrow;
+    } catch (e) {
+      print("❌ Unknown error: $e");
+      rethrow;
+    }
+  }
+
+  Dio get client => _dio;
+
+  // ========= 에러 로깅 인터셉터 =========
+  void _attachErrorLoggingInterceptor() {
     _dio.interceptors.add(
-      AuthInterceptor(
-        storage: storage,
-        refreshTokenUseCase: refreshTokenUseCase,
-        dio: _dio,
+      InterceptorsWrapper(
+        onError: (DioException e, handler) {
+          _printDioError(e);
+          handler.next(e); // 에러를 계속 전달
+        },
       ),
     );
   }
 
-  Future<Response> get(String path) async => await _dio.get(path);
-  Future<Response> post(String path, Map<String, dynamic> data) async =>
-      await _dio.post(path, data: data);
-
-  Dio get client => _dio;
+  void _printDioError(DioException e) {
+    print("❌ [DioError] -----------------------------");
+    print("Status Code: ${e.response?.statusCode}");
+    print("Data       : ${e.response?.data}");
+    print("Message    : ${e.message}");
+    print("------------------------------------------");
+  }
 }

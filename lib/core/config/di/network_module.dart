@@ -8,24 +8,36 @@ import 'package:wisp/data/datasources/auth/remote/auth_api.dart';
 @module
 abstract class NetworkModule {
   @lazySingleton
-  Dio dio() => Dio(
-        BaseOptions(
-          baseUrl: dotenv.env['BASE_URL'] ?? '',
-          connectTimeout: const Duration(seconds: 5),
-          receiveTimeout: const Duration(seconds: 5),
-          headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json",
-          },
-        ),
-      );
+  Dio dio() {
+    final Dio dio = Dio(
+      BaseOptions(
+        baseUrl: dotenv.env['BASE_URL'] ?? '',
+        connectTimeout: const Duration(seconds: 5),
+        receiveTimeout: const Duration(seconds: 5),
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+        },
+      ),
+    );
+    dio.interceptors.add(
+      LogInterceptor(
+        request: true,
+        requestHeader: true,
+        requestBody: true,
+        responseHeader: false,
+        responseBody: true,
+        error: true,
+      ),
+    );
+    return dio;
+  }
 
   @lazySingleton
   FlutterSecureStorage storage() => const FlutterSecureStorage();
 
   @lazySingleton
-  ApiService apiService(Dio dio, FlutterSecureStorage storage) =>
-      ApiService(dio: dio, storage: storage);
+  ApiService apiService(Dio dio) => ApiService(dio: dio);
 
   @lazySingleton
   AuthApi authApi(Dio dio) => AuthApi(dio);

@@ -44,7 +44,7 @@ class AuthScreen extends HookConsumerWidget {
                   isSelected: authState.isLoginMode,
                   onPressed: authNotifier.toggleAuthMode,
                 ),
-                const Gap(20),
+                const Gap(10),
                 AnimatedSwitcher(
                   duration: const Duration(milliseconds: 300),
                   switchInCurve: Curves.easeIn,
@@ -74,17 +74,7 @@ class AuthScreen extends HookConsumerWidget {
                             }
                           },
                         )
-                      : SignupForm(
-                          nameController: TextEditingController(),
-                          phoneController: TextEditingController(),
-                          confromPhoneController: TextEditingController(),
-                          passwordController: TextEditingController(),
-                          conformPasswordController: TextEditingController(),
-                          onSignup: () {},
-                          phoneNumberFocusNode: FocusNode(),
-                          passwordFocusNode: FocusNode(),
-                          conformPasswordFocusNode: FocusNode(),
-                          nameFocusNode: FocusNode()),
+                      : const SignupForm(),
                 ),
               ],
             ),
