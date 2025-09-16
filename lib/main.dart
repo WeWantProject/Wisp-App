@@ -9,7 +9,12 @@ Future<void> main() async {
   await dotenv.load(fileName: ".env");
   WidgetsFlutterBinding.ensureInitialized();
   configureDependencies();
-  runApp(const ProviderScope(child: Wisp()));
+
+  runApp(
+    const ProviderScope(
+      child: Wisp(),
+    ),
+  );
 }
 
 class Wisp extends StatelessWidget {

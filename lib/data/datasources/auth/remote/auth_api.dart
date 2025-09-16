@@ -12,29 +12,19 @@ abstract class AuthApi {
   factory AuthApi(Dio dio, {String baseUrl}) = _AuthApi;
 
   @POST('/auth/send-sms')
-  Future<void> sendSms(
-    @Body() Map<String, dynamic> body,
-  );
+  Future<void> sendSms(@Body() Map<String, dynamic> body);
 
   @PATCH('/auth/verify-phone')
-  Future<void> verifyPhone(
-    @Body() Map<String, dynamic> body,
-  );
+  Future<void> verifyPhone(@Body() Map<String, dynamic> body);
 
   @POST('/auth/signup')
-  Future<void> signUp(
-    @Body() SignUpRequestDto body,
-  );
+  Future<void> signUp(@Body() SignUpRequestDto body);
 
   @POST('/auth/signin')
-  Future<SignInResponseDto> signIn(
-    @Body() SigninRequestDto body,
-  );
+  Future<SignInResponseDto> signIn(@Body() SigninRequestDto body);
 
   @PATCH('/auth/change-password')
-  Future<void> changePassword(
-    @Body() Map<String, dynamic> body,
-  );
+  Future<void> changePassword(@Body() Map<String, dynamic> body);
 
   @PUT('/auth/refresh-token')
   Future<RefreshTokenResponseDto> refreshToken(

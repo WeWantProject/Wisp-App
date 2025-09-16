@@ -69,7 +69,7 @@ class AuthScreen extends HookConsumerWidget {
                             await notifier.login();
                             if (ref.read(loginControllerProvider).isLogin) {
                               if (context.mounted) {
-                                context.go('/home');
+                                context.go('/main');
                               }
                             }
                           },

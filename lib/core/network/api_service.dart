@@ -9,7 +9,6 @@ class ApiService {
     _attachErrorLoggingInterceptor();
   }
 
-  // ========= API 호출 =========
   Future<Response> get(String path,
       {Map<String, dynamic>? queryParameters}) async {
     try {
@@ -27,6 +26,7 @@ class ApiService {
   Future<Response> post(String path, Map<String, dynamic> data) async {
     try {
       final res = await _dio.post(path, data: data);
+      print(res);
       return res;
     } on DioException catch (e) {
       _printDioError(e);
