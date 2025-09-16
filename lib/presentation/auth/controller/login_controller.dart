@@ -19,22 +19,15 @@ class LoginController extends StateNotifier<LoginState> {
 
   LoginController(this.signInUseCase) : super(const LoginState());
 
-  final phoneController = TextEditingController();
-  final passwordController = TextEditingController();
-
-  Future<bool> login() async {
+  Future<bool> login(String phoneNumber, String password) async {
     try {
       state = state.copyWith(isLoading: true, errorMessage: '');
-
-      final phoneNumber = phoneController.text.trim();
-      final password = passwordController.text.trim();
-
       if (!isValidPhoneNumber(phoneNumber)) {
         state = state.copyWith(
           isLoading: false,
           errorMessage: '올바른 전화번호를 입력해주세요.',
+          focusField: "phone",
         );
-        print("휴대폰 번호 오류");
         return false;
       }
 
@@ -42,6 +35,7 @@ class LoginController extends StateNotifier<LoginState> {
         state = state.copyWith(
           isLoading: false,
           errorMessage: '비밀번호는 8자 이상이어야 합니다.',
+          focusField: "password",
         );
         return false;
       }
@@ -68,7 +62,7 @@ class LoginController extends StateNotifier<LoginState> {
       );
       await _secureStorage.write(key: 'userRole', value: response.role.name);
 
-      state = state.copyWith(isLoading: false, isLogin: true);
+      state = state.copyWith(isLoading: false, isLogin: true, focusField: null);
       return true;
     } on DioException catch (e) {
       final Object? data = e.response?.data;
@@ -94,12 +88,5 @@ class LoginController extends StateNotifier<LoginState> {
 
   bool isValidPassword(String password) {
     return password.length >= 8;
-  }
-
-  @override
-  void dispose() {
-    phoneController.dispose();
-    passwordController.dispose();
-    super.dispose();
   }
 }
