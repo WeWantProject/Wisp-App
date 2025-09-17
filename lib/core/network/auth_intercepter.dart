@@ -13,12 +13,14 @@ class AuthInterceptor extends Interceptor {
     required this.dio,
   });
 
-  static const _accessTokenKey = 'access_token';
-  static const _refreshTokenKey = 'refresh_token';
+  static const _accessTokenKey = 'accesstoken';
+  static const _refreshTokenKey = 'refreshToken';
 
   @override
   void onRequest(
-      RequestOptions options, RequestInterceptorHandler handler) async {
+    RequestOptions options,
+    RequestInterceptorHandler handler,
+  ) async {
     final token = await storage.read(key: _accessTokenKey);
     if (token != null) {
       options.headers["Authorization"] = "Bearer $token";
@@ -34,9 +36,13 @@ class AuthInterceptor extends Interceptor {
         try {
           final newToken = await refreshTokenUseCase.refreshToken(refreshToken);
           await storage.write(
-              key: _accessTokenKey, value: newToken.accessToken);
+            key: _accessTokenKey,
+            value: newToken.accessToken,
+          );
           await storage.write(
-              key: _refreshTokenKey, value: newToken.refreshToken);
+            key: _refreshTokenKey,
+            value: newToken.refreshToken,
+          );
           final opts = err.requestOptions;
           opts.headers["Authorization"] = "Bearer ${newToken.accessToken}";
           final response = await dio.fetch(opts);
