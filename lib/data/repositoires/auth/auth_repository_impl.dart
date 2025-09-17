@@ -28,8 +28,8 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<void> sendSms(String phoneNumber) {
-    return remoteDataSource.sendSms(phoneNumber);
+  Future<void> sendSms(String phoneNumber) async {
+    await remoteDataSource.sendSms(phoneNumber);
   }
 
   @override
@@ -47,6 +47,11 @@ class AuthRepositoryImpl implements AuthRepository {
 
   @override
   Future<void> verifyPhone(String code) async {
-    return remoteDataSource.verifyPhone(code);
+    await remoteDataSource.verifyPhone(code);
+  }
+
+  @override
+  Future<void> logout(String refreshToken) async {
+    await remoteDataSource.logout(refreshToken);
   }
 }

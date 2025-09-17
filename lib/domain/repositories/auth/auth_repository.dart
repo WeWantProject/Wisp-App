@@ -15,4 +15,6 @@ abstract class AuthRepository {
   Future<TokenEntity> signIn(SignInEntity signinEntity);
 
   Future<RefreshToken> refreshToken(String refreshToken);
+
+  Future<void> logout(String refreshToken);
 }

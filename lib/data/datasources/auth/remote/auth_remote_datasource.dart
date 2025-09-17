@@ -12,6 +12,7 @@ abstract class AuthRemoteDataSource {
   Future<SignInResponseDto> signIn(SigninRequestDto dto);
   Future<void> changePassword(String phoneNumber, String newPassword);
   Future<RefreshTokenResponseDto> refreshToken(String refreshToken);
+  Future<void> logout(String refreshToken);
 }
 
 @LazySingleton(as: AuthRemoteDataSource)
@@ -47,4 +48,8 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   @override
   Future<RefreshTokenResponseDto> refreshToken(String refreshToken) =>
       api.refreshToken({"refreshToken": refreshToken});
+
+  @override
+  Future<void> logout(String refreshToken) =>
+      api.logout({"refreshToken": refreshToken});
 }

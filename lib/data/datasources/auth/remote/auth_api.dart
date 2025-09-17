@@ -30,4 +30,7 @@ abstract class AuthApi {
   Future<RefreshTokenResponseDto> refreshToken(
     @Body() Map<String, dynamic> body,
   );
+
+  @PATCH('/auth/logout')
+  Future<void> logout(@Body() Map<String, dynamic> body);
 }
