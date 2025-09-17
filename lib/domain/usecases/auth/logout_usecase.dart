@@ -7,7 +7,7 @@ class LogoutUsecase {
 
   LogoutUsecase(this.authRepository);
 
-  Future<void> logount(String refreshToken) async {
+  Future<void> logout(String refreshToken) async {
     await authRepository.logout(refreshToken);
   }
 }
