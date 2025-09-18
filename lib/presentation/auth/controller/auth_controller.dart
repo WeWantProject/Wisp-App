@@ -1,5 +1,3 @@
-import 'dart:nativewrappers/_internal/vm/lib/ffi_allocation_patch.dart';
-
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:wisp/core/config/di/injection.dart';
@@ -27,12 +25,10 @@ class AuthController extends StateNotifier<AuthState> {
     }
   }
 
-  Future<void> logout(Function()? onLogoutComplete) async {
+  Future<void> logout() async {
     final refreshToken = await _storage.read(key: 'refreshToken');
     if (refreshToken == null) return;
     await logoutUsecase.logout(refreshToken);
     _storage.deleteAll();
-    print("로그아웃..");
-    onLogoutComplete.call();
   }
 }
