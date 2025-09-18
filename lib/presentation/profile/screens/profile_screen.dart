@@ -138,9 +138,8 @@ class _LogoutButton extends ConsumerWidget {
         ),
       ),
       onPressed: () {
-        notifier.logout(() {
-          context.go("/auth");
-        });
+        notifier.logout();
+        context.go("/auth");
       },
       child: const Row(
         mainAxisAlignment: MainAxisAlignment.center,
