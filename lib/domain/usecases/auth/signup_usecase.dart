@@ -1,12 +1,22 @@
+import 'package:injectable/injectable.dart';
 import 'package:wisp/domain/entities/auth/signup_entity.dart';
 import 'package:wisp/domain/repositories/auth/auth_repository.dart';
 
-class SignUpUseCase {
+@injectable
+class SignUpUsecase {
   final AuthRepository authRepository;
 
-  SignUpUseCase(this.authRepository);
+  SignUpUsecase(this.authRepository);
 
-  Future<void> signUp(SignUpEntity signUpEntity) async {
-    return await authRepository.signUp(signUpEntity);
+  Future<void> signUp(SignUpEntity signUpentity) async {
+    await authRepository.signUp(signUpentity);
+  }
+
+  Future<void> sendSms(String phoneNumber) async {
+    return await authRepository.sendSms(phoneNumber);
+  }
+
+  Future<void> verifySms(String code) async {
+    return await authRepository.verifyPhone(code);
   }
 }
