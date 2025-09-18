@@ -1,5 +1,7 @@
+import 'package:injectable/injectable.dart';
 import 'package:wisp/domain/repositories/auth/auth_repository.dart';
 
+@injectable
 class ChangePasswordUseCase {
   final AuthRepository authRepository;
 
