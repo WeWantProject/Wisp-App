@@ -1,15 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:wisp/core/config/constants/colors.dart';
+import 'package:wisp/presentation/auth/controller/auth_controller.dart';
 import 'package:wisp/presentation/profile/widgets/profile_item.dart';
 
 class ProfileScreen extends StatelessWidget {
   final String userName;
   final String statusMessage;
 
-  const ProfileScreen(
-      {super.key, required this.userName, required this.statusMessage});
+  const ProfileScreen({
+    super.key,
+    required this.userName,
+    required this.statusMessage,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -22,9 +27,7 @@ class ProfileScreen extends StatelessWidget {
             ProfileTop(userName: userName, statusMessage: statusMessage),
             const Gap(20),
             const Expanded(
-              child: SingleChildScrollView(
-                child: ProfileBottom(),
-              ),
+              child: SingleChildScrollView(child: ProfileBottom()),
             ),
           ],
         ),
@@ -37,8 +40,11 @@ class ProfileTop extends StatelessWidget {
   final String userName;
   final String statusMessage;
 
-  const ProfileTop(
-      {super.key, required this.userName, required this.statusMessage});
+  const ProfileTop({
+    super.key,
+    required this.userName,
+    required this.statusMessage,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +62,10 @@ class ProfileTop extends StatelessWidget {
         Text(
           userName,
           style: const TextStyle(
-              fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
         ),
         Text(
           statusMessage,
@@ -94,53 +103,53 @@ class ProfileBottom extends StatelessWidget {
         ProfileItem(
           color: Colors.blue,
           title: '계정 설정',
-          icon: const Icon(
-            Icons.settings,
-            color: Colors.blue,
-          ),
+          icon: const Icon(Icons.settings, color: Colors.blue),
           onTap: () => context.pushNamed('setting'),
           description: '계정 설정',
         ),
         ProfileItem(
           color: Colors.red,
           title: '친구 초대',
-          icon: const Icon(
-            Icons.share,
-            color: Colors.red,
-          ),
+          icon: const Icon(Icons.share, color: Colors.red),
           onTap: () => context.pushNamed('addFriend'),
           description: 'Wisp을 친구들에게 추천하세요',
         ),
-        TextButton(
-          style: TextButton.styleFrom(
-            padding: const EdgeInsets.all(16),
-            backgroundColor: Colors.red.withValues(alpha: 0.1),
-            foregroundColor: Colors.red.shade400,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
-              side: BorderSide(
-                color: Colors.red.withValues(alpha: 0.2),
-              ),
-            ),
-          ),
-          onPressed: () {},
-          child: const Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                Icons.logout,
-                color: Colors.red,
-                size: 20,
-              ),
-              Gap(8),
-              Text(
-                ' 로그아웃',
-                style: TextStyle(color: Colors.red, fontSize: 16),
-              )
-            ],
-          ),
-        )
+        _LogoutButton(),
       ],
+    );
+  }
+}
+
+class _LogoutButton extends ConsumerWidget {
+  const _LogoutButton();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final notifier = ref.watch(authControllerProvider.notifier);
+
+    return TextButton(
+      style: TextButton.styleFrom(
+        padding: const EdgeInsets.all(16),
+        backgroundColor: Colors.red.withValues(alpha: 0.1),
+        foregroundColor: Colors.red.shade400,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+          side: BorderSide(color: Colors.red.withValues(alpha: 0.2)),
+        ),
+      ),
+      onPressed: () {
+        notifier.logout(() {
+          context.go("/auth");
+        });
+      },
+      child: const Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(Icons.logout, color: Colors.red, size: 20),
+          Gap(8),
+          Text(' 로그아웃', style: TextStyle(color: Colors.red, fontSize: 16)),
+        ],
+      ),
     );
   }
 }
