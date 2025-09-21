@@ -9,12 +9,12 @@ import 'package:wisp/presentation/auth/state/login_state.dart';
 
 final loginControllerProvider =
     StateNotifierProvider<LoginController, LoginState>((ref) {
-      final signInuseCase = getIt<SignInUseCase>();
+      final signInuseCase = getIt<SigninUsecase>();
       return LoginController(signInuseCase);
     });
 
 class LoginController extends StateNotifier<LoginState> {
-  final SignInUseCase signInUseCase;
+  final SigninUsecase signInUseCase;
   final _secureStorage = const FlutterSecureStorage();
 
   LoginController(this.signInUseCase) : super(const LoginState());
