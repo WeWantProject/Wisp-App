@@ -1,6 +1,7 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:wisp/core/config/di/injection.dart';
+import 'package:wisp/domain/entities/auth/token_entity.dart';
 import 'package:wisp/domain/usecases/auth/change_password_usecase.dart';
 import 'package:wisp/domain/usecases/auth/logout_usecase.dart';
 import 'package:wisp/domain/usecases/auth/refresh_token_usecase.dart';
@@ -46,5 +47,9 @@ class AuthController extends StateNotifier<AuthState> {
     _storage.deleteAll();
   }
 
-  Future<void> refreshToken() async {}
+  Future<TokenEntity> refreshToken() async {
+    final refreshToken = await _storage.read(key: 'refreshToken');
+    final newToken = await refreshTokenUseCase.refreshToken(refreshToken!);
+    return newToken;
+  }
 }
