@@ -2,8 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:wisp/data/models/auth/request/signin_request_dto.dart';
 import 'package:wisp/data/models/auth/request/signup_request_dto.dart';
-import 'package:wisp/data/models/auth/response/refresh_token_response_dto.dart';
-import 'package:wisp/data/models/auth/response/signin_response_dto.dart';
+import 'package:wisp/data/models/auth/response/auth_token_response_dto.dart';
 
 part 'auth_api.g.dart';
 
@@ -21,15 +20,13 @@ abstract class AuthApi {
   Future<void> signUp(@Body() SignUpRequestDto body);
 
   @POST('/auth/signin')
-  Future<SignInResponseDto> signIn(@Body() SigninRequestDto body);
+  Future<AuthTokenResponseDto> signIn(@Body() SigninRequestDto body);
 
   @PATCH('/auth/change-password')
   Future<void> changePassword(@Body() Map<String, dynamic> body);
 
   @PUT('/auth/refresh-token')
-  Future<RefreshTokenResponseDto> refreshToken(
-    @Body() Map<String, dynamic> body,
-  );
+  Future<AuthTokenResponseDto> refreshToken(@Body() Map<String, dynamic> body);
 
   @PATCH('/auth/logout')
   Future<void> logout(@Body() Map<String, dynamic> body);
