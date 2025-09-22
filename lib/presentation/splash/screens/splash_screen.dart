@@ -54,7 +54,7 @@ class SplashScreen extends HookConsumerWidget {
           key: 'refreshTokenExpiration',
         );
 
-        // 토큰 없으면 로그인 페이지로 이동
+        // 토큰이 없을 경우
         if (accessToken == null || accessToken.isEmpty) {
           context.go('/auth');
           return;
@@ -98,6 +98,7 @@ class SplashScreen extends HookConsumerWidget {
                 }
               } else {
                 context.go('/auth');
+                _storage.deleteAll();
                 return;
               }
             } else {
