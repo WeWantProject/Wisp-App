@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:gap/gap.dart';
@@ -223,7 +225,25 @@ class _PhoneNumberField extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final remainingTime = useState(0);
+    final remainingTime = useState(300);
+
+    // useEffect로 타이머 설정
+    useEffect(() {
+      Timer? timer;
+
+      // 1초마다 감소
+      timer = Timer.periodic(Duration(seconds: 1), (_) {
+        if (remainingTime.value > 0) {
+          remainingTime.value--;
+        } else {
+          print("타이머 종료!");
+          timer?.cancel();
+        }
+      });
+
+      // cleanup 함수: 위젯이 dispose될 때 타이머 취소
+      return () => timer?.cancel();
+    }, []); // 빈 배열이면 한 번만 실행됨
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -256,7 +276,9 @@ class _PhoneNumberField extends HookWidget {
               child: Text(
                 isEnabled
                     ? "SMS 전송"
-                    : (remainingTime.value > 0 ? "전송완료" : "재전송"),
+                    : (remainingTime.value > 0
+                          ? "${remainingTime.value ~/ 60} : ${remainingTime.value % 60}"
+                          : "재전송"),
                 style: const TextStyle(fontSize: 12, color: Colors.white),
               ),
             ),
