@@ -9,7 +9,7 @@ import 'package:wisp/presentation/auth/state/auth_state.dart';
 
 final authControllerProvider = StateNotifierProvider<AuthController, AuthState>(
   (ref) {
-    final logoutUsecase = getIt<LogoutUsecase>();
+    final logoutUsecase = getIt<LogoutUseCase>();
     final refreshTokenUseCase = getIt<RefreshTokenUseCase>();
     final changePasswordUseCase = getIt<ChangePasswordUseCase>();
     return AuthController(
@@ -22,7 +22,7 @@ final authControllerProvider = StateNotifierProvider<AuthController, AuthState>(
 
 class AuthController extends StateNotifier<AuthState> {
   final _storage = const FlutterSecureStorage();
-  final LogoutUsecase logoutUsecase;
+  final LogoutUseCase logoutUsecase;
   final RefreshTokenUseCase refreshTokenUseCase;
   final ChangePasswordUseCase changePasswordUseCase;
 

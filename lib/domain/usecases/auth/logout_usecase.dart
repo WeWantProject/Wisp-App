@@ -2,10 +2,10 @@ import 'package:injectable/injectable.dart';
 import 'package:wisp/domain/repositories/auth/auth_repository.dart';
 
 @injectable
-class LogoutUsecase {
+class LogoutUseCase {
   final AuthRepository authRepository;
 
-  LogoutUsecase(this.authRepository);
+  LogoutUseCase(this.authRepository);
 
   Future<void> logout(String refreshToken) async {
     await authRepository.logout(refreshToken);
