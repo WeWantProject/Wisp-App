@@ -68,13 +68,19 @@ class SignUpForm extends HookConsumerWidget {
     }
 
     // SMS 인증 함수
-    void handleVerifySms() {
+    void handleVerifySms() async {
       final smsCode = smsCodeController.text.trim();
       if (smsCode.isEmpty) {
         _showSnackBar(context, '인증번호를 입력해주세요.');
         return;
       }
-      notifier.verify(smsCode);
+      try {
+        await notifier.verify(smsCode);
+        timerRef.value?.cancel();
+        Focus.of(context).unfocus();
+      } catch (e) {
+        _showSnackBar(context, e.toString());
+      }
     }
 
     // 회원가입 함수
