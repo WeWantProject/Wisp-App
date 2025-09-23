@@ -114,7 +114,7 @@ class ProfileBottom extends StatelessWidget {
           onTap: () => context.pushNamed('addFriend'),
           description: 'Wisp을 친구들에게 추천하세요',
         ),
-        _LogoutButton(),
+        const _LogoutButton(),
       ],
     );
   }
@@ -125,7 +125,7 @@ class _LogoutButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final notifier = ref.watch(authControllerProvider.notifier);
+    final notifier = ref.read(authControllerProvider.notifier);
 
     return TextButton(
       style: TextButton.styleFrom(
