@@ -13,7 +13,7 @@ class SplashScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    var _storage = FlutterSecureStorage();
+    const storage = FlutterSecureStorage();
 
     final notifier = ref.watch(authControllerProvider.notifier);
 
@@ -45,12 +45,12 @@ class SplashScreen extends HookConsumerWidget {
         await Future.delayed(const Duration(seconds: 3));
 
         final now = DateTime.now().toUtc();
-        final accessToken = await _storage.read(key: 'accessToken');
-        final accessExpireStr = await _storage.read(
+        final accessToken = await storage.read(key: 'accessToken');
+        final accessExpireStr = await storage.read(
           key: 'accessTokenExpiration',
         );
-        final refreshToken = await _storage.read(key: 'refreshToken');
-        final refreshExpireStr = await _storage.read(
+        final refreshToken = await storage.read(key: 'refreshToken');
+        final refreshExpireStr = await storage.read(
           key: 'refreshTokenExpiration',
         );
         print(accessToken);
@@ -65,7 +65,7 @@ class SplashScreen extends HookConsumerWidget {
         if (accessExpireStr != null) {
           final accessExpire = DateTime.tryParse(accessExpireStr)?.toUtc();
           if (accessExpire == null) {
-            await _storage.deleteAll();
+            await storage.deleteAll();
             if (!context.mounted) return;
             context.go('/auth');
             return;
@@ -80,7 +80,7 @@ class SplashScreen extends HookConsumerWidget {
                 refreshExpireStr,
               )?.toUtc();
               if (refreshExpire == null) {
-                await _storage.deleteAll();
+                await storage.deleteAll();
                 if (!context.mounted) return;
                 context.go('/auth');
                 return;
@@ -92,19 +92,19 @@ class SplashScreen extends HookConsumerWidget {
                   final newTokens = await notifier.refreshToken();
 
                   // secure storage에 저장
-                  await _storage.write(
+                  await storage.write(
                     key: 'accessToken',
                     value: newTokens.accessToken,
                   );
-                  await _storage.write(
+                  await storage.write(
                     key: 'refreshToken',
                     value: newTokens.refreshToken,
                   );
-                  await _storage.write(
+                  await storage.write(
                     key: 'accessTokenExpiration',
                     value: newTokens.accessTokenExpiration.toIso8601String(),
                   );
-                  await _storage.write(
+                  await storage.write(
                     key: 'refreshTokenExpiration',
                     value: newTokens.refreshTokenExpiration.toIso8601String(),
                   );
@@ -114,7 +114,7 @@ class SplashScreen extends HookConsumerWidget {
                 }
               } else {
                 context.go('/auth');
-                _storage.deleteAll();
+                storage.deleteAll();
                 return;
               }
             } else {
