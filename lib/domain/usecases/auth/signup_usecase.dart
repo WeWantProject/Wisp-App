@@ -13,10 +13,10 @@ class SignUpUsecase {
   }
 
   Future<void> sendSms(String phoneNumber) async {
-    return await authRepository.sendSms(phoneNumber);
+    await authRepository.sendSms(phoneNumber);
   }
 
   Future<void> verifySms(String code) async {
-    return await authRepository.verifyPhone(code);
+    await authRepository.verifyPhone(code);
   }
 }

@@ -3,14 +3,14 @@ import 'package:dio/dio.dart';
 class ApiService {
   final Dio _dio;
 
-  ApiService({
-    required Dio dio,
-  }) : _dio = dio {
+  ApiService({required Dio dio}) : _dio = dio {
     _attachErrorLoggingInterceptor();
   }
 
-  Future<Response> get(String path,
-      {Map<String, dynamic>? queryParameters}) async {
+  Future<Response> get(
+    String path, {
+    Map<String, dynamic>? queryParameters,
+  }) async {
     try {
       final res = await _dio.get(path, queryParameters: queryParameters);
       return res;
@@ -26,7 +26,6 @@ class ApiService {
   Future<Response> post(String path, Map<String, dynamic> data) async {
     try {
       final res = await _dio.post(path, data: data);
-      print(res);
       return res;
     } on DioException catch (e) {
       _printDioError(e);

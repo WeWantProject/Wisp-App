@@ -7,7 +7,7 @@ part 'signup_request_dto.g.dart';
 @freezed
 abstract class SignUpRequestDto with _$SignUpRequestDto {
   factory SignUpRequestDto({
-    required String userName,
+    required String username,
     required String phoneNumber,
     required String password,
     required String displayName,

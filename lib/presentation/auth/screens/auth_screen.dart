@@ -56,7 +56,7 @@ class AuthScreen extends HookConsumerWidget {
                   },
                   child: authState.isLoginMode[0]
                       ? const LoginForm()
-                      : const SignupForm(),
+                      : SignUpForm(),
                 ),
               ],
             ),

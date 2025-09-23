@@ -38,9 +38,9 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<void> signUp(SignUpEntity signUpEntity) {
+  Future<void> signUp(SignUpEntity signUpEntity) async {
     final dto = SignupRequestMapper.toDto(signUpEntity);
-    return remoteDataSource.signUp(dto);
+    await remoteDataSource.signUp(dto);
   }
 
   @override

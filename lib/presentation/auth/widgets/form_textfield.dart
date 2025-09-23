@@ -11,6 +11,7 @@ class FormTextfield extends HookWidget {
   final bool isPassword;
   final FocusNode focusNode;
   final TextInputType keyboardType;
+  final String? Function(String?)? validator;
 
   const FormTextfield({
     super.key,
@@ -21,6 +22,7 @@ class FormTextfield extends HookWidget {
     this.isPassword = false,
     this.keyboardType = TextInputType.text,
     required this.focusNode,
+    this.validator,
   });
 
   @override
@@ -36,30 +38,20 @@ class FormTextfield extends HookWidget {
       children: [
         Text(
           labelText,
-          style: const TextStyle(
-            color: Colors.white,
-            fontSize: 16,
-          ),
+          style: const TextStyle(color: Colors.white, fontSize: 16),
         ),
         const Gap(10),
-        TextField(
-          onChanged: (value) => controller.text = value,
+        TextFormField(
           obscureText: obscureText.value,
           focusNode: focusNode,
           keyboardType: keyboardType,
           controller: controller,
+          validator: validator,
           decoration: InputDecoration(
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
-            ),
+            border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
             hintText: hintText,
-            hintStyle: const TextStyle(
-              color: WispColors.lightSkyBlue,
-            ),
-            prefixIcon: Icon(
-              leadingIcon,
-              color: WispColors.lightSkyBlue,
-            ),
+            hintStyle: const TextStyle(color: WispColors.lightSkyBlue),
+            prefixIcon: Icon(leadingIcon, color: WispColors.lightSkyBlue),
             suffixIcon: isPassword
                 ? IconButton(
                     icon: Icon(
@@ -68,9 +60,7 @@ class FormTextfield extends HookWidget {
                           : Icons.visibility,
                       color: WispColors.lightSkyBlue,
                     ),
-                    onPressed: () {
-                      togglePasswordVisibility();
-                    },
+                    onPressed: togglePasswordVisibility,
                   )
                 : null,
             filled: true,
@@ -79,10 +69,16 @@ class FormTextfield extends HookWidget {
               borderRadius: BorderRadius.circular(12),
               borderSide: const BorderSide(color: Colors.white),
             ),
+            errorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: const BorderSide(color: Colors.red),
+            ),
+            focusedErrorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: const BorderSide(color: Colors.red),
+            ),
           ),
-          style: const TextStyle(
-            color: Colors.white,
-          ),
+          style: const TextStyle(color: Colors.white),
           cursorColor: Colors.white,
         ),
       ],

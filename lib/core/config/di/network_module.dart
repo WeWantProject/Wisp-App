@@ -24,7 +24,7 @@ abstract class NetworkModule {
       LogInterceptor(
         request: true,
         requestHeader: true,
-        requestBody: false,
+        requestBody: true,
         responseHeader: false,
         responseBody: true,
         error: true,
