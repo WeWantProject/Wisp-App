@@ -21,25 +21,6 @@ class LoginController extends StateNotifier<LoginState> {
 
   Future<bool> login(String phoneNumber, String password) async {
     try {
-      state = state.copyWith(isLoading: true, errorMessage: '');
-      if (!isValidPhoneNumber(phoneNumber)) {
-        state = state.copyWith(
-          isLoading: false,
-          errorMessage: '올바른 전화번호를 입력해주세요.',
-          focusField: "phone",
-        );
-        return false;
-      }
-
-      if (!isValidPassword(password)) {
-        state = state.copyWith(
-          isLoading: false,
-          errorMessage: '비밀번호는 8자 이상이어야 합니다.',
-          focusField: "password",
-        );
-        return false;
-      }
-
       final response = await signInUseCase.signIn(
         SignInEntity(phoneNumber: phoneNumber, password: password),
       );
