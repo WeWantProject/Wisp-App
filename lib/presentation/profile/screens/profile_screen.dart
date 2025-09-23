@@ -137,8 +137,8 @@ class _LogoutButton extends ConsumerWidget {
           side: BorderSide(color: Colors.red.withValues(alpha: 0.2)),
         ),
       ),
-      onPressed: () {
-        notifier.logout();
+      onPressed: () async {
+        await notifier.logout();
         context.go("/auth");
       },
       child: const Row(
