@@ -53,8 +53,6 @@ class SplashScreen extends HookConsumerWidget {
         final refreshExpireStr = await storage.read(
           key: 'refreshTokenExpiration',
         );
-        print(accessToken);
-        print(refreshToken);
 
         // 토큰이 없을 경우
         if (accessToken == null || accessToken.isEmpty) {
