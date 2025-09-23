@@ -107,7 +107,7 @@ class SplashScreen extends HookConsumerWidget {
             }
           }
         }
-        context.go('/main');
+        context.go('/auth');
       }
 
       checkToken();
