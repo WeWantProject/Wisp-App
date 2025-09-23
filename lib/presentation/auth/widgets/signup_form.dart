@@ -184,7 +184,7 @@ class SignUpForm extends HookConsumerWidget {
             ],
 
             AuthButton(
-              onPressed: handleSignUp,
+              onPressed: state.isLoading ? null : handleSignUp,
               text: state.isLoading ? '처리중...' : '회원가입',
             ),
           ],
