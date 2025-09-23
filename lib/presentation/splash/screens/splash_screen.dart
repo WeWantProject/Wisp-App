@@ -42,7 +42,7 @@ class SplashScreen extends HookConsumerWidget {
 
     useEffect(() {
       Future<void> checkToken() async {
-        await Future.delayed(const Duration(seconds: 2));
+        await Future.delayed(const Duration(seconds: 5));
 
         final now = DateTime.now().toUtc();
         final accessToken = await _storage.read(key: 'accessToken');
@@ -53,6 +53,8 @@ class SplashScreen extends HookConsumerWidget {
         final refreshExpireStr = await _storage.read(
           key: 'refreshTokenExpiration',
         );
+        print(accessToken);
+        print(refreshToken);
 
         // 토큰이 없을 경우
         if (accessToken == null || accessToken.isEmpty) {
@@ -61,14 +63,28 @@ class SplashScreen extends HookConsumerWidget {
         }
 
         if (accessExpireStr != null) {
-          final accessExpire = DateTime.parse(accessExpireStr).toUtc();
+          final accessExpire = DateTime.tryParse(accessExpireStr)?.toUtc();
+          if (accessExpire == null) {
+            await _storage.deleteAll();
+            if (!context.mounted) return;
+            context.go('/auth');
+            return;
+          }
 
           // access token 만료 1분 전이면 refresh 시도
           if (now.isAfter(accessExpire.subtract(const Duration(minutes: 1)))) {
             if (refreshToken != null &&
                 refreshToken.isNotEmpty &&
                 refreshExpireStr != null) {
-              final refreshExpire = DateTime.parse(refreshExpireStr).toUtc();
+              final refreshExpire = DateTime.tryParse(
+                refreshExpireStr,
+              )?.toUtc();
+              if (refreshExpire == null) {
+                await _storage.deleteAll();
+                if (!context.mounted) return;
+                context.go('/auth');
+                return;
+              }
 
               if (now.isBefore(refreshExpire)) {
                 try {
