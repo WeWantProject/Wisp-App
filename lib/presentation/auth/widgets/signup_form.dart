@@ -177,12 +177,6 @@ class SignUpForm extends HookConsumerWidget {
             ),
             const Gap(20),
 
-            // 에러 메시지 표시
-            if (state.errorMessage.isNotEmpty) ...[
-              _buildErrorMessage(state.errorMessage),
-              const Gap(10),
-            ],
-
             AuthButton(
               onPressed: state.isLoading ? null : handleSignUp,
               text: state.isLoading ? '처리중...' : '회원가입',
@@ -280,23 +274,6 @@ class SignUpForm extends HookConsumerWidget {
         }
         return null;
       },
-    );
-  }
-
-  // 에러 메시지 빌더
-  Widget _buildErrorMessage(String message) {
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: Colors.red.withOpacity(0.1),
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: Colors.red.withOpacity(0.5)),
-      ),
-      child: Text(
-        message,
-        style: const TextStyle(color: Colors.red, fontSize: 14),
-      ),
     );
   }
 
