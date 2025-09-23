@@ -34,20 +34,40 @@ class AuthInterceptor extends Interceptor {
       final refreshToken = await storage.read(key: _refreshTokenKey);
       if (refreshToken != null) {
         try {
-          final newToken = await refreshTokenUseCase.refreshToken(refreshToken);
-          await storage.write(
-            key: _accessTokenKey,
-            value: newToken.accessToken,
+          // 🔥 핵심: 별도 Dio 인스턴스 생성 (인터셉터 없음)
+          final refreshDio = Dio(
+            BaseOptions(
+              baseUrl: dio.options.baseUrl,
+              connectTimeout: dio.options.connectTimeout,
+              receiveTimeout: dio.options.receiveTimeout,
+              headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+              },
+            ),
           );
-          await storage.write(
-            key: _refreshTokenKey,
-            value: newToken.refreshToken,
+
+          // 직접 refresh API 호출 (RefreshTokenUseCase 우회)
+          final response = await refreshDio.put(
+            '/auth/refresh-token',
+            data: {'refreshToken': refreshToken},
           );
+
+          final newAccessToken = response.data['accessToken'];
+          final newRefreshToken = response.data['refreshToken'];
+
+          await storage.write(key: _accessTokenKey, value: newAccessToken);
+          await storage.write(key: _refreshTokenKey, value: newRefreshToken);
+
+          // 원본 요청 재시도
           final opts = err.requestOptions;
-          opts.headers["Authorization"] = "Bearer ${newToken.accessToken}";
-          final response = await dio.fetch(opts);
-          return handler.resolve(response);
+          opts.headers["Authorization"] = "Bearer $newAccessToken";
+          final retryResponse = await dio.fetch(opts);
+          return handler.resolve(retryResponse);
         } catch (_) {
+          // 토큰 갱신 실패시 저장된 토큰 삭제
+          await storage.delete(key: _accessTokenKey);
+          await storage.delete(key: _refreshTokenKey);
           return handler.next(err);
         }
       }

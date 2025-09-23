@@ -62,7 +62,7 @@ class LoginController extends StateNotifier<LoginState> {
       );
       await _secureStorage.write(key: 'userRole', value: response.role.name);
 
-      state = state.copyWith(isLoading: false, isLogin: true, focusField: null);
+      state = state.copyWith(isLoading: false, isLogin: true, focusField: '');
       return true;
     } on DioException catch (e) {
       final Object? data = e.response?.data;
