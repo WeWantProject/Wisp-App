@@ -241,7 +241,7 @@ class _PhoneNumberField extends HookWidget {
         ),
         const Gap(8),
         Padding(
-          padding: const EdgeInsets.only(top: 30),
+          padding: const EdgeInsets.only(top: 35),
           child: SizedBox(
             height: 50,
             child: ElevatedButton(
