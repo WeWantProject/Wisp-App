@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:wisp/core/config/constants/colors.dart';
 
 class AuthButton extends StatelessWidget {
-  final VoidCallback onPressed;
+  final void Function()? onPressed;
   final String text;
 
   const AuthButton({super.key, required this.onPressed, required this.text});
@@ -13,16 +13,14 @@ class AuthButton extends StatelessWidget {
       width: 400,
       height: 50,
       decoration: BoxDecoration(
-          color: WispColors.deepBlue2,
-          borderRadius: BorderRadius.circular(12)),
+        color: WispColors.deepBlue2,
+        borderRadius: BorderRadius.circular(12),
+      ),
       child: TextButton(
         onPressed: onPressed,
         child: Text(
           text,
-          style: const TextStyle(
-            color: Colors.white,
-            fontSize: 16,
-          ),
+          style: const TextStyle(color: Colors.white, fontSize: 16),
         ),
       ),
     );
