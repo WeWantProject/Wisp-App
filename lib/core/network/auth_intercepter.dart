@@ -13,7 +13,7 @@ class AuthInterceptor extends Interceptor {
     required this.dio,
   });
 
-  static const _accessTokenKey = 'accesstoken';
+  static const _accessTokenKey = 'accessToken';
   static const _refreshTokenKey = 'refreshToken';
 
   @override
