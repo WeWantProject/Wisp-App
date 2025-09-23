@@ -46,15 +46,15 @@ class LoginForm extends HookConsumerWidget {
     }
 
     Future<void> login() async {
-      if (notifier.isValidPhoneNumber(phoneController.text.trim())) {
+      if (!notifier.isValidPhoneNumber(phoneController.text.trim())) {
         _showSnackBar(context, "유효하지 않은 전화번호 입니다.");
-        Focus.of(context).requestFocus(phoneFocus);
+        FocusScope.of(context).requestFocus(phoneFocus);
         return;
       }
 
-      if (notifier.isValidPassword(passwordController.text.trim())) {
+      if (!notifier.isValidPassword(passwordController.text.trim())) {
         _showSnackBar(context, "유효하지 않은 비밀번호 입니다.");
-        Focus.of(context).requestFocus(passwordFocus);
+        FocusScope.of(context).requestFocus(passwordFocus);
         return;
       }
       try {
