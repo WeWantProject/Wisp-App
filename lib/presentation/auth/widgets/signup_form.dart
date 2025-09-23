@@ -38,19 +38,26 @@ class SignUpForm extends HookConsumerWidget {
     // SMS 타이머 상태
     final remainingTime = useState(0);
     final timerRef = useRef<Timer?>(null);
+    final isSendingSms = useState(false);
 
     // SMS 전송 함수
-    void handleSendSms() {
+    void handleSendSms() async {
+      if (isSendingSms.value || remainingTime.value > 0) return;
       final phoneNumber = phoneController.text.trim();
       if (!notifier.isValidPhoneNumber(phoneNumber)) {
         _showSnackBar(context, '올바른 전화번호 형식이 아닙니다. (예: 01012345678)');
         return;
       }
 
-      notifier.sendSms(phoneNumber);
-      _startTimer(remainingTime, timerRef, () {
-        smsCodeController.clear();
-      });
+      isSendingSms.value = true;
+      try {
+        await notifier.sendSms(phoneNumber);
+        _startTimer(remainingTime, timerRef, () {
+          smsCodeController.clear();
+        });
+      } finally {
+        isSendingSms.value = false;
+      }
 
       // SMS 전송 후 포커스 이동
       Future.delayed(const Duration(milliseconds: 300), () {
@@ -120,7 +127,9 @@ class SignUpForm extends HookConsumerWidget {
             _PhoneNumberSection(
               controller: phoneController,
               focusNode: phoneFocus,
-              isEnabled: !state.isPhoneNumber || remainingTime.value == 0,
+              isEnabled:
+                  !isSendingSms.value &&
+                  (!state.isPhoneNumber || remainingTime.value == 0),
               remainingTime: remainingTime.value,
               onSendSms: handleSendSms,
               validator: _validatePhoneNumber,
