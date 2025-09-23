@@ -59,6 +59,23 @@ class AuthInterceptor extends Interceptor {
           await storage.write(key: _accessTokenKey, value: newAccessToken);
           await storage.write(key: _refreshTokenKey, value: newRefreshToken);
 
+          final newAccessExp = response.data['accessTokenExpiration'];
+          final newRefreshExp = response.data['refreshTokenExpiration'];
+
+          if (newAccessExp != null) {
+            await storage.write(
+              key: 'accessTokenExpiration',
+              value: newAccessExp,
+            );
+          }
+
+          if (newRefreshExp != null) {
+            await storage.write(
+              key: 'refreshTokenExpiration',
+              value: newRefreshExp,
+            );
+          }
+
           // 원본 요청 재시도
           final opts = err.requestOptions;
           opts.headers["Authorization"] = "Bearer $newAccessToken";
