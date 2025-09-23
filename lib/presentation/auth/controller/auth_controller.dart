@@ -42,9 +42,15 @@ class AuthController extends StateNotifier<AuthState> {
 
   Future<void> logout() async {
     final refreshToken = await _storage.read(key: 'refreshToken');
-    if (refreshToken == null) return;
-    await logoutUsecase.logout(refreshToken);
-    _storage.deleteAll();
+    if (refreshToken == null) {
+      await _storage.deleteAll();
+      return;
+    }
+    try {
+      await logoutUsecase.logout(refreshToken);
+    } finally {
+      await _storage.deleteAll();
+    }
   }
 
   Future<TokenEntity> refreshToken() async {
