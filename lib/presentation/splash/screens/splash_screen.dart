@@ -42,7 +42,7 @@ class SplashScreen extends HookConsumerWidget {
 
     useEffect(() {
       Future<void> checkToken() async {
-        await Future.delayed(const Duration(seconds: 5));
+        await Future.delayed(const Duration(seconds: 3));
 
         final now = DateTime.now().toUtc();
         final accessToken = await _storage.read(key: 'accessToken');
