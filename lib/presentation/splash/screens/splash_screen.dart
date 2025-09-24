@@ -107,15 +107,20 @@ class SplashScreen extends HookConsumerWidget {
                     value: newTokens.refreshTokenExpiration.toIso8601String(),
                   );
                 } catch (e) {
+                  await storage.deleteAll();
+                  if (!context.mounted) return;
                   context.go('/auth');
                   return;
                 }
               } else {
+                await storage.deleteAll();
+                if (!context.mounted) return;
                 context.go('/auth');
-                storage.deleteAll();
                 return;
               }
             } else {
+              await storage.deleteAll();
+              if (!context.mounted) return;
               context.go('/auth');
               return;
             }
