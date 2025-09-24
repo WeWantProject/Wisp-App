@@ -11,6 +11,8 @@ class FormTextfield extends HookWidget {
   final bool isPassword;
   final FocusNode focusNode;
   final TextInputType keyboardType;
+  final String? Function(String?)? validator;
+  final bool isEnabled;
 
   const FormTextfield({
     super.key,
@@ -21,6 +23,8 @@ class FormTextfield extends HookWidget {
     this.isPassword = false,
     this.keyboardType = TextInputType.text,
     required this.focusNode,
+    this.validator,
+    this.isEnabled = true,
   });
 
   @override
@@ -36,29 +40,28 @@ class FormTextfield extends HookWidget {
       children: [
         Text(
           labelText,
-          style: const TextStyle(
-            color: Colors.white,
+          style: TextStyle(
+            color: isEnabled ? Colors.white : Colors.grey,
             fontSize: 16,
           ),
         ),
         const Gap(10),
-        TextField(
-          onChanged: (value) => controller.text = value,
+        TextFormField(
           obscureText: obscureText.value,
           focusNode: focusNode,
           keyboardType: keyboardType,
           controller: controller,
+          validator: validator,
+          enabled: isEnabled,
           decoration: InputDecoration(
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
-            ),
+            border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
             hintText: hintText,
-            hintStyle: const TextStyle(
-              color: WispColors.lightSkyBlue,
+            hintStyle: TextStyle(
+              color: isEnabled ? WispColors.lightSkyBlue : Colors.grey.shade600,
             ),
             prefixIcon: Icon(
               leadingIcon,
-              color: WispColors.lightSkyBlue,
+              color: isEnabled ? WispColors.lightSkyBlue : Colors.grey.shade600,
             ),
             suffixIcon: isPassword
                 ? IconButton(
@@ -66,22 +69,36 @@ class FormTextfield extends HookWidget {
                       obscureText.value
                           ? Icons.visibility_off
                           : Icons.visibility,
-                      color: WispColors.lightSkyBlue,
+                      color: isEnabled
+                          ? WispColors.lightSkyBlue
+                          : Colors.grey.shade600,
                     ),
-                    onPressed: () {
-                      togglePasswordVisibility();
-                    },
+                    onPressed: isEnabled ? togglePasswordVisibility : null,
                   )
                 : null,
             filled: true,
-            fillColor: WispColors.grey,
+            fillColor: isEnabled ? WispColors.grey : Colors.grey.shade800,
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
-              borderSide: const BorderSide(color: Colors.white),
+              borderSide: BorderSide(
+                color: isEnabled ? Colors.white : Colors.grey,
+              ),
+            ),
+            disabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: const BorderSide(color: Colors.grey),
+            ),
+            errorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: const BorderSide(color: Colors.red),
+            ),
+            focusedErrorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: const BorderSide(color: Colors.red),
             ),
           ),
-          style: const TextStyle(
-            color: Colors.white,
+          style: TextStyle(
+            color: isEnabled ? Colors.white : Colors.grey.shade600,
           ),
           cursorColor: Colors.white,
         ),

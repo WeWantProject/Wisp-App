@@ -6,14 +6,15 @@ class BaseScaffold extends StatelessWidget {
   final PreferredSizeWidget? appBar;
   final BottomNavigationBar? bottomNavigationBar;
 
-  const BaseScaffold({super.key, required this.child, this.appBar, this.bottomNavigationBar});
+  const BaseScaffold(
+      {super.key, required this.child, this.appBar, this.bottomNavigationBar});
 
   @override
   Widget build(BuildContext context) {
-
     final gradient = wispTheme.extension<GradientTheme>()?.backgroundGradient;
 
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       appBar: appBar,
       body: Container(
         decoration: BoxDecoration(

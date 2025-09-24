@@ -4,6 +4,5 @@ import 'package:wisp/core/config/di/injection.config.dart';
 
 final getIt = GetIt.instance;
 
-@InjectableInit()
-void configureDependencies() =>  getIt.init();
-
+@injectableInit
+void configureDependencies() => getIt.init();

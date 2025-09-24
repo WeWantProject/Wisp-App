@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:wisp/core/config/constants/base_scaffold.dart';
 import 'package:wisp/core/config/constants/colors.dart';
 import 'package:wisp/presentation/auth/controller/auth_controller.dart';
-import 'package:wisp/presentation/auth/controller/login_controller.dart';
 import 'package:wisp/presentation/auth/widgets/login_form.dart';
 import 'package:wisp/presentation/auth/widgets/signup_form.dart';
 
@@ -19,60 +16,51 @@ class AuthScreen extends HookConsumerWidget {
     final authNotifier = ref.watch(authControllerProvider.notifier);
     final authState = ref.watch(authControllerProvider);
 
-    final notifier = ref.watch(loginControllerProvider.notifier);
-
-    final phoneNumberFocusNode = useFocusNode();
-    final passwordFocusNode = useFocusNode();
-
     return BaseScaffold(
-      child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const LogoSection(),
-            const Gap(30),
-            ToggleAuthButton(
-              isSelected: authState.isLoginMode,
-              onPressed: authNotifier.toggleAuthMode,
+      child: SafeArea(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+              minHeight:
+                  MediaQuery.of(context).size.height -
+                  MediaQuery.of(context).padding.top -
+                  MediaQuery.of(context).padding.bottom -
+                  40,
             ),
-            const Gap(20),
-            AnimatedSwitcher(
-              duration: const Duration(milliseconds: 300),
-              switchInCurve: Curves.easeIn,
-              switchOutCurve: Curves.easeOut,
-              transitionBuilder: (child, animation) {
-                return FadeTransition(
-                  opacity: animation,
-                  child: ScaleTransition(
-                    scale:
-                        Tween<double>(begin: 0.95, end: 1.0).animate(animation),
-                    child: child,
-                  ),
-                );
-              },
-              child: authState.isLoginMode[0]
-                  ? LoginForm(
-                      phoneNumberFocusNode: phoneNumberFocusNode,
-                      passwordFocusNode: passwordFocusNode,
-                      phoneController: notifier.phoneController,
-                      passwordController: notifier.passwordController,
-                      onLogin: () {
-                        context.go('/main');
-                      },
-                    )
-                  : SignupForm(
-                      nameController: TextEditingController(),
-                      phoneController: TextEditingController(),
-                      confromPhoneController: TextEditingController(),
-                      passwordController: TextEditingController(),
-                      conformPasswordController: TextEditingController(),
-                      onSignup: () {},
-                      phoneNumberFocusNode: FocusNode(),
-                      passwordFocusNode: FocusNode(),
-                      conformPasswordFocusNode: FocusNode(),
-                      nameFocusNode: FocusNode()),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const LogoSection(),
+                const Gap(30),
+                ToggleAuthButton(
+                  isSelected: authState.isLoginMode,
+                  onPressed: authNotifier.toggleAuthMode,
+                ),
+                const Gap(10),
+                AnimatedSwitcher(
+                  duration: const Duration(milliseconds: 300),
+                  switchInCurve: Curves.easeIn,
+                  switchOutCurve: Curves.easeOut,
+                  transitionBuilder: (child, animation) {
+                    return FadeTransition(
+                      opacity: animation,
+                      child: ScaleTransition(
+                        scale: Tween<double>(
+                          begin: 0.95,
+                          end: 1.0,
+                        ).animate(animation),
+                        child: child,
+                      ),
+                    );
+                  },
+                  child: authState.isLoginMode[0]
+                      ? const LoginForm()
+                      : SignUpForm(),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );
@@ -140,10 +128,7 @@ class ToggleAuthButton extends StatelessWidget {
         selectedColor: Colors.white,
         fillColor: WispColors.grey,
         borderRadius: BorderRadius.circular(8),
-        constraints: const BoxConstraints(
-          minHeight: 50,
-          minWidth: 175,
-        ),
+        constraints: const BoxConstraints(minHeight: 50, minWidth: 175),
         children: const [
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),

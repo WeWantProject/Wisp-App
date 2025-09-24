@@ -3,10 +3,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wisp/core/config/constants/theme.dart';
 import 'package:wisp/core/config/di/injection.dart';
 import 'package:wisp/core/config/router/route.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-Future<void> main () async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await dotenv.load(fileName: ".env");
   configureDependencies();
+
   runApp(const ProviderScope(child: Wisp()));
 }
 

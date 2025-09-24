@@ -11,6 +11,7 @@
 .svn/
 .swiftpm/
 migrate_working_dir/
+.env
 
 # IntelliJ related
 *.iml
@@ -62,3 +63,11 @@ app.*.map.json
 
 # Web related
 **/ios/Runner/GoogleService-Info.plist
+
+# Generated code (annotation-based)
+*.g.dart
+*.freezed.dart
+*.injectable.dart
+*.config.dart
+*.gen.dart
+*.mocks.dart

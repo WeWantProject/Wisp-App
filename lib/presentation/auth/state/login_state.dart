@@ -8,7 +8,6 @@ abstract class LoginState with _$LoginState {
     @Default(false) bool isLogin,
     @Default(false) bool isLoading,
     @Default('') String errorMessage,
-    @Default('') String phoneNumber,
-    @Default('') String password,
+    @Default('') String focusField,
   }) = _LoginState;
 }
