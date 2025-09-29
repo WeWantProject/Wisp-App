@@ -6,8 +6,12 @@ class BaseScaffold extends StatelessWidget {
   final PreferredSizeWidget? appBar;
   final BottomNavigationBar? bottomNavigationBar;
 
-  const BaseScaffold(
-      {super.key, required this.child, this.appBar, this.bottomNavigationBar});
+  const BaseScaffold({
+    super.key,
+    required this.child,
+    this.appBar,
+    this.bottomNavigationBar,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -16,11 +20,11 @@ class BaseScaffold extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: appBar,
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: gradient,
+      body: SafeArea(
+        child: Container(
+          decoration: BoxDecoration(gradient: gradient),
+          child: child,
         ),
-        child: child,
       ),
       bottomNavigationBar: bottomNavigationBar,
     );
