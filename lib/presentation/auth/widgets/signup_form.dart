@@ -369,7 +369,7 @@ class _PhoneNumberSection extends StatelessWidget {
         Expanded(
           flex: 2,
           child: FormTextfield(
-            hintText: '01012345678',
+            hintText: '-를 제외하고 입력해주세요.',
             labelText: '전화번호',
             controller: controller,
             leadingIcon: Icons.phone,

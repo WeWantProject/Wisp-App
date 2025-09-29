@@ -81,7 +81,7 @@ class LoginForm extends HookConsumerWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             FormTextfield(
-              hintText: '010-1234-5678',
+              hintText: '-를 제외하고 입력해주세요',
               labelText: '전화번호',
               controller: phoneController,
               leadingIcon: Icons.phone,
