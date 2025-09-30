@@ -25,7 +25,7 @@ abstract class AuthApi {
   @PATCH('/auth/change-password')
   Future<void> changePassword(@Body() Map<String, dynamic> body);
 
-  @PUT('/auth/refresh-token')
+  @PUT('/auth/refresh')
   Future<AuthTokenResponseDto> refreshToken(@Body() Map<String, dynamic> body);
 
   @POST('/auth/logout')
