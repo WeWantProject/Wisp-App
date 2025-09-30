@@ -32,60 +32,46 @@ class AuthInterceptor extends Interceptor {
   void onError(DioException err, ErrorInterceptorHandler handler) async {
     if (err.response?.statusCode == 401) {
       final refreshToken = await storage.read(key: _refreshTokenKey);
+      final refreshTokenExpire = await storage.read(
+        key: 'refreshTokenExpiration',
+      );
+      final now = DateTime.now().toUtc();
       if (refreshToken != null) {
+        final refreshTokenExpiration = DateTime.parse(
+          refreshTokenExpire!,
+        ).toUtc();
         try {
-          // 🔥 핵심: 별도 Dio 인스턴스 생성 (인터셉터 없음)
-          final refreshDio = Dio(
-            BaseOptions(
-              baseUrl: dio.options.baseUrl,
-              connectTimeout: dio.options.connectTimeout,
-              receiveTimeout: dio.options.receiveTimeout,
-              headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/json",
-              },
-            ),
-          );
+          if (now.isAfter(refreshTokenExpiration)) {
+            final response = await refreshTokenUseCase.refreshToken(
+              refreshToken,
+            );
 
-          // 직접 refresh API 호출 (RefreshTokenUseCase 우회)
-          final response = await refreshDio.put(
-            '/auth/refresh-token',
-            data: {'refreshToken': refreshToken},
-          );
-
-          final newAccessToken = response.data['accessToken'];
-          final newRefreshToken = response.data['refreshToken'];
-
-          await storage.write(key: _accessTokenKey, value: newAccessToken);
-          await storage.write(key: _refreshTokenKey, value: newRefreshToken);
-
-          final newAccessExp = response.data['accessTokenExpiration'];
-          final newRefreshExp = response.data['refreshTokenExpiration'];
-
-          if (newAccessExp != null) {
+            await storage.write(
+              key: 'accessToken',
+              value: response.accessToken,
+            );
+            await storage.write(
+              key: 'refreshToken',
+              value: response.refreshToken,
+            );
             await storage.write(
               key: 'accessTokenExpiration',
-              value: newAccessExp,
+              value: response.accessTokenExpiration.toIso8601String(),
             );
-          }
-
-          if (newRefreshExp != null) {
             await storage.write(
               key: 'refreshTokenExpiration',
-              value: newRefreshExp,
+              value: response.refreshTokenExpiration.toIso8601String(),
             );
-          }
 
-          // 원본 요청 재시도
-          final opts = err.requestOptions;
-          opts.headers["Authorization"] = "Bearer $newAccessToken";
-          final retryResponse = await dio.fetch(opts);
-          return handler.resolve(retryResponse);
+            final newAccessToken = storage.read(key: _accessTokenKey);
+
+            final opts = err.requestOptions;
+            opts.headers["Authorization"] = "Bearer $newAccessToken";
+            final retryResponse = await dio.fetch(opts);
+            return handler.resolve(retryResponse);
+          }
         } catch (_) {
           // 토큰 갱신 실패시 저장된 토큰 삭제
-          await storage.delete(key: _accessTokenKey);
-          await storage.delete(key: _refreshTokenKey);
-          return handler.next(err);
         }
       }
     }
