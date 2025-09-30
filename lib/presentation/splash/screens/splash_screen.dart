@@ -42,7 +42,7 @@ class SplashScreen extends HookConsumerWidget {
 
     useEffect(() {
       Future<void> checkToken() async {
-        await Future.delayed(const Duration(seconds: 3));
+        await Future.delayed(const Duration(seconds: 3)); // Splash 애니메이션 대기용
 
         final now = DateTime.now().toUtc();
         final accessToken = await storage.read(key: 'accessToken');
@@ -54,84 +54,75 @@ class SplashScreen extends HookConsumerWidget {
           key: 'refreshTokenExpiration',
         );
 
-        // 토큰이 없을 경우
+        // 액세스 토큰 없으면 로그인
         if (accessToken == null || accessToken.isEmpty) {
           context.go('/auth');
           return;
         }
 
-        if (accessExpireStr != null) {
-          final accessExpire = DateTime.tryParse(accessExpireStr)?.toUtc();
-          if (accessExpire == null) {
-            await storage.deleteAll();
-            if (!context.mounted) return;
-            context.go('/auth');
-            return;
-          }
+        // 액세스 토큰 만료일 파싱
+        final accessExpire = accessExpireStr != null
+            ? DateTime.tryParse(accessExpireStr)?.toUtc()
+            : null;
 
-          // access token 만료 1분 전이면 refresh 시도
-          if (now.isAfter(accessExpire.subtract(const Duration(minutes: 1)))) {
-            if (refreshToken != null &&
-                refreshToken.isNotEmpty &&
-                refreshExpireStr != null) {
-              final refreshExpire = DateTime.tryParse(
-                refreshExpireStr,
-              )?.toUtc();
-              if (refreshExpire == null) {
-                await storage.deleteAll();
-                if (!context.mounted) return;
-                context.go('/auth');
-                return;
-              }
-
-              if (now.isBefore(refreshExpire)) {
-                try {
-                  // 새 토큰 발급
-                  final newTokens = await notifier.refreshToken();
-
-                  // secure storage에 저장
-                  await storage.write(
-                    key: 'accessToken',
-                    value: newTokens.accessToken,
-                  );
-                  await storage.write(
-                    key: 'refreshToken',
-                    value: newTokens.refreshToken,
-                  );
-                  await storage.write(
-                    key: 'accessTokenExpiration',
-                    value: newTokens.accessTokenExpiration.toIso8601String(),
-                  );
-                  await storage.write(
-                    key: 'refreshTokenExpiration',
-                    value: newTokens.refreshTokenExpiration.toIso8601String(),
-                  );
-                } catch (e) {
-                  await storage.deleteAll();
-                  if (!context.mounted) return;
-                  context.go('/auth');
-                  return;
-                }
-              } else {
-                await storage.deleteAll();
-                if (!context.mounted) return;
-                context.go('/auth');
-                return;
-              }
-            } else {
-              await storage.deleteAll();
-              if (!context.mounted) return;
-              context.go('/auth');
-              return;
-            }
-          } else {
-            if (!context.mounted) return;
-            context.go('/main');
-            return;
-          }
+        if (accessExpire == null) {
+          // 잘못된 만료일 → 로그아웃
+          await storage.deleteAll();
+          if (!context.mounted) return;
+          context.go('/auth');
+          return;
         }
-        if (!context.mounted) return;
-        context.go('/main');
+
+        if (now.isBefore(accessExpire)) {
+          // 액세스 토큰 아직 유효 → 바로 메인 이동
+          context.go('/main');
+          return;
+        }
+
+        // 액세스 토큰 만료 → 리프레시 토큰 검사
+        if (refreshToken == null ||
+            refreshToken.isEmpty ||
+            refreshExpireStr == null) {
+          await storage.deleteAll();
+          if (!context.mounted) return;
+          context.go('/auth');
+          return;
+        }
+
+        final refreshExpire = DateTime.tryParse(refreshExpireStr)?.toUtc();
+        if (refreshExpire == null || now.isAfter(refreshExpire)) {
+          // 리프레시 토큰 만료 → 로그아웃
+          await storage.deleteAll();
+          if (!context.mounted) return;
+          context.go('/auth');
+          return;
+        }
+
+        // 리프레시 토큰 유효 → 새 토큰 발급
+        try {
+          final newTokens = await notifier.refreshToken();
+
+          await storage.write(key: 'accessToken', value: newTokens.accessToken);
+          await storage.write(
+            key: 'refreshToken',
+            value: newTokens.refreshToken,
+          );
+          await storage.write(
+            key: 'accessTokenExpiration',
+            value: newTokens.accessTokenExpiration.toIso8601String(),
+          );
+          await storage.write(
+            key: 'refreshTokenExpiration',
+            value: newTokens.refreshTokenExpiration.toIso8601String(),
+          );
+
+          context.go('/main');
+        } catch (e) {
+          // 재발급 실패 → 로그아웃
+          await storage.deleteAll();
+          if (!context.mounted) return;
+          context.go('/auth');
+        }
       }
 
       checkToken();
