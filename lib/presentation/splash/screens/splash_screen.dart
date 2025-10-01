@@ -42,9 +42,9 @@ class SplashScreen extends HookConsumerWidget {
 
     useEffect(() {
       Future<void> checkToken() async {
-        await Future.delayed(const Duration(seconds: 3)); // Splash 애니메이션 대기용
+        await Future.delayed(const Duration(seconds: 3));
 
-        final now = DateTime.now().toUtc();
+        final now = DateTime.now();
         final accessToken = await storage.read(key: 'accessToken');
         final accessExpireStr = await storage.read(
           key: 'accessTokenExpiration',
@@ -54,19 +54,29 @@ class SplashScreen extends HookConsumerWidget {
           key: 'refreshTokenExpiration',
         );
 
-        // 액세스 토큰 없으면 로그인
+        // 🔍 디버깅 로그 추가
+        // print('=== Token Check Debug ===');
+        // print('Now (UTC): $now');
+        // print('Access Token: ${accessToken?.substring(0, 20)}...');
+        // print('Access Expire Str: $accessExpireStr');
+        // print('Refresh Expire Str: $refreshExpireStr');
+        // print('now :$now');
+
         if (accessToken == null || accessToken.isEmpty) {
+          print('❌ No access token');
           context.go('/auth');
           return;
         }
 
-        // 액세스 토큰 만료일 파싱
         final accessExpire = accessExpireStr != null
-            ? DateTime.tryParse(accessExpireStr)?.toUtc()
+            ? DateTime.tryParse(accessExpireStr)
             : null;
 
+        // print('Access Expire (UTC): $accessExpire');
+        // print('Time until expire: ${accessExpire?.difference(now)}');
+
         if (accessExpire == null) {
-          // 잘못된 만료일 → 로그아웃
+          print('❌ Invalid access expiration');
           await storage.deleteAll();
           if (!context.mounted) return;
           context.go('/auth');
@@ -74,10 +84,12 @@ class SplashScreen extends HookConsumerWidget {
         }
 
         if (now.isBefore(accessExpire)) {
-          // 액세스 토큰 아직 유효 → 바로 메인 이동
+          print('✅ Access token valid');
           context.go('/main');
           return;
         }
+
+        print('⚠️ Access token expired, checking refresh token');
 
         // 액세스 토큰 만료 → 리프레시 토큰 검사
         if (refreshToken == null ||
@@ -89,7 +101,7 @@ class SplashScreen extends HookConsumerWidget {
           return;
         }
 
-        final refreshExpire = DateTime.tryParse(refreshExpireStr)?.toUtc();
+        final refreshExpire = DateTime.tryParse(refreshExpireStr);
         if (refreshExpire == null || now.isAfter(refreshExpire)) {
           // 리프레시 토큰 만료 → 로그아웃
           await storage.deleteAll();
