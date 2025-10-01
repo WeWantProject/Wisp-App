@@ -100,22 +100,7 @@ class SplashScreen extends HookConsumerWidget {
 
         // 리프레시 토큰 유효 → 새 토큰 발급
         try {
-          final newTokens = await notifier.refreshToken();
-
-          await storage.write(key: 'accessToken', value: newTokens.accessToken);
-          await storage.write(
-            key: 'refreshToken',
-            value: newTokens.refreshToken,
-          );
-          await storage.write(
-            key: 'accessTokenExpiration',
-            value: newTokens.accessTokenExpiration.toIso8601String(),
-          );
-          await storage.write(
-            key: 'refreshTokenExpiration',
-            value: newTokens.refreshTokenExpiration.toIso8601String(),
-          );
-
+          await notifier.refreshToken();
           context.go('/main');
         } catch (e) {
           // 재발급 실패 → 로그아웃
