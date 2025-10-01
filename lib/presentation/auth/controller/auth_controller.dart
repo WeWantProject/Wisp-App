@@ -69,4 +69,8 @@ class AuthController extends StateNotifier<AuthState> {
 
     state = state.copyWith(isTokenExpired: false);
   }
+
+  Future<void> setTokenExpired() async {
+    state = state.copyWith(isTokenExpired: true);
+  }
 }
