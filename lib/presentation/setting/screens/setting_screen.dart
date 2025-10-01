@@ -16,25 +16,21 @@ class _SettingScreenState extends State<SettingScreen> {
   @override
   Widget build(BuildContext context) {
     return const BaseScaffold(
-      appBar: SettingAppbar(
-        title: "설정",
-      ),
-      child: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.symmetric(vertical: 14, horizontal: 16),
-          child: SingleChildScrollView(
-            physics: ClampingScrollPhysics(),
-            child: Column(
-              children: [
-                _BasicSettings(),
-                Gap(20),
-                _InformationSettings(),
-                Gap(20),
-                _LanguageSettings(),
-                Gap(20),
-                _AccountSettings(),
-              ],
-            ),
+      appBar: SettingAppbar(title: "설정"),
+      child: Padding(
+        padding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+        child: SingleChildScrollView(
+          physics: ClampingScrollPhysics(),
+          child: Column(
+            children: [
+              _BasicSettings(),
+              Gap(20),
+              _InformationSettings(),
+              Gap(20),
+              _LanguageSettings(),
+              Gap(20),
+              _AccountSettings(),
+            ],
           ),
         ),
       ),
@@ -56,16 +52,10 @@ class __BasicSettingsState extends State<_BasicSettings> {
   Widget build(BuildContext context) {
     return _SettingTile(
       title: "기본 설정",
-      icon: const Icon(
-        Icons.settings_outlined,
-        color: Colors.amber,
-      ),
+      icon: const Icon(Icons.settings_outlined, color: Colors.amber),
       children: [
         _SettingItem(
-          icon: const Icon(
-            Icons.notifications_outlined,
-            color: Colors.orange,
-          ),
+          icon: const Icon(Icons.notifications_outlined, color: Colors.orange),
           title: "알림",
           content: "메시지 및 통화 알림",
           active: Switch(
@@ -102,10 +92,7 @@ class __BasicSettingsState extends State<_BasicSettings> {
         ),
         const Gap(16),
         _SettingItem(
-          icon: const Icon(
-            Icons.chat_bubble_outline,
-            color: Colors.green,
-          ),
+          icon: const Icon(Icons.chat_bubble_outline, color: Colors.green),
           title: "읽음 확인",
           content: "메시지 읽음 표시",
           active: Switch(
@@ -142,16 +129,10 @@ class __InformationSettingsState extends State<_InformationSettings> {
   Widget build(BuildContext context) {
     return _SettingTile(
       title: "개인정보 보호",
-      icon: const Icon(
-        Icons.shield_outlined,
-        color: Colors.green,
-      ),
+      icon: const Icon(Icons.shield_outlined, color: Colors.green),
       children: [
         _SettingItem(
-          icon: const Icon(
-            Icons.visibility_outlined,
-            color: Colors.blue,
-          ),
+          icon: const Icon(Icons.visibility_outlined, color: Colors.blue),
           title: "마지막 접속 시간",
           content: "다른 사용자에게 표시",
           active: Switch(
@@ -168,10 +149,7 @@ class __InformationSettingsState extends State<_InformationSettings> {
         ),
         const Gap(16),
         _SettingItem(
-          icon: const Icon(
-            Icons.people_alt_outlined,
-            color: Colors.green,
-          ),
+          icon: const Icon(Icons.people_alt_outlined, color: Colors.green),
           title: "온라인 상태",
           content: "현재 온라인 상태 표시",
           active: Switch(
@@ -188,10 +166,7 @@ class __InformationSettingsState extends State<_InformationSettings> {
         ),
         const Gap(16),
         _SettingItem(
-          icon: const Icon(
-            Icons.shield_outlined,
-            color: Colors.purpleAccent,
-          ),
+          icon: const Icon(Icons.shield_outlined, color: Colors.purpleAccent),
           title: "프로필 공개 범위",
           content: "누가 내 프로필을 볼 수 있는지 설정",
           active: SettingDropdown(
@@ -224,16 +199,10 @@ class __LanguageSettingsState extends State<_LanguageSettings> {
   Widget build(BuildContext context) {
     return _SettingTile(
       title: "언어",
-      icon: const Icon(
-        Icons.language_outlined,
-        color: Colors.blue,
-      ),
+      icon: const Icon(Icons.language_outlined, color: Colors.blue),
       children: [
         _SettingItem(
-          icon: const Icon(
-            Icons.language_outlined,
-            color: Colors.blue,
-          ),
+          icon: const Icon(Icons.language_outlined, color: Colors.blue),
           title: "앱 언어",
           content: "앱에서 사용할 언어를 선택하세요",
           active: SettingDropdown(
@@ -258,34 +227,22 @@ class _AccountSettings extends StatelessWidget {
   Widget build(BuildContext context) {
     return const _SettingTile(
       title: "계정 관리",
-      icon: Icon(
-        Icons.lock_outline,
-        color: Colors.orange,
-      ),
+      icon: Icon(Icons.lock_outline, color: Colors.orange),
       children: [
         _SettingItem(
-          icon: Icon(
-            Icons.lock_outline,
-            color: Colors.blue,
-          ),
+          icon: Icon(Icons.lock_outline, color: Colors.blue),
           title: "비밀번호 변경",
           content: "계정 보안을 위해 정기적으로 변경하세요",
         ),
         Gap(16),
         _SettingItem(
-          icon: Icon(
-            Icons.shield_outlined,
-            color: Colors.green,
-          ),
+          icon: Icon(Icons.shield_outlined, color: Colors.green),
           title: "2단계 인증",
           content: "SMS 또는 앱을 통한 추가 보안",
         ),
         Gap(16),
         _SettingItem(
-          icon: Icon(
-            Icons.delete_outline,
-            color: Colors.red,
-          ),
+          icon: Icon(Icons.delete_outline, color: Colors.red),
           title: "계정 삭제",
           content: "모든 데이터가 영구적으로 삭제됩니다",
         ),

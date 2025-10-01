@@ -18,20 +18,13 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            ProfileTop(userName: userName, statusMessage: statusMessage),
-            const Gap(20),
-            const Expanded(
-              child: SingleChildScrollView(child: ProfileBottom()),
-            ),
-          ],
-        ),
-      ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        ProfileTop(userName: userName, statusMessage: statusMessage),
+        const Gap(20),
+        const Expanded(child: SingleChildScrollView(child: ProfileBottom())),
+      ],
     );
   }
 }
